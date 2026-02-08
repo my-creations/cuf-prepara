@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="pt">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Guia de Preparacao para Colonoscopia | CUF Prepara</title>
+    <meta
+      name="description"
+      content="Guia de preparacao para colonoscopia: dieta por fases, medicacao, calendario e checklist."
+    />
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/variables.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/sections.css" />
+    <link rel="stylesheet" href="css/wizard.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="site-header">
+        <div class="logo">
+          <span class="logo-mark"></span>
+          <div class="logo-text">
+            <span class="logo-title">CUF Prepara</span>
+            <span class="logo-subtitle" data-i18n="header.subtitle">Guia clinico</span>
+          </div>
+        </div>
+        <nav class="site-nav">
+          <a href="#calendario" data-i18n="nav.calendar">Calendario</a>
+          <a href="#dieta" data-i18n="nav.diet">Dieta</a>
+          <a href="#medicacao" data-i18n="nav.meds">Medicacao</a>
+          <a href="#lista" data-i18n="nav.list">Lista</a>
+          <a href="#receitas" data-i18n="nav.recipes">Receitas</a>
+        </nav>
+        <div class="lang-toggle" aria-label="Language" data-i18n-aria="lang.label">
+          <button class="lang-btn is-active" data-lang="pt">PT</button>
+          <button class="lang-btn" data-lang="en">EN</button>
+        </div>
+      </header>
+
+      <main>
+        <section class="hero" id="top">
+          <div class="hero-content">
+            <span class="badge" data-i18n="hero.badge">Guia clinico</span>
+            <h1 data-i18n="hero.title">Guia de preparacao para colonoscopia</h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle">
+              Tudo o que precisa para uma preparacao intestinal eficaz, com calendario inteligente,
+              dieta por fases e lembretes.
+            </p>
+            <div class="hero-actions">
+              <a class="btn primary" href="#calendario" data-i18n="hero.ctaPrimary">
+                Definir data do exame
+              </a>
+              <a class="btn ghost" href="#receitas" data-i18n="hero.ctaSecondary">
+                Ver dieta e receitas
+              </a>
+            </div>
+            <div class="hero-highlights" id="heroHighlights"></div>
+          </div>
+          <div class="hero-media">
+            <div class="hero-card">
+              <div class="hero-card-top">
+                <span data-i18n="hero.cardTitle">Plano personalizado</span>
+                <span class="pill" data-i18n="hero.cardPill">Europa/Lisboa</span>
+              </div>
+              <div class="hero-card-body">
+                <div class="hero-card-row">
+                  <span data-i18n="hero.cardExam">Exame</span>
+                  <strong id="heroExamDate">--</strong>
+                </div>
+                <div class="hero-card-row">
+                  <span data-i18n="hero.cardDiet">Dieta</span>
+                  <strong id="heroDietDate">--</strong>
+                </div>
+                <div class="hero-card-row">
+                  <span data-i18n="hero.cardMeds">Medicacao</span>
+                  <strong id="heroMedsDate">--</strong>
+                </div>
+              </div>
+              <div class="hero-card-footer">
+                <span data-i18n="hero.cardNote">Atualiza automaticamente ao selecionar a data.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section calendar" id="calendario">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="calendar.kicker">Calendario</span>
+              <h2 data-i18n="calendar.title">Calendario e cronograma</h2>
+              <p data-i18n="calendar.subtitle">
+                Selecione a data do exame para gerar o plano completo e criar eventos reais no
+                calendario.
+              </p>
+            </div>
+            <div class="section-note" data-i18n="calendar.timezone">
+              Fuso horario: Europe/Lisbon
+            </div>
+          </div>
+
+          <div class="calendar-grid">
+            <div class="calendar-panel">
+              <div class="input-grid">
+                <label class="input-field">
+                  <span data-i18n="calendar.dateLabel">Data do exame</span>
+                  <input type="date" id="examDate" />
+                </label>
+                <label class="input-field">
+                  <span data-i18n="calendar.timeLabel">Hora do exame</span>
+                  <input type="time" id="examTime" value="08:30" />
+                </label>
+              </div>
+              <div class="calendar-actions">
+                <button class="btn primary" id="downloadIcs" data-i18n="calendar.appleBtn">
+                  Adicionar ao Apple Calendar
+                </button>
+                <button class="btn primary" id="toggleGoogle" data-i18n="calendar.googleBtn">
+                  Adicionar ao Google Calendar
+                </button>
+              </div>
+              <div class="google-events" id="googleEvents"></div>
+              <div class="share-link">
+                <span class="share-label" data-i18n="calendar.shareLabel">Link partilhavel</span>
+                <div class="share-actions">
+                  <input type="text" id="shareLink" readonly />
+                  <button class="btn subtle" id="copyLink" data-i18n="calendar.copyBtn">
+                    Copiar link
+                  </button>
+                </div>
+                <span class="share-note" data-i18n="calendar.shareNote">
+                  Envie este link ao doente para abrir o plano ja com a data selecionada.
+                </span>
+              </div>
+            </div>
+
+            <div class="calendar-panel outline">
+              <div class="panel-title" data-i18n="calendar.summaryTitle">Resumo do cronograma</div>
+              <div class="timeline" id="timeline"></div>
+              <div class="panel-title" data-i18n="calendar.summarySubtitle">
+                Detalhes adicionais
+              </div>
+              <div class="info-card" id="calendarInfo"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="dieta">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="diet.kicker">Dieta</span>
+              <h2 data-i18n="diet.title">Dieta por fases</h2>
+              <p data-i18n="diet.subtitle">
+                Reduza fibras e residuos para facilitar a limpeza intestinal. Ajuste conforme a
+                orientacao medica.
+              </p>
+            </div>
+          </div>
+          <div class="card-grid" id="dietPhases"></div>
+        </section>
+
+        <section class="section" id="medicacao">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="meds.kicker">Medicacao</span>
+              <h2 data-i18n="meds.title">Medicacao e toma</h2>
+              <p data-i18n="meds.subtitle">
+                Siga sempre a prescricao do seu medico. Os horarios abaixo sao calculados a partir
+                da data do exame.
+              </p>
+            </div>
+          </div>
+          <div class="card-grid" id="medCards"></div>
+        </section>
+
+        <section class="section" id="lista">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="list.kicker">Lista pratica</span>
+              <h2 data-i18n="list.title">Lista de compras</h2>
+              <p data-i18n="list.subtitle">
+                Use esta checklist para organizar os itens essenciais de preparacao.
+              </p>
+            </div>
+          </div>
+          <div class="checklist" id="shoppingList"></div>
+        </section>
+
+        <section class="section" id="receitas">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="recipes.kicker">Ideias</span>
+              <h2 data-i18n="recipes.title">Receitas e sugestoes</h2>
+              <p data-i18n="recipes.subtitle">
+                Sugestoes simples e suaves para cada fase da dieta.
+              </p>
+            </div>
+          </div>
+          <div class="filter-row" id="recipeFilters"></div>
+          <div class="card-grid recipes" id="recipeCards"></div>
+        </section>
+
+        <section class="section" id="videos">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="media.kicker">Multimedia</span>
+              <h2 data-i18n="media.title">Videos explicativos</h2>
+              <p data-i18n="media.subtitle">
+                Pode substituir estes videos pelos fornecidos pela sua equipa.
+              </p>
+            </div>
+          </div>
+          <div class="media-grid" id="videoGrid"></div>
+        </section>
+
+        <section class="section" id="imagens">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="gallery.kicker">Galeria</span>
+              <h2 data-i18n="gallery.title">Imagens e infograficos</h2>
+              <p data-i18n="gallery.subtitle">
+                Reserve este espaco para materiais visuais de apoio.
+              </p>
+            </div>
+          </div>
+          <div class="gallery" id="imageGrid"></div>
+        </section>
+
+        <section class="section" id="faq">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="faq.kicker">FAQ</span>
+              <h2 data-i18n="faq.title">Perguntas frequentes</h2>
+              <p data-i18n="faq.subtitle">Respostas rapidas para duvidas comuns.</p>
+            </div>
+          </div>
+          <div class="faq" id="faqList"></div>
+        </section>
+
+        <section class="section" id="alertas">
+          <div class="callout">
+            <div class="callout-content">
+              <span class="callout-title" data-i18n="alerts.title">
+                Precisa de ajuda durante a preparacao?
+              </span>
+              <p data-i18n="alerts.text">
+                Se tiver duvidas, sintomas inesperados ou dificuldades com a preparacao, contacte
+                a equipa clinica do Hospital CUF Descobertas.
+              </p>
+            </div>
+            <div class="callout-actions">
+              <a class="btn primary" href="#" data-i18n="alerts.cta">Contactar equipa</a>
+              <span class="callout-note" data-i18n="alerts.note">
+                Este guia nao substitui a orientacao medica individual.
+              </span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-content">
+          <span data-i18n="footer.disclaimer">
+            Informacao de apoio a preparacao para colonoscopia. Siga sempre a prescricao medica e
+            as indicacoes do Hospital CUF Descobertas.
+          </span>
+          <div class="footer-actions">
+            <button type="button" class="btn subtle" id="resetWizard" style="font-size: 0.85rem; padding: 8px 16px;">
+              Refazer configuração
+            </button>
+            <span class="footer-meta" data-i18n="footer.location">
+              Hospital CUF Descobertas, Lisboa
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <div class="modal" id="videoModal" aria-hidden="true">
+      <div class="modal-overlay" data-modal-close></div>
+      <div class="modal-content" role="dialog" aria-modal="true">
+        <button
+          class="modal-close"
+          data-modal-close
+          aria-label="Fechar"
+          data-i18n-aria="modal.close"
+        >
+          &times;
+        </button>
+        <div class="modal-body" id="modalBody"></div>
+      </div>
+    </div>
+
+    <!-- Wizard Overlay -->
+    <div id="wizardOverlay" class="wizard-overlay is-hidden">
+      <!-- Splash Screen -->
+      <div id="wizardSplash" class="wizard-splash is-hidden">
+        <div class="wizard-splash-content">
+          <h1 class="wizard-splash-logo">CUF Prepara</h1>
+        </div>
+      </div>
+
+      <!-- Wizard Container -->
+      <div id="wizardContainer" class="wizard-container is-hidden">
+        <div class="wizard-card">
+          <!-- Progress -->
+          <div class="wizard-progress">
+            <div class="wizard-progress-dot is-active"></div>
+            <div class="wizard-progress-dot"></div>
+            <div class="wizard-progress-dot"></div>
+            <div class="wizard-progress-dot"></div>
+          </div>
+
+          <!-- Step 1: Language -->
+          <div class="wizard-step" data-step="0">
+            <h2 class="wizard-step-title">Escolha o idioma</h2>
+            <p class="wizard-step-subtitle">Choose your language</p>
+            <div class="wizard-options">
+              <div class="wizard-option" data-wizard-lang="pt">
+                <div class="wizard-option-radio"></div>
+                <div class="wizard-option-content">
+                  <h3 class="wizard-option-title">Português</h3>
+                  <p class="wizard-option-description">Conteúdo em português</p>
+                </div>
+              </div>
+              <div class="wizard-option" data-wizard-lang="en">
+                <div class="wizard-option-radio"></div>
+                <div class="wizard-option-content">
+                  <h3 class="wizard-option-title">English</h3>
+                  <p class="wizard-option-description">Content in English</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: Date & Time -->
+          <div class="wizard-step" data-step="1">
+            <h2 class="wizard-step-title">Data e hora do exame</h2>
+            <p class="wizard-step-subtitle">Selecione quando será realizada a colonoscopia</p>
+            <div class="wizard-input-group">
+              <div class="wizard-input-field">
+                <label for="wizardDate">Data do exame</label>
+                <input type="date" id="wizardDate" required />
+              </div>
+              <div class="wizard-input-field">
+                <label for="wizardTime">Hora do exame</label>
+                <input type="time" id="wizardTime" value="08:30" required />
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Medication -->
+          <div class="wizard-step" data-step="2">
+            <h2 class="wizard-step-title">Medicação de preparação</h2>
+            <p class="wizard-step-subtitle">Qual foi prescrito pelo seu médico?</p>
+            <div class="wizard-options">
+              <div class="wizard-option" data-wizard-medication="plenvu">
+                <div class="wizard-option-radio"></div>
+                <div class="wizard-option-content">
+                  <h3 class="wizard-option-title">Plenvu</h3>
+                  <p class="wizard-option-description">Solução de preparação intestinal</p>
+                </div>
+              </div>
+              <div class="wizard-option" data-wizard-medication="moviprep">
+                <div class="wizard-option-radio"></div>
+                <div class="wizard-option-content">
+                  <h3 class="wizard-option-title">Moviprep</h3>
+                  <p class="wizard-option-description">Solução de preparação intestinal</p>
+                </div>
+              </div>
+              <div class="wizard-option" data-wizard-medication="citrafleet">
+                <div class="wizard-option-radio"></div>
+                <div class="wizard-option-content">
+                  <h3 class="wizard-option-title">Citrafleet</h3>
+                  <p class="wizard-option-description">Com Dulcolax (prescrito pelo médico)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Constipation -->
+          <div class="wizard-step" data-step="3">
+            <h2 class="wizard-step-title">Tem tendência para obstipação?</h2>
+            <p class="wizard-step-subtitle">Evacua com dificuldade ou irregularidade?</p>
+            <div class="wizard-options">
+              <div class="wizard-option" data-wizard-constipation="true">
+                <div class="wizard-option-radio"></div>
+                <div class="wizard-option-content">
+                  <h3 class="wizard-option-title">Sim</h3>
+                  <p class="wizard-option-description">Tenho tendência para obstipação</p>
+                </div>
+              </div>
+              <div class="wizard-option" data-wizard-constipation="false">
+                <div class="wizard-option-radio"></div>
+                <div class="wizard-option-content">
+                  <h3 class="wizard-option-title">Não</h3>
+                  <p class="wizard-option-description">Não tenho problemas de obstipação</p>
+                </div>
+              </div>
+            </div>
+            <div class="wizard-alert" id="constipationAlert" style="display: none;">
+              <p class="wizard-alert-text">Será adicionado Dulcolax aos 48h e 24h antes do exame para melhor preparação intestinal.</p>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="wizard-buttons">
+            <button type="button" class="wizard-btn wizard-btn-secondary" id="wizardBack" style="display: none;">Voltar</button>
+            <button type="button" class="wizard-btn wizard-btn-primary" id="wizardNext" disabled>Continuar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>

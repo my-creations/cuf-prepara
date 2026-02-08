@@ -1,0 +1,210 @@
+{
+  "heroHighlights": [
+    {
+      "title": "Diet D-3",
+      "text": "Low-residue meals and clear liquids plan."
+    },
+    {
+      "title": "Medication",
+      "text": "Reminders 16h and 10h before the exam."
+    },
+    {
+      "title": "Real calendar",
+      "text": "Create events in Google or Apple Calendar."
+    }
+  ],
+  "dietPhases": [
+    {
+      "tag": "D-3 to D-2",
+      "title": "Low-residue diet",
+      "items": [
+        "Avoid seeds, whole grains, nuts, and raw vegetables.",
+        "Prefer lean meats, fish, white rice, and plain pasta.",
+        "Fruit without peel or seeds (stewed apple/pear).",
+        "Hydrate with water, tea, and non-carbonated drinks."
+      ]
+    },
+    {
+      "tag": "D-1",
+      "title": "Clear liquids",
+      "items": [
+        "Strained broth, water, tea, and clear isotonic drinks.",
+        "Clear gelatin and filtered juices without pulp.",
+        "Avoid red/purple drinks, milk, and alcohol."
+      ]
+    },
+    {
+      "tag": "D0",
+      "title": "Fasting and final prep",
+      "items": [
+        "Do not eat solid food.",
+        "Follow medication timing per prescription.",
+        "Confirm arrival time at the hospital."
+      ]
+    }
+  ],
+  "medCards": [
+    {
+      "tag": "D-1",
+      "title": "Medication 16h before",
+      "items": [
+        "Start prep with Plenvu, Moviprep or Citrafleet + Dulcolax.",
+        "Stay hydrated with clear liquids."
+      ]
+    },
+    {
+      "tag": "D-1",
+      "title": "Medication 10h before",
+      "items": [
+        "Second dose of solution (per prescription).",
+        "Maintain clear liquid diet until medical guidance."
+      ]
+    },
+    {
+      "tag": "D0",
+      "title": "On the exam day",
+      "items": [
+        "Fast until the time indicated by the clinical team.",
+        "Bring documents and your medication list."
+      ]
+    }
+  ],
+  "shoppingList": [
+    {
+      "id": "prep",
+      "text": "Prep solution (Plenvu/Moviprep/Citrafleet + Dulcolax)"
+    },
+    {
+      "id": "water",
+      "text": "Water and caffeine-free tea"
+    },
+    {
+      "id": "isotonic",
+      "text": "Clear isotonic drinks"
+    },
+    {
+      "id": "broth",
+      "text": "Strained vegetable or chicken broth"
+    },
+    {
+      "id": "gelatin",
+      "text": "Clear gelatin"
+    },
+    {
+      "id": "rice",
+      "text": "White rice, plain pasta"
+    },
+    {
+      "id": "protein",
+      "text": "White fish or chicken breast"
+    },
+    {
+      "id": "wipes",
+      "text": "Wet wipes and barrier cream"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "rice-soup",
+      "category": "lunch",
+      "phase": "D-3 to D-2",
+      "title": "Gentle rice soup",
+      "description": "Strained broth with well-cooked white rice."
+    },
+    {
+      "id": "grilled-fish",
+      "category": "dinner",
+      "phase": "D-3 to D-2",
+      "title": "Grilled white fish",
+      "description": "Lean fish with white rice and mild olive oil."
+    },
+    {
+      "id": "shredded-chicken",
+      "category": "lunch",
+      "phase": "D-3 to D-2",
+      "title": "Shredded chicken",
+      "description": "Boiled chicken breast with plain pasta."
+    },
+    {
+      "id": "gelatin",
+      "category": "snack",
+      "phase": "D-1",
+      "title": "Clear gelatin",
+      "description": "Light-colored gelatin without fruit pieces."
+    },
+    {
+      "id": "tea-honey",
+      "category": "breakfast",
+      "phase": "D-1",
+      "title": "Tea with honey",
+      "description": "Mild tea with a touch of honey."
+    },
+    {
+      "id": "clear-broth",
+      "category": "dinner",
+      "phase": "D-1",
+      "title": "Clear broth",
+      "description": "Strained vegetable or chicken broth."
+    }
+  ],
+  "videos": [
+    {
+      "id": "video-diet",
+      "title": "How to organize the diet",
+      "description": "Summary of phases and food choices.",
+      "duration": "02:20"
+    },
+    {
+      "id": "video-meds",
+      "title": "How to take the medication",
+      "description": "Timing and hydration guidance.",
+      "duration": "03:10"
+    },
+    {
+      "id": "video-day",
+      "title": "On the exam day",
+      "description": "What to bring and how to arrive.",
+      "duration": "01:45"
+    }
+  ],
+  "images": [
+    {
+      "id": "img-1",
+      "title": "Infographic: schedule",
+      "description": "Visual plan summary."
+    },
+    {
+      "id": "img-2",
+      "title": "Prep checklist",
+      "description": "Essential items."
+    },
+    {
+      "id": "img-3",
+      "title": "Allowed meals",
+      "description": "Meal examples."
+    },
+    {
+      "id": "img-4",
+      "title": "What to avoid",
+      "description": "Restricted foods."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Can I take my usual medication?",
+      "answer": "Follow your doctor's instructions. Some medications may require adjustment."
+    },
+    {
+      "question": "Can I drink water on the exam day?",
+      "answer": "It depends on the indicated time. Always respect the fasting period given."
+    },
+    {
+      "question": "What if I cannot finish the solution?",
+      "answer": "Contact the hospital to receive specific guidance."
+    },
+    {
+      "question": "How do I know the prep was effective?",
+      "answer": "Bowel movements should become clear/yellowish. If unsure, contact the team."
+    }
+  ]
+}

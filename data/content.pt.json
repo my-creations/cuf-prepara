@@ -1,0 +1,210 @@
+{
+  "heroHighlights": [
+    {
+      "title": "Dieta D-3",
+      "text": "Plano alimentar com baixo residuo e liquidos claros."
+    },
+    {
+      "title": "Medicacao",
+      "text": "Lembretes 16h e 10h antes do exame."
+    },
+    {
+      "title": "Calendario real",
+      "text": "Crie eventos no Google ou Apple Calendar."
+    }
+  ],
+  "dietPhases": [
+    {
+      "tag": "D-3 a D-2",
+      "title": "Dieta com baixo resíduo",
+      "items": [
+        "Evite sementes, cereais integrais, frutos secos e legumes crus.",
+        "Prefira carnes magras, peixe, arroz branco e massa simples.",
+        "Fruta sem pele e sem sementes (maçã ou pera cozida).",
+        "Hidrate-se com água, chá e bebidas sem gás."
+      ]
+    },
+    {
+      "tag": "D-1",
+      "title": "Líquidos claros",
+      "items": [
+        "Caldo coado, água, chá e isotónicos claros.",
+        "Gelatina clara e sumos filtrados sem polpa.",
+        "Evite bebidas vermelhas/roxo, leite e bebidas alcoólicas."
+      ]
+    },
+    {
+      "tag": "D0",
+      "title": "Jejum e preparação final",
+      "items": [
+        "Não ingerir alimentos sólidos.",
+        "Seguir os horários da medicação conforme prescrição.",
+        "Confirmar a hora de chegada ao hospital."
+      ]
+    }
+  ],
+  "medCards": [
+    {
+      "tag": "D-1",
+      "title": "Medicação 16h antes",
+      "items": [
+        "Início da preparação com Plenvu, Moviprep ou Citrafleet + Dulcolax.",
+        "Manter hidratação com líquidos claros."
+      ]
+    },
+    {
+      "tag": "D-1",
+      "title": "Medicação 10h antes",
+      "items": [
+        "Segunda toma da solução (conforme prescrição).",
+        "Manter dieta líquida clara até indicação médica."
+      ]
+    },
+    {
+      "tag": "D0",
+      "title": "No dia do exame",
+      "items": [
+        "Manter jejum até a hora indicada pela equipa clínica.",
+        "Levar documentos e lista de medicação habitual."
+      ]
+    }
+  ],
+  "shoppingList": [
+    {
+      "id": "prep",
+      "text": "Solução de preparação (Plenvu/Moviprep/Citrafleet + Dulcolax)"
+    },
+    {
+      "id": "water",
+      "text": "Água e chá sem cafeína"
+    },
+    {
+      "id": "isotonic",
+      "text": "Bebidas isotónicas claras"
+    },
+    {
+      "id": "broth",
+      "text": "Caldo de legumes ou galinha coado"
+    },
+    {
+      "id": "gelatin",
+      "text": "Gelatina clara"
+    },
+    {
+      "id": "rice",
+      "text": "Arroz branco, massa simples"
+    },
+    {
+      "id": "protein",
+      "text": "Peixe branco ou peito de frango"
+    },
+    {
+      "id": "wipes",
+      "text": "Toalhitas húmidas e creme barreira"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "sopa-arroz",
+      "category": "lunch",
+      "phase": "D-3 a D-2",
+      "title": "Sopa suave de arroz",
+      "description": "Caldo coado com arroz branco bem cozido."
+    },
+    {
+      "id": "peixe-grelhado",
+      "category": "dinner",
+      "phase": "D-3 a D-2",
+      "title": "Peixe branco grelhado",
+      "description": "Peixe magro com arroz branco e azeite suave."
+    },
+    {
+      "id": "frango-desfiado",
+      "category": "lunch",
+      "phase": "D-3 a D-2",
+      "title": "Frango desfiado",
+      "description": "Peito de frango cozido com massa simples."
+    },
+    {
+      "id": "gelatina",
+      "category": "snack",
+      "phase": "D-1",
+      "title": "Gelatina clara",
+      "description": "Gelatina de cor clara sem pedaços."
+    },
+    {
+      "id": "cha-mel",
+      "category": "breakfast",
+      "phase": "D-1",
+      "title": "Chá com mel",
+      "description": "Chá suave com um pouco de mel."
+    },
+    {
+      "id": "caldo-claro",
+      "category": "dinner",
+      "phase": "D-1",
+      "title": "Caldo claro",
+      "description": "Caldo coado de legumes ou galinha."
+    }
+  ],
+  "videos": [
+    {
+      "id": "video-dieta",
+      "title": "Como organizar a dieta",
+      "description": "Resumo das fases e escolhas alimentares.",
+      "duration": "02:20"
+    },
+    {
+      "id": "video-meds",
+      "title": "Como tomar a medicação",
+      "description": "Orientação sobre horários e hidratação.",
+      "duration": "03:10"
+    },
+    {
+      "id": "video-dia",
+      "title": "No dia do exame",
+      "description": "O que levar e como preparar a chegada.",
+      "duration": "01:45"
+    }
+  ],
+  "images": [
+    {
+      "id": "img-1",
+      "title": "Infográfico: cronograma",
+      "description": "Resumo visual do plano."
+    },
+    {
+      "id": "img-2",
+      "title": "Checklist de preparação",
+      "description": "Itens essenciais."
+    },
+    {
+      "id": "img-3",
+      "title": "Pratos permitidos",
+      "description": "Exemplos de refeições."
+    },
+    {
+      "id": "img-4",
+      "title": "O que evitar",
+      "description": "Alimentos proibidos."
+    }
+  ],
+  "faqs": [
+    {
+      "question": "Posso tomar a minha medicação habitual?",
+      "answer": "Siga as instruções do seu médico. Alguns medicamentos precisam de ajuste prévio."
+    },
+    {
+      "question": "Posso beber água no dia do exame?",
+      "answer": "Depende da hora indicada. Respeite sempre o jejum definido pela equipa clínica."
+    },
+    {
+      "question": "E se não conseguir terminar a solução?",
+      "answer": "Contacte o hospital para receber indicações específicas."
+    },
+    {
+      "question": "Como sei se a preparação foi eficaz?",
+      "answer": "As dejeções devem ficar transparentes/amareladas. Em caso de dúvida, contacte a equipa."
+    }
+  ]
+}
