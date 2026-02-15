@@ -22,15 +22,14 @@
           <span class="logo-mark"></span>
           <div class="logo-text">
             <span class="logo-title">CUF Prepara</span>
-            <span class="logo-subtitle" data-i18n="header.subtitle">Guia clinico</span>
           </div>
         </div>
         <nav class="site-nav">
-          <a href="#calendario" data-i18n="nav.calendar">Calendario</a>
-          <a href="#dieta" data-i18n="nav.diet">Dieta</a>
-          <a href="#medicacao" data-i18n="nav.meds">Medicacao</a>
-          <a href="#lista" data-i18n="nav.list">Lista</a>
-          <a href="#receitas" data-i18n="nav.recipes">Receitas</a>
+          <a href="#dieta-residuos" data-i18n="nav.residue">Dieta pobre em resíduos</a>
+          <a href="#dieta-liquida" data-i18n="nav.liquid">Dieta líquida</a>
+          <a href="#plenvu" data-i18n="nav.plenvu">Toma do Plenvu</a>
+          <a href="#dia-exame" data-i18n="nav.examDay">Dia do exame</a>
+          <a href="#faq" data-i18n="nav.faq">FAQ</a>
         </nav>
         <div class="lang-toggle" aria-label="Language" data-i18n-aria="lang.label">
           <button class="lang-btn is-active" data-lang="pt">PT</button>
@@ -41,217 +40,222 @@
       <main>
         <section class="hero" id="top">
           <div class="hero-content">
-            <span class="badge" data-i18n="hero.badge">Guia clinico</span>
             <h1 data-i18n="hero.title">Guia de preparacao para colonoscopia</h1>
             <p class="hero-subtitle" data-i18n="hero.subtitle">
               Tudo o que precisa para uma preparacao intestinal eficaz, com calendario inteligente,
               dieta por fases e lembretes.
             </p>
-            <div class="hero-actions">
-              <a class="btn primary" href="#calendario" data-i18n="hero.ctaPrimary">
-                Definir data do exame
-              </a>
-              <a class="btn ghost" href="#receitas" data-i18n="hero.ctaSecondary">
-                Ver dieta e receitas
-              </a>
-            </div>
-            <div class="hero-highlights" id="heroHighlights"></div>
           </div>
           <div class="hero-media">
             <div class="hero-card">
               <div class="hero-card-top">
                 <span data-i18n="hero.cardTitle">Plano personalizado</span>
-                <span class="pill" data-i18n="hero.cardPill">Europa/Lisboa</span>
+                <span class="pill" data-i18n="hero.cardPill">Lisboa</span>
               </div>
               <div class="hero-card-body">
+                <div class="hero-card-row">
+                  <span data-i18n="hero.cardDiet">Início da dieta</span>
+                  <strong id="heroDietDate">--</strong>
+                </div>
+                <div class="hero-card-row dulcolax-row" id="heroDulcolaxRow48">
+                  <span id="heroDulcolaxLabel48">Dulcolax</span>
+                  <strong id="heroDulcolaxValue48">--</strong>
+                </div>
+                <div class="hero-card-row dulcolax-row" id="heroDulcolaxRow24">
+                  <span id="heroDulcolaxLabel24">Dulcolax</span>
+                  <strong id="heroDulcolaxValue24">--</strong>
+                </div>
+                <div class="hero-card-row">
+                  <span data-i18n="hero.cardMeds">Toma do</span>
+                  <strong id="heroMedsDate">--</strong>
+                </div>
                 <div class="hero-card-row">
                   <span data-i18n="hero.cardExam">Exame</span>
                   <strong id="heroExamDate">--</strong>
                 </div>
-                <div class="hero-card-row">
-                  <span data-i18n="hero.cardDiet">Dieta</span>
-                  <strong id="heroDietDate">--</strong>
-                </div>
-                <div class="hero-card-row">
-                  <span data-i18n="hero.cardMeds">Medicacao</span>
-                  <strong id="heroMedsDate">--</strong>
-                </div>
               </div>
               <div class="hero-card-footer">
-                <span data-i18n="hero.cardNote">Atualiza automaticamente ao selecionar a data.</span>
               </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section calendar" id="calendario">
-          <div class="section-header">
-            <div>
-              <span class="section-kicker" data-i18n="calendar.kicker">Calendario</span>
-              <h2 data-i18n="calendar.title">Calendario e cronograma</h2>
-              <p data-i18n="calendar.subtitle">
-                Selecione a data do exame para gerar o plano completo e criar eventos reais no
-                calendario.
-              </p>
-            </div>
-            <div class="section-note" data-i18n="calendar.timezone">
-              Fuso horario: Europe/Lisbon
-            </div>
-          </div>
-
-          <div class="calendar-grid">
-            <div class="calendar-panel">
-              <div class="input-grid">
-                <label class="input-field">
-                  <span data-i18n="calendar.dateLabel">Data do exame</span>
-                  <input type="date" id="examDate" />
-                </label>
-                <label class="input-field">
-                  <span data-i18n="calendar.timeLabel">Hora do exame</span>
-                  <input type="time" id="examTime" value="08:30" />
-                </label>
-              </div>
-              <div class="calendar-actions">
-                <button class="btn primary" id="downloadIcs" data-i18n="calendar.appleBtn">
-                  Adicionar ao Apple Calendar
-                </button>
+              <div class="hero-card-actions calendar-actions">
                 <button class="btn primary" id="toggleGoogle" data-i18n="calendar.googleBtn">
                   Adicionar ao Google Calendar
                 </button>
+                <button class="btn primary" id="downloadIcs" data-i18n="calendar.appleBtn">
+                  Adicionar ao Apple Calendar
+                </button>
               </div>
               <div class="google-events" id="googleEvents"></div>
-              <div class="share-link">
-                <span class="share-label" data-i18n="calendar.shareLabel">Link partilhavel</span>
-                <div class="share-actions">
-                  <input type="text" id="shareLink" readonly />
-                  <button class="btn subtle" id="copyLink" data-i18n="calendar.copyBtn">
-                    Copiar link
-                  </button>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="preparacao">
+          <div class="section-header">
+            <div>
+              <span class="section-kicker" data-i18n="accordion.kicker"></span>
+              <h2>
+                <span class="title-primary" data-i18n="accordion.titleLead">Preparação</span>
+                <span class="title-accent" data-i18n="accordion.titleAccent">Detalhada</span>
+              </h2>
+              <p data-i18n="accordion.subtitle">
+                Tudo o que precisa para preparar a dieta, a medicação e o dia do exame.
+              </p>
+            </div>
+          </div>
+          <div class="accordion" id="prepAccordion">
+            <details class="accordion-item" id="dieta-residuos">
+              <summary>
+                <div class="accordion-summary">
+                  <span class="accordion-title" data-i18n="accordion.sections.residue.title">
+                    Dieta pobre em resíduos
+                  </span>
+                  <span class="accordion-meta" id="accordionMetaResidue"></span>
                 </div>
-                <span class="share-note" data-i18n="calendar.shareNote">
-                  Envie este link ao doente para abrir o plano ja com a data selecionada.
-                </span>
+              </summary>
+              <div class="accordion-panel">
+                <p class="accordion-intro" id="residueIntro"></p>
+                <div class="accordion-grid">
+                  <div class="accordion-block">
+                    <h3 data-i18n="accordion.blocks.forbiddenTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Alimentos proibidos</h3>
+                    <div class="food-grid" id="residueForbidden"></div>
+                  </div>
+                  <div class="accordion-block">
+                    <h3 data-i18n="accordion.blocks.allowedTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><polyline points="20 6 9 17 4 12"></polyline></svg>Alimentos permitidos</h3>
+                    <div class="food-grid" id="residueAllowed"></div>
+                  </div>
+                  <div class="accordion-block">
+                    <h3 data-i18n="accordion.blocks.shoppingTitle">Lista de compras</h3>
+                    <p class="accordion-note" id="residueShoppingNote"></p>
+                    <div class="phase-focus" id="residueFocus"></div>
+                    <div class="checklist" id="shoppingListResidue"></div>
+                  </div>
+                  <div class="accordion-block">
+                    <h3 data-i18n="accordion.blocks.recipesTitle">Receitas</h3>
+                    <div class="card-grid recipes" id="recipeCardsResidue"></div>
+                  </div>
+                  <div class="accordion-block full">
+                    <div class="info-card dulcolax-reminder is-hidden" id="residueDulcolaxReminder"></div>
+                  </div>
+                </div>
               </div>
-            </div>
+            </details>
 
-            <div class="calendar-panel outline">
-              <div class="panel-title" data-i18n="calendar.summaryTitle">Resumo do cronograma</div>
-              <div class="timeline" id="timeline"></div>
-              <div class="panel-title" data-i18n="calendar.summarySubtitle">
-                Detalhes adicionais
+            <details class="accordion-item" id="dieta-liquida">
+              <summary>
+                <div class="accordion-summary">
+                  <span class="accordion-title" data-i18n="accordion.sections.liquid.title">
+                    Dieta líquida
+                  </span>
+                  <span class="accordion-meta" id="accordionMetaLiquid"></span>
+                </div>
+              </summary>
+              <div class="accordion-panel">
+                <p class="accordion-intro" id="liquidIntro"></p>
+                <div class="accordion-grid">
+                  <div class="accordion-block">
+                    <h3 data-i18n="accordion.blocks.forbiddenTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Alimentos proibidos</h3>
+                    <div class="food-grid" id="liquidForbidden"></div>
+                  </div>
+                  <div class="accordion-block">
+                    <h3 data-i18n="accordion.blocks.allowedTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><polyline points="20 6 9 17 4 12"></polyline></svg>Alimentos permitidos</h3>
+                    <div class="food-grid" id="liquidAllowed"></div>
+                  </div>
+                  <div class="accordion-block">
+                    <h3 data-i18n="accordion.blocks.shoppingTitle">Lista de compras</h3>
+                    <p class="accordion-note" id="liquidShoppingNote"></p>
+                    <div class="phase-focus" id="liquidFocus"></div>
+                    <div class="checklist" id="shoppingListLiquid"></div>
+                  </div>
+                  <div class="accordion-block">
+                    <h3 data-i18n="accordion.blocks.recipesTitle">Receitas</h3>
+                    <div class="card-grid recipes" id="recipeCardsLiquid"></div>
+                  </div>
+                  <div class="accordion-block full">
+                    <div class="info-card dulcolax-reminder is-hidden" id="liquidDulcolaxReminder"></div>
+                  </div>
+                </div>
               </div>
-              <div class="info-card" id="calendarInfo"></div>
-            </div>
-          </div>
-        </section>
+            </details>
 
-        <section class="section" id="dieta">
-          <div class="section-header">
-            <div>
-              <span class="section-kicker" data-i18n="diet.kicker">Dieta</span>
-              <h2 data-i18n="diet.title">Dieta por fases</h2>
-              <p data-i18n="diet.subtitle">
-                Reduza fibras e residuos para facilitar a limpeza intestinal. Ajuste conforme a
-                orientacao medica.
-              </p>
-            </div>
-          </div>
-          <div class="card-grid" id="dietPhases"></div>
-        </section>
+            <details class="accordion-item" id="plenvu">
+              <summary>
+                <div class="accordion-summary">
+                  <span class="accordion-title" data-i18n="accordion.sections.plenvu.title">
+                    Toma do Plenvu
+                  </span>
+                  <span class="accordion-meta" id="accordionMetaPlenvu"></span>
+                </div>
+              </summary>
+              <div class="accordion-panel">
+                <div class="accordion-grid">
+                  <div class="accordion-block full">
+                    <h3 data-i18n="accordion.blocks.plenvuTextTitle">Explicação por escrito</h3>
+                    <div class="info-card" id="plenvuText"></div>
+                  </div>
+                  <div class="accordion-block">
+                    <h3 data-i18n="accordion.blocks.videoTitle">Vídeo de preparação do preparado</h3>
+                    <div class="media-grid" id="plenvuVideoGrid"></div>
+                  </div>
+                </div>
+              </div>
+            </details>
 
-        <section class="section" id="medicacao">
-          <div class="section-header">
-            <div>
-              <span class="section-kicker" data-i18n="meds.kicker">Medicacao</span>
-              <h2 data-i18n="meds.title">Medicacao e toma</h2>
-              <p data-i18n="meds.subtitle">
-                Siga sempre a prescricao do seu medico. Os horarios abaixo sao calculados a partir
-                da data do exame.
-              </p>
-            </div>
-          </div>
-          <div class="card-grid" id="medCards"></div>
-        </section>
+            <details class="accordion-item" id="dia-exame">
+              <summary>
+                <div class="accordion-summary">
+                  <span class="accordion-title" data-i18n="accordion.sections.examDay.title">
+                    Dia do exame
+                  </span>
+                  <span class="accordion-meta" id="accordionMetaExam"></span>
+                </div>
+              </summary>
+              <div class="accordion-panel">
+                <div class="accordion-grid">
+                  <div class="accordion-block full">
+                    <h3 data-i18n="accordion.blocks.examLocationTitle">Dirija-se ao</h3>
+                    <div class="info-card" id="examLocation"></div>
+                  </div>
+                  <div class="accordion-block full">
+                    <h3 data-i18n="accordion.blocks.examChecklistTitle">A não esquecer</h3>
+                    <div class="info-card" id="examChecklist"></div>
+                  </div>
+                </div>
+              </div>
+            </details>
 
-        <section class="section" id="lista">
-          <div class="section-header">
-            <div>
-              <span class="section-kicker" data-i18n="list.kicker">Lista pratica</span>
-              <h2 data-i18n="list.title">Lista de compras</h2>
-              <p data-i18n="list.subtitle">
-                Use esta checklist para organizar os itens essenciais de preparacao.
-              </p>
-            </div>
+            <details class="accordion-item" id="faq">
+              <summary>
+                <div class="accordion-summary">
+                  <span class="accordion-title" data-i18n="accordion.sections.faq.title">
+                    Perguntas frequentes
+                  </span>
+                  <span class="accordion-meta" data-i18n="accordion.sections.faq.meta">
+                    Respostas rápidas
+                  </span>
+                </div>
+              </summary>
+              <div class="accordion-panel">
+                <div class="faq" id="faqList"></div>
+              </div>
+            </details>
           </div>
-          <div class="checklist" id="shoppingList"></div>
-        </section>
-
-        <section class="section" id="receitas">
-          <div class="section-header">
-            <div>
-              <span class="section-kicker" data-i18n="recipes.kicker">Ideias</span>
-              <h2 data-i18n="recipes.title">Receitas e sugestoes</h2>
-              <p data-i18n="recipes.subtitle">
-                Sugestoes simples e suaves para cada fase da dieta.
-              </p>
-            </div>
-          </div>
-          <div class="filter-row" id="recipeFilters"></div>
-          <div class="card-grid recipes" id="recipeCards"></div>
-        </section>
-
-        <section class="section" id="videos">
-          <div class="section-header">
-            <div>
-              <span class="section-kicker" data-i18n="media.kicker">Multimedia</span>
-              <h2 data-i18n="media.title">Videos explicativos</h2>
-              <p data-i18n="media.subtitle">
-                Pode substituir estes videos pelos fornecidos pela sua equipa.
-              </p>
-            </div>
-          </div>
-          <div class="media-grid" id="videoGrid"></div>
-        </section>
-
-        <section class="section" id="imagens">
-          <div class="section-header">
-            <div>
-              <span class="section-kicker" data-i18n="gallery.kicker">Galeria</span>
-              <h2 data-i18n="gallery.title">Imagens e infograficos</h2>
-              <p data-i18n="gallery.subtitle">
-                Reserve este espaco para materiais visuais de apoio.
-              </p>
-            </div>
-          </div>
-          <div class="gallery" id="imageGrid"></div>
-        </section>
-
-        <section class="section" id="faq">
-          <div class="section-header">
-            <div>
-              <span class="section-kicker" data-i18n="faq.kicker">FAQ</span>
-              <h2 data-i18n="faq.title">Perguntas frequentes</h2>
-              <p data-i18n="faq.subtitle">Respostas rapidas para duvidas comuns.</p>
-            </div>
-          </div>
-          <div class="faq" id="faqList"></div>
         </section>
 
         <section class="section" id="alertas">
           <div class="callout">
             <div class="callout-content">
               <span class="callout-title" data-i18n="alerts.title">
-                Precisa de ajuda durante a preparacao?
+                Precisa de ajuda durante a preparação?
               </span>
               <p data-i18n="alerts.text">
-                Se tiver duvidas, sintomas inesperados ou dificuldades com a preparacao, contacte
-                a equipa clinica do Hospital CUF Descobertas.
+                Se tiver dúvidas, sintomas inesperados ou dificuldades com a preparação, contacte
+                a equipa clínica do Hospital CUF Descobertas.
               </p>
             </div>
             <div class="callout-actions">
               <a class="btn primary" href="#" data-i18n="alerts.cta">Contactar equipa</a>
               <span class="callout-note" data-i18n="alerts.note">
-                Este guia nao substitui a orientacao medica individual.
+                Este guia não substitui a orientação médica individual.
               </span>
             </div>
           </div>
@@ -261,8 +265,8 @@
       <footer class="site-footer">
         <div class="footer-content">
           <span data-i18n="footer.disclaimer">
-            Informacao de apoio a preparacao para colonoscopia. Siga sempre a prescricao medica e
-            as indicacoes do Hospital CUF Descobertas.
+            Informação de apoio à preparação para colonoscopia. Siga sempre a prescrição médica e
+            as indicações do Hospital CUF Descobertas
           </span>
           <div class="footer-actions">
             <button type="button" class="btn subtle" id="resetWizard" style="font-size: 0.85rem; padding: 8px 16px;">
@@ -340,11 +344,25 @@
             <div class="wizard-input-group">
               <div class="wizard-input-field">
                 <label for="wizardDate">Data do exame</label>
-                <input type="date" id="wizardDate" required />
+                <div class="wizard-input-wrapper">
+                  <svg class="wizard-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                    <line x1="16" y1="2" x2="16" y2="6"></line>
+                    <line x1="8" y1="2" x2="8" y2="6"></line>
+                    <line x1="3" y1="10" x2="21" y2="10"></line>
+                  </svg>
+                  <input type="date" id="wizardDate" lang="pt-PT" required />
+                </div>
               </div>
               <div class="wizard-input-field">
                 <label for="wizardTime">Hora do exame</label>
-                <input type="time" id="wizardTime" value="08:30" required />
+                <div class="wizard-input-wrapper">
+                  <svg class="wizard-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <input type="time" id="wizardTime" value="08:30" required />
+                </div>
               </div>
             </div>
           </div>

@@ -1,5 +1,6 @@
 import { defaultExamTime } from "../constants.js";
 import { getText } from "../i18n.js";
+import { getMedicationScheduleLabel, getMedicationName } from "../utils/medication.js";
 import {
   formatCalendarDate,
   formatDate,
@@ -7,9 +8,44 @@ import {
   formatTime,
   formatUtcStamp,
 } from "../utils/dates.js";
-import { buildShareUrl } from "../utils/urls.js";
 
-export const buildSchedule = (examDateTime, lang, isConstipated = false) => {
+const getDayLabel = (eventDate, examDateTime, lang) => {
+  const diffTime = examDateTime.getTime() - eventDate.getTime();
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+  
+  const weekdays = lang === "pt" 
+    ? ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"]
+    : ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  
+  const dayName = weekdays[eventDate.getDay()];
+  const dateStr = eventDate.toLocaleDateString(lang === "pt" ? "pt-PT" : "en-US", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric"
+  });
+  
+  if (diffDays === 0) {
+    return lang === "pt" 
+      ? `Dia do Exame (${dayName}, ${dateStr})`
+      : `Exam Day (${dayName}, ${dateStr})`;
+  } else if (diffDays === 1) {
+    return lang === "pt"
+      ? `Dia 1 antes do exame (${dayName}, ${dateStr})`
+      : `1 Day before exam (${dayName}, ${dateStr})`;
+  } else if (diffDays === 2) {
+    return lang === "pt"
+      ? `Dia 2 antes do exame (${dayName}, ${dateStr})`
+      : `2 Days before exam (${dayName}, ${dateStr})`;
+  } else if (diffDays === 3) {
+    return lang === "pt"
+      ? `Dia 3 antes do exame (${dayName}, ${dateStr})`
+      : `3 Days before exam (${dayName}, ${dateStr})`;
+  }
+  
+  return `${dayName}, ${dateStr}`;
+};
+
+export const buildSchedule = (examDateTime, lang, isConstipated = false, medication = "") => {
   if (!examDateTime) {
     return [];
   }
@@ -33,20 +69,6 @@ export const buildSchedule = (examDateTime, lang, isConstipated = false) => {
       highlight: false,
     },
     {
-      id: "med16",
-      title: getText("timeline.med16"),
-      dateTime: med16,
-      showTime: true,
-      highlight: false,
-    },
-    {
-      id: "med10",
-      title: getText("timeline.med10"),
-      dateTime: med10,
-      showTime: true,
-      highlight: false,
-    },
-    {
       id: "exam",
       title: getText("timeline.exam"),
       dateTime: examDateTime,
@@ -55,14 +77,35 @@ export const buildSchedule = (examDateTime, lang, isConstipated = false) => {
     },
   ];
 
+  const hasMedication = Boolean(medication);
+  const hasMed16 = medication === "citrafleet" || !hasMedication;
+
+  if (hasMed16) {
+    events.push({
+      id: "med16",
+      title: getMedicationScheduleLabel(lang, medication, 16),
+      dateTime: med16,
+      showTime: true,
+      highlight: false,
+      medication,
+    });
+  }
+
+  events.push({
+    id: "med10",
+    title: getMedicationScheduleLabel(lang, medication, 10),
+    dateTime: med10,
+    showTime: true,
+    highlight: false,
+    medication,
+  });
+
   if (isConstipated) {
     const dulcolax48 = new Date(examDateTime);
-    dulcolax48.setDate(dulcolax48.getDate() - 2);
-    dulcolax48.setHours(20, 0, 0, 0);
+    dulcolax48.setHours(dulcolax48.getHours() - 48);
 
     const dulcolax24 = new Date(examDateTime);
-    dulcolax24.setDate(dulcolax24.getDate() - 1);
-    dulcolax24.setHours(20, 0, 0, 0);
+    dulcolax24.setHours(dulcolax24.getHours() - 24);
 
     events.push(
       {
@@ -93,22 +136,31 @@ const buildEventDetails = (event, lang) => {
   return lines.join("\n");
 };
 
-export const renderHeroSummary = (elements, schedule, lang) => {
+export const renderHeroSummary = (elements, schedule, lang, state) => {
   const examEvent = schedule.find((item) => item.id === "exam");
   const dietEvent = schedule.find((item) => item.id === "diet");
-  const medEvent = schedule.find((item) => item.id === "med16");
+  const medEvent =
+    schedule.find((item) => item.id === "med16") ||
+    schedule.find((item) => item.id === "med10");
+  const dulcolaxEvents = schedule.filter((item) => item.id === "dulcolax48" || item.id === "dulcolax24");
+  const dulcolaxTimes = dulcolaxEvents
+    .map((item) => `${formatDate(item.dateTime, lang)} · ${formatTime(item.dateTime, lang)}`)
+    .join(" / ");
+  const medicationName = getMedicationName(state.medication);
 
   if (!examEvent) {
     elements.heroExamDate.textContent = "--";
     elements.heroDietDate.textContent = "--";
     elements.heroMedsDate.textContent = "--";
+    if (elements.heroDulcolaxRow48) {
+      elements.heroDulcolaxRow48.classList.remove("is-visible");
+    }
+    if (elements.heroDulcolaxRow24) {
+      elements.heroDulcolaxRow24.classList.remove("is-visible");
+    }
     return;
   }
 
-  elements.heroExamDate.textContent = `${formatDate(examEvent.dateTime, lang)} · ${formatTime(
-    examEvent.dateTime,
-    lang
-  )}`;
   if (dietEvent) {
     elements.heroDietDate.textContent = `${formatDate(dietEvent.dateTime, lang)}`;
   }
@@ -118,6 +170,52 @@ export const renderHeroSummary = (elements, schedule, lang) => {
       lang
     )}`;
   }
+  if (elements.heroMedsLabel) {
+    elements.heroMedsLabel.textContent = medicationName
+      ? lang === "pt"
+        ? `Toma do ${medicationName}`
+        : `Taking ${medicationName}`
+      : lang === "pt"
+      ? "Toma do"
+      : "Taking";
+  }
+  if (elements.heroDulcolaxRow48 && elements.heroDulcolaxRow24) {
+    const dulcolax48 = schedule.find((item) => item.id === "dulcolax48");
+    const dulcolax24 = schedule.find((item) => item.id === "dulcolax24");
+    if (state.isConstipated) {
+      elements.heroDulcolaxRow48.classList.add("is-visible");
+      elements.heroDulcolaxRow24.classList.add("is-visible");
+      if (elements.heroDulcolaxLabel48) {
+        elements.heroDulcolaxLabel48.textContent =
+          lang === "pt"
+            ? "Primeira toma de Dulcolax (2 comprimidos)"
+            : "First Dulcolax dose (2 tablets)";
+      }
+      if (elements.heroDulcolaxLabel24) {
+        elements.heroDulcolaxLabel24.textContent =
+          lang === "pt"
+            ? "Segunda toma de Dulcolax (2 comprimidos)"
+            : "Second Dulcolax dose (2 tablets)";
+      }
+      if (elements.heroDulcolaxValue48) {
+        elements.heroDulcolaxValue48.textContent = dulcolax48
+          ? `${formatDate(dulcolax48.dateTime, lang)} · ${formatTime(dulcolax48.dateTime, lang)}`
+          : "--";
+      }
+      if (elements.heroDulcolaxValue24) {
+        elements.heroDulcolaxValue24.textContent = dulcolax24
+          ? `${formatDate(dulcolax24.dateTime, lang)} · ${formatTime(dulcolax24.dateTime, lang)}`
+          : "--";
+      }
+    } else {
+      elements.heroDulcolaxRow48.classList.remove("is-visible");
+      elements.heroDulcolaxRow24.classList.remove("is-visible");
+    }
+  }
+  elements.heroExamDate.textContent = `${formatDate(examEvent.dateTime, lang)} · ${formatTime(
+    examEvent.dateTime,
+    lang
+  )}`;
 };
 
 export const renderTimeline = (elements, schedule, lang) => {
@@ -129,16 +227,24 @@ export const renderTimeline = (elements, schedule, lang) => {
     elements.timeline.appendChild(empty);
     return;
   }
+  
+  const examEvent = schedule.find((item) => item.id === "exam");
+  const examDateTime = examEvent ? examEvent.dateTime : null;
+  
   schedule.forEach((item) => {
     const card = document.createElement("div");
     card.className = "timeline-item";
     if (item.highlight) {
       card.classList.add("highlight");
     }
+    
+    const dayLabel = examDateTime ? getDayLabel(item.dateTime, examDateTime, lang) : "";
     const meta = item.showTime
-      ? `${formatDate(item.dateTime, lang)} · ${formatTime(item.dateTime, lang)}`
-      : `${formatDate(item.dateTime, lang)}`;
+      ? `${formatTime(item.dateTime, lang)}`
+      : getText("timeline.allDay");
+    
     card.innerHTML = `
+      <div class="timeline-day-label">${dayLabel}</div>
       <div class="timeline-title">${item.title}</div>
       <div class="timeline-meta">${meta}</div>
     `;
@@ -146,7 +252,7 @@ export const renderTimeline = (elements, schedule, lang) => {
   });
 };
 
-export const renderCalendarInfo = (elements, schedule) => {
+export const renderCalendarInfo = (elements, schedule, lang, state) => {
   elements.calendarInfo.innerHTML = "";
   if (!schedule.length) {
     elements.calendarInfo.textContent = getText("calendar.noDate");
@@ -154,10 +260,27 @@ export const renderCalendarInfo = (elements, schedule) => {
   }
 
   const list = document.createElement("ul");
+  
+  // Build medication text based on user selection
+  let medicationText;
+  if (state.medication) {
+    const medicationName = getMedicationName(state.medication);
+    if (state.isConstipated) {
+      medicationText = lang === "pt"
+        ? `Toma do ${medicationName} + Dulcolax`
+        : `Taking ${medicationName} + Dulcolax`;
+    } else {
+      medicationText = lang === "pt"
+        ? `Toma do ${medicationName}`
+        : `Taking ${medicationName}`;
+    }
+  } else {
+    medicationText = getText("calendarInfo.meds");
+  }
+  
   const items = [
-    getText("calendarInfo.timezone"),
     getText("calendarInfo.location"),
-    getText("calendarInfo.meds"),
+    medicationText,
     getText("calendarInfo.note"),
   ];
   items.forEach((item) => {
@@ -178,6 +301,10 @@ export const renderGoogleLinks = (elements, schedule, lang) => {
     return;
   }
   schedule.forEach((event) => {
+    const eventWithMedication = {
+      ...event,
+      medication: event.medication,
+    };
     const eventDate = new Date(event.dateTime);
     const startDate = new Date(
       eventDate.getFullYear(),
@@ -188,7 +315,7 @@ export const renderGoogleLinks = (elements, schedule, lang) => {
     endDate.setDate(endDate.getDate() + 1);
     const dates = `${formatCalendarDate(startDate)}/${formatCalendarDate(endDate)}`;
     const text = event.title;
-    const details = buildEventDetails(event, lang);
+    const details = buildEventDetails(eventWithMedication, lang);
     const location = event.id === "exam" ? getText("calendarInfo.locationValue") : "";
     const url = new URL("https://calendar.google.com/calendar/render");
     url.searchParams.set("action", "TEMPLATE");
@@ -213,10 +340,6 @@ export const renderGoogleLinks = (elements, schedule, lang) => {
     wrapper.appendChild(anchor);
     elements.googleEvents.appendChild(wrapper);
   });
-};
-
-export const updateShareLink = (elements, state) => {
-  elements.shareLink.value = buildShareUrl(state.examDate, state.examTime, state.lang);
 };
 
 export const downloadIcs = (schedule, lang) => {

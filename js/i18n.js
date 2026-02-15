@@ -18,7 +18,17 @@ export const applyTranslations = () => {
     const key = node.dataset.i18n;
     const value = getText(key);
     if (typeof value === "string") {
-      node.textContent = value;
+      const hasSvg = node.innerHTML.includes("<svg");
+      if (hasSvg) {
+        const match = node.innerHTML.match(/<svg[\s\S]*?<\/svg>/);
+        if (match) {
+          node.innerHTML = match[0] + value;
+        } else {
+          node.textContent = value;
+        }
+      } else {
+        node.textContent = value;
+      }
     }
   });
 

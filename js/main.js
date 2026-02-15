@@ -9,19 +9,15 @@ import {
   buildSchedule,
   downloadIcs,
   getDefaultExamDate,
-  renderCalendarInfo,
   renderGoogleLinks,
   renderHeroSummary,
-  renderTimeline,
-  updateShareLink,
 } from "./modules/calendar.js";
+import { formatDate, formatTime } from "./utils/dates.js";
 import {
-  renderDietPhases,
   renderFaq,
-  renderHighlights,
-  renderImages,
-  renderMedCards,
-  renderRecipeFilters,
+  renderFoodGrid,
+  renderInfoCard,
+  renderFocusList,
   renderRecipes,
   renderShoppingList,
   renderVideos,
@@ -29,26 +25,43 @@ import {
 import { setupModal } from "./modules/modal.js";
 
 const elements = {
-  examDate: document.getElementById("examDate"),
-  examTime: document.getElementById("examTime"),
   heroExamDate: document.getElementById("heroExamDate"),
   heroDietDate: document.getElementById("heroDietDate"),
   heroMedsDate: document.getElementById("heroMedsDate"),
-  heroHighlights: document.getElementById("heroHighlights"),
-  timeline: document.getElementById("timeline"),
-  calendarInfo: document.getElementById("calendarInfo"),
+  heroMedsLabel: document.querySelector('[data-i18n="hero.cardMeds"]'),
+  heroDulcolaxRow48: document.getElementById("heroDulcolaxRow48"),
+  heroDulcolaxRow24: document.getElementById("heroDulcolaxRow24"),
+  heroDulcolaxLabel48: document.getElementById("heroDulcolaxLabel48"),
+  heroDulcolaxLabel24: document.getElementById("heroDulcolaxLabel24"),
+  heroDulcolaxValue48: document.getElementById("heroDulcolaxValue48"),
+  heroDulcolaxValue24: document.getElementById("heroDulcolaxValue24"),
   googleEvents: document.getElementById("googleEvents"),
   toggleGoogle: document.getElementById("toggleGoogle"),
   downloadIcs: document.getElementById("downloadIcs"),
-  shareLink: document.getElementById("shareLink"),
-  copyLink: document.getElementById("copyLink"),
-  dietPhases: document.getElementById("dietPhases"),
-  medCards: document.getElementById("medCards"),
-  shoppingList: document.getElementById("shoppingList"),
-  recipeFilters: document.getElementById("recipeFilters"),
-  recipeCards: document.getElementById("recipeCards"),
-  videoGrid: document.getElementById("videoGrid"),
-  imageGrid: document.getElementById("imageGrid"),
+  shoppingListResidue: document.getElementById("shoppingListResidue"),
+  shoppingListLiquid: document.getElementById("shoppingListLiquid"),
+  recipeCardsResidue: document.getElementById("recipeCardsResidue"),
+  recipeCardsLiquid: document.getElementById("recipeCardsLiquid"),
+  residueForbidden: document.getElementById("residueForbidden"),
+  residueAllowed: document.getElementById("residueAllowed"),
+  liquidForbidden: document.getElementById("liquidForbidden"),
+  liquidAllowed: document.getElementById("liquidAllowed"),
+  residueDulcolaxReminder: document.getElementById("residueDulcolaxReminder"),
+  liquidDulcolaxReminder: document.getElementById("liquidDulcolaxReminder"),
+  residueShoppingNote: document.getElementById("residueShoppingNote"),
+  liquidShoppingNote: document.getElementById("liquidShoppingNote"),
+  residueFocus: document.getElementById("residueFocus"),
+  liquidFocus: document.getElementById("liquidFocus"),
+  residueIntro: document.getElementById("residueIntro"),
+  liquidIntro: document.getElementById("liquidIntro"),
+  plenvuText: document.getElementById("plenvuText"),
+  plenvuVideoGrid: document.getElementById("plenvuVideoGrid"),
+  examLocation: document.getElementById("examLocation"),
+  examChecklist: document.getElementById("examChecklist"),
+  accordionMetaResidue: document.getElementById("accordionMetaResidue"),
+  accordionMetaLiquid: document.getElementById("accordionMetaLiquid"),
+  accordionMetaPlenvu: document.getElementById("accordionMetaPlenvu"),
+  accordionMetaExam: document.getElementById("accordionMetaExam"),
   faqList: document.getElementById("faqList"),
   modal: document.getElementById("videoModal"),
   modalBody: document.getElementById("modalBody"),
@@ -60,35 +73,157 @@ const getContent = (lang) => contentCache.get(lang);
 
 const updateCalendar = () => {
   if (!state.examDate) {
-    renderHeroSummary(elements, [], state.lang);
-    renderTimeline(elements, [], state.lang);
-    renderCalendarInfo(elements, []);
+    renderHeroSummary(elements, [], state.lang, state);
     elements.googleEvents.classList.toggle("is-visible", false);
-    updateShareLink(elements, state);
+    renderAccordionMeta();
     return;
   }
 
   const examDateTime = buildExamDateTime(state.examDate, state.examTime || defaultExamTime);
-  const schedule = buildSchedule(examDateTime, state.lang, state.isConstipated);
+  const schedule = buildSchedule(
+    examDateTime,
+    state.lang,
+    state.isConstipated,
+    state.medication
+  );
 
-  renderHeroSummary(elements, schedule, state.lang);
-  renderTimeline(elements, schedule, state.lang);
-  renderCalendarInfo(elements, schedule);
+  renderHeroSummary(elements, schedule, state.lang, state);
   renderGoogleLinks(elements, schedule, state.lang);
   elements.googleEvents.classList.toggle("is-visible", state.showGoogleLinks);
-  updateShareLink(elements, state);
+  renderAccordionMeta();
 };
 
-const onRecipeFilterChange = (filter) => {
-  state.recipeFilter = filter;
-  const content = getContent(state.lang) || getContent("pt");
-  renderRecipeFilters(
-    elements,
-    translations[state.lang] || translations.pt,
-    state,
-    onRecipeFilterChange
+const renderAccordionContent = (content) => {
+  const recipes = content.recipes || [];
+  renderShoppingList(
+    elements.shoppingListResidue,
+    content,
+    checklistKey,
+    state.lang,
+    state.medication,
+    state.isConstipated
   );
-  renderRecipes(elements, content, state);
+  renderShoppingList(
+    elements.shoppingListLiquid,
+    content,
+    checklistKey,
+    state.lang,
+    state.medication,
+    state.isConstipated
+  );
+  renderRecipes(elements.recipeCardsResidue, recipes, { phase: content.accordion?.residuePhase });
+  renderRecipes(elements.recipeCardsLiquid, recipes, { phase: content.accordion?.liquidPhase });
+  renderFoodGrid(elements.residueForbidden, content.accordion?.residueForbidden || []);
+  renderFoodGrid(elements.residueAllowed, content.accordion?.residueAllowed || []);
+  renderFoodGrid(elements.liquidForbidden, content.accordion?.liquidForbidden || []);
+  renderFoodGrid(elements.liquidAllowed, content.accordion?.liquidAllowed || []);
+  renderInfoCard(elements.plenvuText, content.accordion?.plenvuText || "");
+  const plenvuVideoId = content.accordion?.plenvuVideoId;
+  const plenvuVideo = content.videos?.filter((video) => video.id === plenvuVideoId);
+  renderVideos(elements.plenvuVideoGrid, plenvuVideo || []);
+  renderInfoCard(elements.examLocation, content.accordion?.examLocation || "");
+  renderInfoCard(elements.examChecklist, content.accordion?.examChecklist || []);
+  if (elements.residueShoppingNote) {
+    elements.residueShoppingNote.textContent = content.accordion?.residueShoppingNote || "";
+  }
+  if (elements.liquidShoppingNote) {
+    elements.liquidShoppingNote.textContent = content.accordion?.liquidShoppingNote || "";
+  }
+  if (elements.residueIntro) {
+    elements.residueIntro.textContent = content.accordion?.residueIntro || "";
+  }
+  if (elements.liquidIntro) {
+    elements.liquidIntro.textContent = content.accordion?.liquidIntro || "";
+  }
+  renderFocusList(elements.residueFocus, content.accordion?.residueFocusTitle || "", content.accordion?.residueFocus || []);
+  renderFocusList(elements.liquidFocus, content.accordion?.liquidFocusTitle || "", content.accordion?.liquidFocus || []);
+
+  if (state.isConstipated) {
+    renderInfoCard(elements.residueDulcolaxReminder, content.accordion?.dulcolaxReminder || "");
+    renderInfoCard(elements.liquidDulcolaxReminder, content.accordion?.dulcolaxReminder || "");
+    if (elements.residueDulcolaxReminder) {
+      elements.residueDulcolaxReminder.classList.remove("is-hidden");
+    }
+    if (elements.liquidDulcolaxReminder) {
+      elements.liquidDulcolaxReminder.classList.remove("is-hidden");
+    }
+  } else {
+    if (elements.residueDulcolaxReminder) {
+      elements.residueDulcolaxReminder.classList.add("is-hidden");
+    }
+    if (elements.liquidDulcolaxReminder) {
+      elements.liquidDulcolaxReminder.classList.add("is-hidden");
+    }
+  }
+};
+
+const renderAccordionMeta = () => {
+  if (!state.examDate) {
+    const placeholders = [
+      elements.accordionMetaResidue,
+      elements.accordionMetaLiquid,
+      elements.accordionMetaPlenvu,
+      elements.accordionMetaExam,
+    ];
+    placeholders.forEach((node) => {
+      if (node) {
+        node.textContent = "--";
+      }
+    });
+    return;
+  }
+  const examDateTime = buildExamDateTime(state.examDate, state.examTime || defaultExamTime);
+  if (!examDateTime) {
+    return;
+  }
+
+  const dietStart = new Date(examDateTime);
+  dietStart.setDate(dietStart.getDate() - 3);
+  dietStart.setHours(0, 0, 0, 0);
+
+  const dietSecond = new Date(examDateTime);
+  dietSecond.setDate(dietSecond.getDate() - 2);
+  dietSecond.setHours(0, 0, 0, 0);
+
+  const liquidDay = new Date(examDateTime);
+  liquidDay.setDate(liquidDay.getDate() - 1);
+  liquidDay.setHours(0, 0, 0, 0);
+
+  const med10 = new Date(examDateTime);
+  med10.setHours(med10.getHours() - 10);
+
+  const dateOptions = { weekday: "long" };
+
+  const rangeSeparator = state.lang === "pt" ? " e " : " and ";
+
+  if (elements.accordionMetaResidue) {
+    elements.accordionMetaResidue.textContent = `${formatDate(
+      dietStart,
+      state.lang,
+      dateOptions
+    )}${rangeSeparator}${formatDate(dietSecond, state.lang, dateOptions)}`;
+  }
+  if (elements.accordionMetaLiquid) {
+    elements.accordionMetaLiquid.textContent = `${formatDate(
+      liquidDay,
+      state.lang,
+      dateOptions
+    )}`;
+  }
+  if (elements.accordionMetaPlenvu) {
+    elements.accordionMetaPlenvu.textContent = `${formatDate(
+      med10,
+      state.lang,
+      dateOptions
+    )} · ${formatTime(med10, state.lang)}`;
+  }
+  if (elements.accordionMetaExam) {
+    elements.accordionMetaExam.textContent = `${formatDate(
+      examDateTime,
+      state.lang,
+      dateOptions
+    )} · ${formatTime(examDateTime, state.lang)}`;
+  }
 };
 
 const applyLanguage = (lang) => {
@@ -97,28 +232,29 @@ const applyLanguage = (lang) => {
   document.querySelectorAll(".lang-btn").forEach((button) => {
     button.classList.toggle("is-active", button.dataset.lang === lang);
   });
+  
   applyTranslations();
   const content = getContent(lang) || getContent("pt");
   if (content) {
-    renderHighlights(elements, content);
-    renderDietPhases(elements, content);
-    renderMedCards(elements, content);
-    renderShoppingList(elements, content, checklistKey);
-    renderRecipeFilters(
-      elements,
-      translations[lang] || translations.pt,
-      state,
-      onRecipeFilterChange
-    );
-    renderRecipes(elements, content, state);
-    renderVideos(elements, content);
-    renderImages(elements, content);
+    renderAccordionContent(content);
     renderFaq(elements, content);
   }
+  renderAccordionMeta();
   updateCalendar();
 };
 
-const initCalendarInputs = () => {
+const openAccordionFromHash = () => {
+  const targetId = window.location.hash.replace("#", "");
+  if (!targetId) {
+    return;
+  }
+  const target = document.getElementById(targetId);
+  if (target && target.tagName === "DETAILS") {
+    target.open = true;
+  }
+};
+
+const initCalendarState = () => {
   const params = new URLSearchParams(window.location.search);
   const urlLang = params.get("lang");
   const urlDate = params.get("exame");
@@ -138,18 +274,9 @@ const initCalendarInputs = () => {
   if (!state.examDate) {
     state.examDate = getDefaultExamDate();
   }
-
-  elements.examDate.value = state.examDate;
-  elements.examTime.value = state.examTime || defaultExamTime;
-
-  elements.examDate.addEventListener("change", (event) => {
-    state.examDate = event.target.value;
-    updateCalendar();
-  });
-  elements.examTime.addEventListener("change", (event) => {
-    state.examTime = event.target.value;
-    updateCalendar();
-  });
+  if (!state.examTime) {
+    state.examTime = defaultExamTime;
+  }
 };
 
 const setupActions = () => {
@@ -160,22 +287,13 @@ const setupActions = () => {
 
   elements.downloadIcs.addEventListener("click", () => {
     const examDateTime = buildExamDateTime(state.examDate, state.examTime || defaultExamTime);
-    const schedule = buildSchedule(examDateTime, state.lang, state.isConstipated);
+    const schedule = buildSchedule(
+      examDateTime,
+      state.lang,
+      state.isConstipated,
+      state.medication
+    );
     downloadIcs(schedule, state.lang);
-  });
-
-  elements.copyLink.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(elements.shareLink.value);
-      const original = translations[state.lang].calendar.copyBtn;
-      elements.copyLink.textContent = translations[state.lang].calendar.copySuccess;
-      setTimeout(() => {
-        elements.copyLink.textContent = original;
-      }, 1400);
-    } catch (error) {
-      elements.shareLink.select();
-      document.execCommand("copy");
-    }
   });
 
   document.querySelectorAll(".lang-btn").forEach((button) => {
@@ -187,6 +305,21 @@ const setupActions = () => {
       Wizard.reset();
     }
   });
+
+  document.querySelectorAll(".site-nav a").forEach((link) => {
+    link.addEventListener("click", () => {
+      const targetId = link.getAttribute("href")?.replace("#", "");
+      if (!targetId) {
+        return;
+      }
+      const target = document.getElementById(targetId);
+      if (target && target.tagName === "DETAILS") {
+        target.open = true;
+      }
+    });
+  });
+
+  window.addEventListener("hashchange", openAccordionFromHash);
 };
 
 const handleWizardComplete = (wizardData) => {
@@ -221,34 +354,20 @@ const initializeApp = async () => {
     }
   }
 
-  initCalendarInputs();
+  initCalendarState();
   applyLanguage(state.lang);
   setupActions();
   setupModal(
     {
       modal: elements.modal,
       modalBody: elements.modalBody,
-      videoGrid: elements.videoGrid,
+      videoGrid: elements.plenvuVideoGrid,
     },
     () => state.lang,
     getContent
   );
 
-  if (state.medication) {
-    highlightMedication();
-  }
-
-  if (state.isConstipated) {
-    showConstipationAlert();
-  }
-};
-
-const highlightMedication = () => {
-  console.log("Medicamento selecionado:", state.medication);
-};
-
-const showConstipationAlert = () => {
-  console.log("Alerta de obstipacao ativo");
+  openAccordionFromHash();
 };
 
 const init = () => {

@@ -1,78 +1,70 @@
 {
-  "heroHighlights": [
-    {
-      "title": "Dieta D-3",
-      "text": "Plano alimentar com baixo residuo e liquidos claros."
-    },
-    {
-      "title": "Medicacao",
-      "text": "Lembretes 16h e 10h antes do exame."
-    },
-    {
-      "title": "Calendario real",
-      "text": "Crie eventos no Google ou Apple Calendar."
-    }
-  ],
-  "dietPhases": [
-    {
-      "tag": "D-3 a D-2",
-      "title": "Dieta com baixo resíduo",
-      "items": [
-        "Evite sementes, cereais integrais, frutos secos e legumes crus.",
-        "Prefira carnes magras, peixe, arroz branco e massa simples.",
-        "Fruta sem pele e sem sementes (maçã ou pera cozida).",
-        "Hidrate-se com água, chá e bebidas sem gás."
-      ]
-    },
-    {
-      "tag": "D-1",
-      "title": "Líquidos claros",
-      "items": [
-        "Caldo coado, água, chá e isotónicos claros.",
-        "Gelatina clara e sumos filtrados sem polpa.",
-        "Evite bebidas vermelhas/roxo, leite e bebidas alcoólicas."
-      ]
-    },
-    {
-      "tag": "D0",
-      "title": "Jejum e preparação final",
-      "items": [
-        "Não ingerir alimentos sólidos.",
-        "Seguir os horários da medicação conforme prescrição.",
-        "Confirmar a hora de chegada ao hospital."
-      ]
-    }
-  ],
-  "medCards": [
-    {
-      "tag": "D-1",
-      "title": "Medicação 16h antes",
-      "items": [
-        "Início da preparação com Plenvu, Moviprep ou Citrafleet + Dulcolax.",
-        "Manter hidratação com líquidos claros."
-      ]
-    },
-    {
-      "tag": "D-1",
-      "title": "Medicação 10h antes",
-      "items": [
-        "Segunda toma da solução (conforme prescrição).",
-        "Manter dieta líquida clara até indicação médica."
-      ]
-    },
-    {
-      "tag": "D0",
-      "title": "No dia do exame",
-      "items": [
-        "Manter jejum até a hora indicada pela equipa clínica.",
-        "Levar documentos e lista de medicação habitual."
-      ]
-    }
-  ],
+  "accordion": {
+    "residuePhase": "3 a 2 dias antes",
+    "liquidPhase": "Véspera",
+    "residueIntro": "Nos dois a três dias que antecedem a colonoscopia, é fundamental começar a adaptar a alimentação para facilitar a limpeza do intestino. Durante estes dias, recomenda-se uma dieta baixa em resíduos, privilegiando alimentos simples, cozidos e de fácil digestão.",
+    "liquidIntro": "Na véspera do exame, a dieta deve ser baseada em líquidos claros para manter a hidratação e facilitar a limpeza intestinal.",
+    "residueShoppingNote": "A base da lista é a mesma, mas priorize itens pobres em resíduos.",
+    "liquidShoppingNote": "Mantenha a lista, mas foque nos líquidos claros.",
+    "residueFocusTitle": "Ingredientes chave nesta fase",
+    "residueFocus": [
+      "Arroz branco",
+      "Massa simples",
+      "Peixe branco",
+      "Frango cozido",
+      "Chá suave"
+    ],
+    "liquidFocusTitle": "Líquidos essenciais",
+    "liquidFocus": [
+      "Caldo coado",
+      "Água",
+      "Chá",
+      "Isotónicos claros",
+      "Gelatina clara"
+    ],
+    "residueForbidden": [
+      { "title": "Frutas", "icon": "cross", "detail": "Frutas cruas com casca e sementes" },
+      { "title": "Hortaliças", "icon": "cross", "detail": "Saladas e Legumes" },
+      { "title": "Leguminosas", "icon": "cross", "detail": "Feijão, grão, lentilhas, ervilhas" },
+      { "title": "Sementes e frutos secos", "icon": "cross", "detail": "Nozes, amêndoas, sementes" },
+      { "title": "Alimentos integrais", "icon": "cross", "detail": "Pão integral, aveia, quinoa" },
+      { "title": "Leite", "icon": "cross", "detail": "" }
+    ],
+    "residueAllowed": [
+      { "title": "Bebidas Transparentes", "icon": "check", "detail": "Chás e Infusões, Limonada, Laranjada ou Café" },
+      { "title": "Carnes Magras", "icon": "check", "detail": "Peito de Peru, Peito de Frango, Vitela e Vaca (Cozida ou Grelhada)" },
+      { "title": "Peixes Magros", "icon": "check", "detail": "Pescada, Carapau, Robalo, Liguado ou Bacalhau (Cozidos ou Grelhados)" },
+      { "title": "Arroz / Massa / Batata", "icon": "check", "detail": "Cozinhado de forma simples" },
+      { "title": "Pão Branco", "icon": "check", "detail": "Pão de Trigo, Pão de Forma (Sem Sementes), Papo Seco" },
+      { "title": "Iogurtes", "icon": "check", "detail": "Naturais ou Gregos (Sem Pedaços)" }
+    ],
+    "liquidForbidden": [
+      { "title": "Bebidas vermelhas", "icon": "cross", "detail": "Sumos vermelhos/roxos" },
+      { "title": "Leite e lácteos", "icon": "cross", "detail": "Leite, iogurtes" },
+      { "title": "Álcool", "icon": "cross", "detail": "Vinho, cerveja, licores" },
+      { "title": "Sopas com resíduos", "icon": "cross", "detail": "Caldo sem coar" }
+    ],
+    "liquidAllowed": [
+      { "title": "Água", "icon": "check", "detail": "Sem gás" },
+      { "title": "Chá claro", "icon": "check", "detail": "Sem cafeína" },
+      { "title": "Caldo coado", "icon": "check", "detail": "Legumes ou galinha" },
+      { "title": "Gelatina clara", "icon": "check", "detail": "Sem fruta" }
+    ],
+    "dulcolaxReminder": "Dulcolax aos 48h e 24h antes do exame (4 comprimidos no total).",
+    "plenvuText": "Prepare a solução conforme as instruções da embalagem. Beba cada toma lentamente e intercale com líquidos claros para manter a hidratação. Siga sempre a prescrição do seu médico.",
+    "plenvuVideoId": "video-meds",
+    "examLocation": "Edifício 1, piso 1, recepção 1B - Exames especiais.",
+    "examChecklist": [
+      "Documento de identificação",
+      "Cartão seguro ou sistema de saúde",
+      "Prescrição médica do exame",
+      "Análises sanguíneas recentes (menos de 6 meses) que incluam hemograma, plaquetas, INR e aPTT"
+    ]
+  },
   "shoppingList": [
     {
       "id": "prep",
-      "text": "Solução de preparação (Plenvu/Moviprep/Citrafleet + Dulcolax)"
+      "text": "Solução de preparação"
     },
     {
       "id": "water",
@@ -107,42 +99,42 @@
     {
       "id": "sopa-arroz",
       "category": "lunch",
-      "phase": "D-3 a D-2",
+      "phase": "3 a 2 dias antes",
       "title": "Sopa suave de arroz",
       "description": "Caldo coado com arroz branco bem cozido."
     },
     {
       "id": "peixe-grelhado",
       "category": "dinner",
-      "phase": "D-3 a D-2",
+      "phase": "3 a 2 dias antes",
       "title": "Peixe branco grelhado",
       "description": "Peixe magro com arroz branco e azeite suave."
     },
     {
       "id": "frango-desfiado",
       "category": "lunch",
-      "phase": "D-3 a D-2",
+      "phase": "3 a 2 dias antes",
       "title": "Frango desfiado",
       "description": "Peito de frango cozido com massa simples."
     },
     {
       "id": "gelatina",
       "category": "snack",
-      "phase": "D-1",
+      "phase": "Véspera",
       "title": "Gelatina clara",
       "description": "Gelatina de cor clara sem pedaços."
     },
     {
       "id": "cha-mel",
       "category": "breakfast",
-      "phase": "D-1",
+      "phase": "Véspera",
       "title": "Chá com mel",
       "description": "Chá suave com um pouco de mel."
     },
     {
       "id": "caldo-claro",
       "category": "dinner",
-      "phase": "D-1",
+      "phase": "Véspera",
       "title": "Caldo claro",
       "description": "Caldo coado de legumes ou galinha."
     }
@@ -165,28 +157,6 @@
       "title": "No dia do exame",
       "description": "O que levar e como preparar a chegada.",
       "duration": "01:45"
-    }
-  ],
-  "images": [
-    {
-      "id": "img-1",
-      "title": "Infográfico: cronograma",
-      "description": "Resumo visual do plano."
-    },
-    {
-      "id": "img-2",
-      "title": "Checklist de preparação",
-      "description": "Itens essenciais."
-    },
-    {
-      "id": "img-3",
-      "title": "Pratos permitidos",
-      "description": "Exemplos de refeições."
-    },
-    {
-      "id": "img-4",
-      "title": "O que evitar",
-      "description": "Alimentos proibidos."
     }
   ],
   "faqs": [

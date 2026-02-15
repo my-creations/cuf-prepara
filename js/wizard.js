@@ -45,7 +45,6 @@ export class Wizard {
         e.preventDefault();
         e.stopPropagation();
         const option = e.target.closest('[data-wizard-lang]');
-        console.log('Language clicked:', option.dataset.wizardLang);
         this.selectOption('language', option.dataset.wizardLang, '[data-wizard-lang]');
         // Update all wizard texts when language changes
         this.updateWizardTexts();
@@ -88,6 +87,63 @@ export class Wizard {
 
     document.getElementById('wizardTime')?.addEventListener('change', (e) => {
       this.data.examTime = e.target.value;
+    });
+
+    // Make entire input wrapper clickable to open picker
+    document.querySelectorAll('.wizard-input-wrapper').forEach((wrapper) => {
+      const input = wrapper.querySelector('input[type="date"], input[type="time"]');
+      if (input) {
+        wrapper.addEventListener('click', (e) => {
+          // Prevent default to stop event bubbling issues
+          e.preventDefault();
+          e.stopPropagation();
+          
+          // Always focus the input first
+          input.focus();
+          
+          // Try to open the picker using showPicker() API
+          if (typeof input.showPicker === 'function') {
+            try {
+              input.showPicker();
+            } catch (err) {
+              // If showPicker fails, fall back to click simulation
+              const clickEvent = new MouseEvent('click', {
+                view: window,
+                bubbles: true,
+                cancelable: true
+              });
+              input.dispatchEvent(clickEvent);
+            }
+          } else {
+            // Fallback for browsers without showPicker support
+            input.click();
+          }
+        });
+      }
+    });
+
+    // Make labels trigger the picker too
+    document.querySelectorAll('.wizard-input-field label').forEach((label) => {
+      const inputId = label.getAttribute('for');
+      const input = document.getElementById(inputId);
+      if (input && (input.type === 'date' || input.type === 'time')) {
+        label.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          
+          input.focus();
+          
+          if (typeof input.showPicker === 'function') {
+            try {
+              input.showPicker();
+            } catch (err) {
+              input.click();
+            }
+          } else {
+            input.click();
+          }
+        });
+      }
     });
   }
 
@@ -163,12 +219,10 @@ export class Wizard {
   }
 
   selectOption(field, value, selector) {
-    console.log('selectOption called:', field, value, selector);
     this.data[field] = value;
 
     // Remove is-selected from all options with this selector
     document.querySelectorAll(selector).forEach((el) => {
-      console.log('Removing is-selected from:', el);
       el.classList.remove('is-selected');
     });
 
@@ -176,16 +230,13 @@ export class Wizard {
     // Map field names to data attribute names
     const dataAttrMap = {
       'language': 'lang',
-      'medication': 'medication', 
+      'medication': 'medication',
       'isConstipated': 'constipation'
     };
     const dataAttr = dataAttrMap[field] || field;
     const selected = document.querySelector(`${selector}[data-wizard-${dataAttr}="${value}"]`);
-    console.log('Selected element:', selected);
     if (selected) {
       selected.classList.add('is-selected');
-      console.log('Added is-selected to:', selected);
-      console.log('Classes after:', selected.className);
     }
 
     this.validateStep();
@@ -193,6 +244,31 @@ export class Wizard {
 
   updateWizardTexts() {
     const lang = this.data.language || 'pt';
+    
+    // Update date/time input lang attribute for localized picker
+    const langAttr = lang === 'pt' ? 'pt-PT' : 'en-GB';
+    const wizardDate = document.getElementById('wizardDate');
+    const wizardTime = document.getElementById('wizardTime');
+    if (wizardDate) {
+      wizardDate.setAttribute('lang', langAttr);
+    }
+    if (wizardTime) {
+      wizardTime.setAttribute('lang', langAttr);
+    }
+    
+    // Also update lang on parent wrapper and container for better picker locale detection
+    const wizardDateWrapper = document.querySelector('.wizard-input-wrapper');
+    if (wizardDateWrapper) {
+      wizardDateWrapper.setAttribute('lang', langAttr);
+    }
+    
+    const wizardContainer = document.getElementById('wizardContainer');
+    if (wizardContainer) {
+      wizardContainer.setAttribute('lang', langAttr);
+    }
+    
+    // Update document lang for broader locale support
+    document.documentElement.lang = lang === 'pt' ? 'pt' : 'en';
     
     // Update step titles and subtitles
     const steps = [
@@ -207,8 +283,8 @@ export class Wizard {
       if (stepEl) {
         const titleEl = stepEl.querySelector('.wizard-step-title');
         const subtitleEl = stepEl.querySelector('.wizard-step-subtitle');
-        if (titleEl) titleEl.textContent = this.getWizardText(lang, step.title);
-        if (subtitleEl) subtitleEl.textContent = this.getWizardText(lang, step.subtitle);
+        if (titleEl) titleEl.textContent = this.getWizardText(step.title);
+        if (subtitleEl) subtitleEl.textContent = this.getWizardText(step.subtitle);
       }
     });
     
@@ -224,8 +300,8 @@ export class Wizard {
       if (option) {
         const titleEl = option.querySelector('.wizard-option-title');
         const descEl = option.querySelector('.wizard-option-description');
-        if (titleEl) titleEl.textContent = this.getWizardText(lang, texts.title);
-        if (descEl) descEl.textContent = this.getWizardText(lang, texts.desc);
+        if (titleEl) titleEl.textContent = this.getWizardText(texts.title);
+        if (descEl) descEl.textContent = this.getWizardText(texts.desc);
       }
     });
     
@@ -240,8 +316,8 @@ export class Wizard {
       if (option) {
         const titleEl = option.querySelector('.wizard-option-title');
         const descEl = option.querySelector('.wizard-option-description');
-        if (titleEl) titleEl.textContent = this.getWizardText(lang, texts.title);
-        if (descEl) descEl.textContent = this.getWizardText(lang, texts.desc);
+        if (titleEl) titleEl.textContent = this.getWizardText(texts.title);
+        if (descEl) descEl.textContent = this.getWizardText(texts.desc);
       }
     });
     
@@ -251,81 +327,27 @@ export class Wizard {
     
     if (nextBtn) {
       nextBtn.textContent = this.currentStep === this.elements.steps.length - 1 
-        ? this.getWizardText(lang, 'finish') 
-        : this.getWizardText(lang, 'next');
+        ? this.getWizardText('finish') 
+        : this.getWizardText('next');
     }
     if (backBtn) {
-      backBtn.textContent = this.getWizardText(lang, 'back');
+      backBtn.textContent = this.getWizardText('back');
     }
     
     // Update labels
     const dateLabel = document.querySelector('label[for="wizardDate"]');
     const timeLabel = document.querySelector('label[for="wizardTime"]');
-    if (dateLabel) dateLabel.textContent = this.getWizardText(lang, 'dateLabel');
-    if (timeLabel) timeLabel.textContent = this.getWizardText(lang, 'timeLabel');
+    if (dateLabel) dateLabel.textContent = this.getWizardText('dateLabel');
+    if (timeLabel) timeLabel.textContent = this.getWizardText('timeLabel');
     
     // Update constipation alert
     const alertText = document.querySelector('#constipationAlert .wizard-alert-text');
-    if (alertText) alertText.textContent = this.getWizardText(lang, 'constipationAlert');
+    if (alertText) alertText.textContent = this.getWizardText('constipationAlert');
   }
 
-  getWizardText(lang, key) {
-    const texts = {
-      pt: {
-        step1Title: 'Escolha o idioma',
-        step1Subtitle: 'Choose your language',
-        step2Title: 'Data e hora do exame',
-        step2Subtitle: 'Selecione quando será realizada a colonoscopia',
-        step3Title: 'Medicação de preparação',
-        step3Subtitle: 'Qual foi prescrito pelo seu médico?',
-        step4Title: 'Tem tendência para obstipação?',
-        step4Subtitle: 'Evacua com dificuldade ou irregularidade?',
-        next: 'Continuar',
-        back: 'Voltar',
-        finish: 'Concluir',
-        plenvu: 'Plenvu',
-        plenvuDesc: 'Solução de preparação intestinal',
-        moviprep: 'Moviprep',
-        moviprepDesc: 'Solução de preparação intestinal',
-        citrafleet: 'Citrafleet',
-        citrafleetDesc: 'Com Dulcolax (prescrito pelo médico)',
-        yes: 'Sim',
-        yesDesc: 'Tenho tendência para obstipação',
-        no: 'Não',
-        noDesc: 'Não tenho problemas de obstipação',
-        constipationAlert: 'Será adicionado Dulcolax aos 48h e 24h antes do exame para melhor preparação intestinal.',
-        dateLabel: 'Data do exame',
-        timeLabel: 'Hora do exame',
-      },
-      en: {
-        step1Title: 'Choose your language',
-        step1Subtitle: 'Escolha o idioma',
-        step2Title: 'Exam date and time',
-        step2Subtitle: 'Select when the colonoscopy will be performed',
-        step3Title: 'Preparation medication',
-        step3Subtitle: 'Which was prescribed by your doctor?',
-        step4Title: 'Do you tend to be constipated?',
-        step4Subtitle: 'Do you have difficulty or irregular bowel movements?',
-        next: 'Continue',
-        back: 'Back',
-        finish: 'Finish',
-        plenvu: 'Plenvu',
-        plenvuDesc: 'Bowel preparation solution',
-        moviprep: 'Moviprep',
-        moviprepDesc: 'Bowel preparation solution',
-        citrafleet: 'Citrafleet',
-        citrafleetDesc: 'With Dulcolax (prescribed by doctor)',
-        yes: 'Yes',
-        yesDesc: 'I tend to be constipated',
-        no: 'No',
-        noDesc: 'I don\'t have constipation problems',
-        constipationAlert: 'Dulcolax will be added at 48h and 24h before the exam for better bowel preparation.',
-        dateLabel: 'Exam date',
-        timeLabel: 'Exam time',
-      }
-    };
-    
-    return texts[lang]?.[key] || texts['pt'][key];
+  getWizardText(key) {
+    const lang = this.data.language || 'pt';
+    return translations[lang]?.wizard?.[key] || translations['pt']?.wizard?.[key] || key;
   }
 
   next() {

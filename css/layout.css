@@ -58,14 +58,34 @@ main {
 
 .hero {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: 1fr;
   gap: 48px;
-  padding: 80px 8vw 60px;
+  padding: 110px 8vw 70px;
   align-items: center;
+  justify-items: center;
 }
 
 .section {
   padding: 60px 8vw;
+}
+
+.section {
+  position: relative;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  left: 8vw;
+  right: 8vw;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(0, 162, 206, 0),
+    rgba(0, 162, 206, 0.18),
+    rgba(0, 162, 206, 0)
+  );
 }
 
 .section-header {
@@ -76,11 +96,52 @@ main {
   margin-bottom: 32px;
 }
 
-.calendar-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 28px;
+#preparacao .section-header {
+  justify-content: center;
+  text-align: center;
 }
+
+#preparacao .section-kicker {
+  display: none;
+}
+
+#preparacao .section-header > div {
+  max-width: 720px;
+}
+
+#preparacao .section-header h2::after {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.title-accent {
+  color: var(--primary);
+}
+
+.title-primary {
+  color: var(--primary);
+}
+
+.section-header > div {
+  max-width: 640px;
+}
+
+.section-header h2 {
+  position: relative;
+  padding-bottom: 10px;
+}
+
+.section-header h2::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 56px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--primary), rgba(0, 162, 206, 0));
+}
+
 
 .card-grid {
   display: grid;
@@ -100,11 +161,6 @@ main {
   gap: 20px;
 }
 
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-}
 
 .site-footer {
   padding: 40px 8vw 60px;
@@ -133,13 +189,19 @@ main {
   }
 }
 
+
 @media (max-width: 720px) {
   .hero {
-    padding: 60px 6vw 40px;
+    padding: 80px 6vw 40px;
   }
 
   .section {
     padding: 50px 6vw;
+  }
+
+  .section::before {
+    left: 6vw;
+    right: 6vw;
   }
 
   .section-header {

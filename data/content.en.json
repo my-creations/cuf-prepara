@@ -1,78 +1,70 @@
 {
-  "heroHighlights": [
-    {
-      "title": "Diet D-3",
-      "text": "Low-residue meals and clear liquids plan."
-    },
-    {
-      "title": "Medication",
-      "text": "Reminders 16h and 10h before the exam."
-    },
-    {
-      "title": "Real calendar",
-      "text": "Create events in Google or Apple Calendar."
-    }
-  ],
-  "dietPhases": [
-    {
-      "tag": "D-3 to D-2",
-      "title": "Low-residue diet",
-      "items": [
-        "Avoid seeds, whole grains, nuts, and raw vegetables.",
-        "Prefer lean meats, fish, white rice, and plain pasta.",
-        "Fruit without peel or seeds (stewed apple/pear).",
-        "Hydrate with water, tea, and non-carbonated drinks."
-      ]
-    },
-    {
-      "tag": "D-1",
-      "title": "Clear liquids",
-      "items": [
-        "Strained broth, water, tea, and clear isotonic drinks.",
-        "Clear gelatin and filtered juices without pulp.",
-        "Avoid red/purple drinks, milk, and alcohol."
-      ]
-    },
-    {
-      "tag": "D0",
-      "title": "Fasting and final prep",
-      "items": [
-        "Do not eat solid food.",
-        "Follow medication timing per prescription.",
-        "Confirm arrival time at the hospital."
-      ]
-    }
-  ],
-  "medCards": [
-    {
-      "tag": "D-1",
-      "title": "Medication 16h before",
-      "items": [
-        "Start prep with Plenvu, Moviprep or Citrafleet + Dulcolax.",
-        "Stay hydrated with clear liquids."
-      ]
-    },
-    {
-      "tag": "D-1",
-      "title": "Medication 10h before",
-      "items": [
-        "Second dose of solution (per prescription).",
-        "Maintain clear liquid diet until medical guidance."
-      ]
-    },
-    {
-      "tag": "D0",
-      "title": "On the exam day",
-      "items": [
-        "Fast until the time indicated by the clinical team.",
-        "Bring documents and your medication list."
-      ]
-    }
-  ],
+  "accordion": {
+    "residuePhase": "3 to 2 days before",
+    "liquidPhase": "Day before",
+    "residueIntro": "In the two to three days leading up to the colonoscopy, it's important to start adjusting your diet to help bowel cleansing. A low-residue diet is recommended, focusing on simple, cooked, easy-to-digest foods.",
+    "liquidIntro": "On the day before the exam, the diet should be based on clear liquids to maintain hydration and support bowel cleansing.",
+    "residueShoppingNote": "Keep the same list, but prioritize low-residue items.",
+    "liquidShoppingNote": "Keep the list, but focus on clear liquids.",
+    "residueFocusTitle": "Key items for this phase",
+    "residueFocus": [
+      "White rice",
+      "Plain pasta",
+      "White fish",
+      "Boiled chicken",
+      "Mild tea"
+    ],
+    "liquidFocusTitle": "Essential liquids",
+    "liquidFocus": [
+      "Strained broth",
+      "Water",
+      "Tea",
+      "Clear isotonic drinks",
+      "Clear gelatin"
+    ],
+    "residueForbidden": [
+      { "title": "Seeds and nuts", "icon": "cross", "detail": "Nuts, seeds" },
+      { "title": "Whole-grain foods", "icon": "cross", "detail": "Whole bread, oats, quinoa" },
+      { "title": "Leafy vegetables", "icon": "cross", "detail": "Salads and vegetables" },
+      { "title": "Fruits", "icon": "cross", "detail": "Raw fruits with peel and seeds" },
+      { "title": "Legumes", "icon": "cross", "detail": "Beans, chickpeas, lentils, peas" },
+      { "title": "Milk", "icon": "cross", "detail": "" }
+    ],
+    "residueAllowed": [
+      { "title": "Clear drinks", "icon": "check", "detail": "Tea, lemonade, orangeade, or coffee" },
+      { "title": "Lean meats", "icon": "check", "detail": "Turkey breast, chicken breast, veal, or beef (boiled or grilled)" },
+      { "title": "Lean fish", "icon": "check", "detail": "Hake, mackerel, seabass, sole, or cod (boiled or grilled)" },
+      { "title": "Rice / Pasta / Potato", "icon": "check", "detail": "Simply cooked" },
+      { "title": "White bread", "icon": "check", "detail": "Wheat bread, sliced white bread (no seeds), bread roll" },
+      { "title": "Yogurts", "icon": "check", "detail": "Plain or Greek (no pieces)" }
+    ],
+    "liquidForbidden": [
+      { "title": "Red drinks", "icon": "cross", "detail": "Red/purple juices" },
+      { "title": "Milk", "icon": "cross", "detail": "" },
+      { "title": "Alcohol", "icon": "cross", "detail": "Wine, beer, spirits" },
+      { "title": "Chunky soups", "icon": "cross", "detail": "Unstrained broth" }
+    ],
+    "liquidAllowed": [
+      { "title": "Water", "icon": "check", "detail": "Non-carbonated" },
+      { "title": "Clear tea", "icon": "check", "detail": "Caffeine-free" },
+      { "title": "Strained broth", "icon": "check", "detail": "Vegetable or chicken" },
+      { "title": "Clear gelatin", "icon": "check", "detail": "No fruit" }
+    ],
+    "dulcolaxReminder": "Dulcolax at 48h and 24h before the exam (4 tablets total).",
+    "plenvuText": "Prepare the solution according to the package instructions. Sip each dose slowly and alternate with clear liquids to stay hydrated. Always follow your doctor's prescription.",
+    "plenvuVideoId": "video-meds",
+    "examLocation": "Building 1, floor 1, reception 1B - Special exams.",
+    "examChecklist": [
+      "Identification document",
+      "Insurance card or national health system card",
+      "Exam prescription",
+      "Recent blood tests (within 6 months) including CBC, platelets, INR, and aPTT"
+    ]
+  },
   "shoppingList": [
     {
       "id": "prep",
-      "text": "Prep solution (Plenvu/Moviprep/Citrafleet + Dulcolax)"
+      "text": "Prep solution"
     },
     {
       "id": "water",
@@ -107,42 +99,42 @@
     {
       "id": "rice-soup",
       "category": "lunch",
-      "phase": "D-3 to D-2",
+      "phase": "3 to 2 days before",
       "title": "Gentle rice soup",
       "description": "Strained broth with well-cooked white rice."
     },
     {
       "id": "grilled-fish",
       "category": "dinner",
-      "phase": "D-3 to D-2",
+      "phase": "3 to 2 days before",
       "title": "Grilled white fish",
       "description": "Lean fish with white rice and mild olive oil."
     },
     {
       "id": "shredded-chicken",
       "category": "lunch",
-      "phase": "D-3 to D-2",
+      "phase": "3 to 2 days before",
       "title": "Shredded chicken",
       "description": "Boiled chicken breast with plain pasta."
     },
     {
       "id": "gelatin",
       "category": "snack",
-      "phase": "D-1",
+      "phase": "Day before",
       "title": "Clear gelatin",
       "description": "Light-colored gelatin without fruit pieces."
     },
     {
       "id": "tea-honey",
       "category": "breakfast",
-      "phase": "D-1",
+      "phase": "Day before",
       "title": "Tea with honey",
       "description": "Mild tea with a touch of honey."
     },
     {
       "id": "clear-broth",
       "category": "dinner",
-      "phase": "D-1",
+      "phase": "Day before",
       "title": "Clear broth",
       "description": "Strained vegetable or chicken broth."
     }
@@ -165,28 +157,6 @@
       "title": "On the exam day",
       "description": "What to bring and how to arrive.",
       "duration": "01:45"
-    }
-  ],
-  "images": [
-    {
-      "id": "img-1",
-      "title": "Infographic: schedule",
-      "description": "Visual plan summary."
-    },
-    {
-      "id": "img-2",
-      "title": "Prep checklist",
-      "description": "Essential items."
-    },
-    {
-      "id": "img-3",
-      "title": "Allowed meals",
-      "description": "Meal examples."
-    },
-    {
-      "id": "img-4",
-      "title": "What to avoid",
-      "description": "Restricted foods."
     }
   ],
   "faqs": [

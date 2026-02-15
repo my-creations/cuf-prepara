@@ -279,18 +279,79 @@
   font-size: 0.9rem;
 }
 
-.wizard-input-field input {
+.wizard-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  border-radius: var(--radius);
+  background: var(--card);
+  transition: all 0.2s ease;
+}
+
+.wizard-input-wrapper input {
+  width: 100%;
   padding: 16px;
+  padding-left: 40px;
   border: 2px solid var(--border);
   border-radius: var(--radius);
   font-size: 1rem;
-  background: var(--card);
+  background: transparent;
   color: var(--text);
+  transition: all 0.2s ease;
+  cursor: pointer;
+  font-family: inherit;
 }
 
-.wizard-input-field input:focus {
+.wizard-input-wrapper:hover {
+  background: var(--accent-soft);
+}
+
+.wizard-input-wrapper:hover input {
+  border-color: var(--primary);
+}
+
+.wizard-input-wrapper input:focus {
   outline: none;
   border-color: var(--primary);
+  background: white;
+}
+
+.wizard-input-wrapper:has(input:focus) {
+  background: white;
+}
+
+.wizard-input-wrapper input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.wizard-input-wrapper input::-moz-calendar-picker-indicator {
+  display: none;
+}
+
+.wizard-input-icon {
+  position: absolute;
+  left: 16px;
+  pointer-events: none;
+  color: var(--primary);
+  opacity: 0.8;
+  z-index: 1;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  user-select: none;
+}
+
+.wizard-input-wrapper:hover .wizard-input-icon,
+.wizard-input-wrapper:has(input:focus) .wizard-input-icon {
+  opacity: 1;
+}
+
+.wizard-date-time-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
 
 /* Alert */
@@ -315,5 +376,70 @@
 
   .wizard-splash-logo {
     font-size: 2.5rem;
+  }
+}
+
+/* Calendar & Time Picker Popup Styling */
+
+/* Color scheme to match CUF branding - influences browser's default picker styling */
+* {
+  color-scheme: light;
+}
+
+/* Force primary color in date picker for browsers that support it */
+input[type="date"],
+input[type="time"] {
+  accent-color: var(--primary);
+}
+
+/* WebKit browsers - Chrome, Safari, Edge */
+::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  cursor: pointer;
+}
+
+::-webkit-datetime-edit {
+  padding: 0;
+}
+
+::-webkit-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+::-webkit-datetime-edit-text {
+  color: var(--muted);
+  padding: 0 2px;
+}
+
+::-webkit-datetime-edit-month-field,
+::-webkit-datetime-edit-day-field,
+::-webkit-datetime-edit-year-field,
+::-webkit-datetime-edit-hour-field,
+::-webkit-datetime-edit-minute-field,
+::-webkit-datetime-edit-ampm-field {
+  color: var(--text);
+}
+
+/* Firefox-specific styles */
+::-moz-datetime-edit {
+  padding: 0;
+}
+
+::-moz-datetime-edit-fields-wrapper {
+  padding: 0;
+}
+
+/* Firefox date picker styling */
+::-moz-date-picker {
+  color: var(--text);
+  background: var(--card);
+  border-color: var(--border);
+}
+
+/* Chrome/Safari/Edge popup appearance hints */
+@supports (-webkit-appearance: none) {
+  input[type="date"]:focus,
+  input[type="time"]:focus {
+    color-scheme: light;
   }
 }
