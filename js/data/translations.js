@@ -4,6 +4,9 @@ export const translations = {
       title: "Guia de Preparação para Colonoscopia | CUF Prepara",
       description: "Guia de preparação para colonoscopia: dieta por fases, medicação, calendário e checklist",
     },
+    branding: {
+      title: "CUF Prepara",
+    },
     nav: {
       residue: "Dieta pobre em resíduos",
       liquid: "Dieta líquida",
@@ -19,6 +22,7 @@ export const translations = {
       cardExam: "Exame",
       cardDiet: "Início da dieta",
       cardMeds: "Toma do",
+      dulcolaxLabel: "Dulcolax",
     },
     calendar: {
       appleBtn: "Adicionar ao Apple Calendar",
@@ -84,6 +88,8 @@ export const translations = {
     },
     lang: {
       label: "Idioma",
+      pt: "PT",
+      en: "EN",
     },
     timeline: {
       exam: "Exame de Colonoscopia",
@@ -135,12 +141,16 @@ export const translations = {
       constipationAlert: "Será adicionado Dulcolax às 48h e 24h antes do exame para melhor preparação intestinal",
       dateLabel: "Data do exame",
       timeLabel: "Hora do exame",
+      reset: "Refazer configuração",
     },
   },
   en: {
     meta: {
       title: "Colonoscopy Preparation Guide | CUF Prepara",
       description: "Preparation guide for colonoscopy: phased diet, medication, calendar and checklist",
+    },
+    branding: {
+      title: "CUF Prepara",
     },
     nav: {
       residue: "Low-residue diet",
@@ -157,6 +167,7 @@ export const translations = {
       cardExam: "Exam",
       cardDiet: "Diet start",
       cardMeds: "Taking",
+      dulcolaxLabel: "Dulcolax",
     },
     calendar: {
       appleBtn: "Add to Apple Calendar",
@@ -222,6 +233,8 @@ export const translations = {
     },
     lang: {
       label: "Language",
+      pt: "PT",
+      en: "EN",
     },
     timeline: {
       exam: "Colonoscopy exam",
@@ -273,6 +286,7 @@ export const translations = {
       constipationAlert: "Dulcolax will be added at 48h and 24h before the exam for better bowel preparation",
       dateLabel: "Exam date",
       timeLabel: "Exam time",
+      reset: "Reset setup",
     },
   },
 };

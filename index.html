@@ -3,11 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Guia de Preparacao para Colonoscopia | CUF Prepara</title>
-    <meta
-      name="description"
-      content="Guia de preparacao para colonoscopia: dieta por fases, medicacao, calendario e checklist."
-    />
+    <title data-i18n="meta.title"></title>
+    <meta name="description" content="" />
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/variables.css" />
     <link rel="stylesheet" href="css/layout.css" />
@@ -21,68 +18,61 @@
         <div class="logo">
           <span class="logo-mark"></span>
           <div class="logo-text">
-            <span class="logo-title">CUF Prepara</span>
+            <span class="logo-title" data-i18n="branding.title"></span>
           </div>
         </div>
         <nav class="site-nav">
-          <a href="#dieta-residuos" data-i18n="nav.residue">Dieta pobre em resíduos</a>
-          <a href="#dieta-liquida" data-i18n="nav.liquid">Dieta líquida</a>
-          <a href="#plenvu" data-i18n="nav.plenvu">Toma do Plenvu</a>
-          <a href="#dia-exame" data-i18n="nav.examDay">Dia do exame</a>
-          <a href="#faq" data-i18n="nav.faq">FAQ</a>
+          <a href="#dieta-residuos" data-i18n="nav.residue"></a>
+          <a href="#dieta-liquida" data-i18n="nav.liquid"></a>
+          <a href="#plenvu" data-i18n="nav.plenvu"></a>
+          <a href="#dia-exame" data-i18n="nav.examDay"></a>
+          <a href="#faq" data-i18n="nav.faq"></a>
         </nav>
         <div class="lang-toggle" aria-label="Language" data-i18n-aria="lang.label">
-          <button class="lang-btn is-active" data-lang="pt">PT</button>
-          <button class="lang-btn" data-lang="en">EN</button>
+          <button class="lang-btn is-active" data-lang="pt" data-i18n="lang.pt"></button>
+          <button class="lang-btn" data-lang="en" data-i18n="lang.en"></button>
         </div>
       </header>
 
       <main>
         <section class="hero" id="top">
           <div class="hero-content">
-            <h1 data-i18n="hero.title">Guia de preparacao para colonoscopia</h1>
-            <p class="hero-subtitle" data-i18n="hero.subtitle">
-              Tudo o que precisa para uma preparacao intestinal eficaz, com calendario inteligente,
-              dieta por fases e lembretes.
-            </p>
+            <h1 data-i18n="hero.title"></h1>
+            <p class="hero-subtitle" data-i18n="hero.subtitle"></p>
           </div>
           <div class="hero-media">
             <div class="hero-card">
               <div class="hero-card-top">
-                <span data-i18n="hero.cardTitle">Plano personalizado</span>
-                <span class="pill" data-i18n="hero.cardPill">Lisboa</span>
+                <span data-i18n="hero.cardTitle"></span>
+                <span class="pill" data-i18n="hero.cardPill"></span>
               </div>
               <div class="hero-card-body">
                 <div class="hero-card-row">
-                  <span data-i18n="hero.cardDiet">Início da dieta</span>
+                  <span data-i18n="hero.cardDiet"></span>
                   <strong id="heroDietDate">--</strong>
                 </div>
                 <div class="hero-card-row dulcolax-row" id="heroDulcolaxRow48">
-                  <span id="heroDulcolaxLabel48">Dulcolax</span>
+                  <span id="heroDulcolaxLabel48" data-i18n="hero.dulcolaxLabel"></span>
                   <strong id="heroDulcolaxValue48">--</strong>
                 </div>
                 <div class="hero-card-row dulcolax-row" id="heroDulcolaxRow24">
-                  <span id="heroDulcolaxLabel24">Dulcolax</span>
+                  <span id="heroDulcolaxLabel24" data-i18n="hero.dulcolaxLabel"></span>
                   <strong id="heroDulcolaxValue24">--</strong>
                 </div>
                 <div class="hero-card-row">
-                  <span data-i18n="hero.cardMeds">Toma do</span>
+                  <span data-i18n="hero.cardMeds"></span>
                   <strong id="heroMedsDate">--</strong>
                 </div>
                 <div class="hero-card-row">
-                  <span data-i18n="hero.cardExam">Exame</span>
+                  <span data-i18n="hero.cardExam"></span>
                   <strong id="heroExamDate">--</strong>
                 </div>
               </div>
               <div class="hero-card-footer">
               </div>
               <div class="hero-card-actions calendar-actions">
-                <button class="btn primary" id="toggleGoogle" data-i18n="calendar.googleBtn">
-                  Adicionar ao Google Calendar
-                </button>
-                <button class="btn primary" id="downloadIcs" data-i18n="calendar.appleBtn">
-                  Adicionar ao Apple Calendar
-                </button>
+                <button class="btn primary" id="toggleGoogle" data-i18n="calendar.googleBtn"></button>
+                <button class="btn primary" id="downloadIcs" data-i18n="calendar.appleBtn"></button>
               </div>
               <div class="google-events" id="googleEvents"></div>
             </div>
@@ -94,21 +84,17 @@
             <div>
               <span class="section-kicker" data-i18n="accordion.kicker"></span>
               <h2>
-                <span class="title-primary" data-i18n="accordion.titleLead">Preparação</span>
-                <span class="title-accent" data-i18n="accordion.titleAccent">Detalhada</span>
+                <span class="title-primary" data-i18n="accordion.titleLead"></span>
+                <span class="title-accent" data-i18n="accordion.titleAccent"></span>
               </h2>
-              <p data-i18n="accordion.subtitle">
-                Tudo o que precisa para preparar a dieta, a medicação e o dia do exame.
-              </p>
+              <p data-i18n="accordion.subtitle"></p>
             </div>
           </div>
           <div class="accordion" id="prepAccordion">
             <details class="accordion-item" id="dieta-residuos">
               <summary>
                 <div class="accordion-summary">
-                  <span class="accordion-title" data-i18n="accordion.sections.residue.title">
-                    Dieta pobre em resíduos
-                  </span>
+                  <span class="accordion-title" data-i18n="accordion.sections.residue.title"></span>
                   <span class="accordion-meta" id="accordionMetaResidue"></span>
                 </div>
               </summary>
@@ -116,21 +102,21 @@
                 <p class="accordion-intro" id="residueIntro"></p>
                 <div class="accordion-grid">
                   <div class="accordion-block">
-                    <h3 data-i18n="accordion.blocks.forbiddenTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Alimentos proibidos</h3>
+                    <h3 data-i18n="accordion.blocks.forbiddenTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></h3>
                     <div class="food-grid" id="residueForbidden"></div>
                   </div>
                   <div class="accordion-block">
-                    <h3 data-i18n="accordion.blocks.allowedTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><polyline points="20 6 9 17 4 12"></polyline></svg>Alimentos permitidos</h3>
+                    <h3 data-i18n="accordion.blocks.allowedTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><polyline points="20 6 9 17 4 12"></polyline></svg></h3>
                     <div class="food-grid" id="residueAllowed"></div>
                   </div>
                   <div class="accordion-block">
-                    <h3 data-i18n="accordion.blocks.shoppingTitle">Lista de compras</h3>
+                    <h3 data-i18n="accordion.blocks.shoppingTitle"></h3>
                     <p class="accordion-note" id="residueShoppingNote"></p>
                     <div class="phase-focus" id="residueFocus"></div>
                     <div class="checklist" id="shoppingListResidue"></div>
                   </div>
                   <div class="accordion-block">
-                    <h3 data-i18n="accordion.blocks.recipesTitle">Receitas</h3>
+                    <h3 data-i18n="accordion.blocks.recipesTitle"></h3>
                     <div class="card-grid recipes" id="recipeCardsResidue"></div>
                   </div>
                   <div class="accordion-block full">
@@ -143,9 +129,7 @@
             <details class="accordion-item" id="dieta-liquida">
               <summary>
                 <div class="accordion-summary">
-                  <span class="accordion-title" data-i18n="accordion.sections.liquid.title">
-                    Dieta líquida
-                  </span>
+                  <span class="accordion-title" data-i18n="accordion.sections.liquid.title"></span>
                   <span class="accordion-meta" id="accordionMetaLiquid"></span>
                 </div>
               </summary>
@@ -153,21 +137,21 @@
                 <p class="accordion-intro" id="liquidIntro"></p>
                 <div class="accordion-grid">
                   <div class="accordion-block">
-                    <h3 data-i18n="accordion.blocks.forbiddenTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>Alimentos proibidos</h3>
+                    <h3 data-i18n="accordion.blocks.forbiddenTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></h3>
                     <div class="food-grid" id="liquidForbidden"></div>
                   </div>
                   <div class="accordion-block">
-                    <h3 data-i18n="accordion.blocks.allowedTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><polyline points="20 6 9 17 4 12"></polyline></svg>Alimentos permitidos</h3>
+                    <h3 data-i18n="accordion.blocks.allowedTitle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px; vertical-align: middle;"><polyline points="20 6 9 17 4 12"></polyline></svg></h3>
                     <div class="food-grid" id="liquidAllowed"></div>
                   </div>
                   <div class="accordion-block">
-                    <h3 data-i18n="accordion.blocks.shoppingTitle">Lista de compras</h3>
+                    <h3 data-i18n="accordion.blocks.shoppingTitle"></h3>
                     <p class="accordion-note" id="liquidShoppingNote"></p>
                     <div class="phase-focus" id="liquidFocus"></div>
                     <div class="checklist" id="shoppingListLiquid"></div>
                   </div>
                   <div class="accordion-block">
-                    <h3 data-i18n="accordion.blocks.recipesTitle">Receitas</h3>
+                    <h3 data-i18n="accordion.blocks.recipesTitle"></h3>
                     <div class="card-grid recipes" id="recipeCardsLiquid"></div>
                   </div>
                   <div class="accordion-block full">
@@ -180,20 +164,18 @@
             <details class="accordion-item" id="plenvu">
               <summary>
                 <div class="accordion-summary">
-                  <span class="accordion-title" data-i18n="accordion.sections.plenvu.title">
-                    Toma do Plenvu
-                  </span>
+                  <span class="accordion-title" data-i18n="accordion.sections.plenvu.title"></span>
                   <span class="accordion-meta" id="accordionMetaPlenvu"></span>
                 </div>
               </summary>
               <div class="accordion-panel">
                 <div class="accordion-grid">
                   <div class="accordion-block full">
-                    <h3 data-i18n="accordion.blocks.plenvuTextTitle">Explicação por escrito</h3>
+                    <h3 data-i18n="accordion.blocks.plenvuTextTitle"></h3>
                     <div class="info-card" id="plenvuText"></div>
                   </div>
                   <div class="accordion-block">
-                    <h3 data-i18n="accordion.blocks.videoTitle">Vídeo de preparação do preparado</h3>
+                    <h3 data-i18n="accordion.blocks.videoTitle"></h3>
                     <div class="media-grid" id="plenvuVideoGrid"></div>
                   </div>
                 </div>
@@ -203,20 +185,18 @@
             <details class="accordion-item" id="dia-exame">
               <summary>
                 <div class="accordion-summary">
-                  <span class="accordion-title" data-i18n="accordion.sections.examDay.title">
-                    Dia do exame
-                  </span>
+                  <span class="accordion-title" data-i18n="accordion.sections.examDay.title"></span>
                   <span class="accordion-meta" id="accordionMetaExam"></span>
                 </div>
               </summary>
               <div class="accordion-panel">
                 <div class="accordion-grid">
                   <div class="accordion-block full">
-                    <h3 data-i18n="accordion.blocks.examLocationTitle">Dirija-se ao</h3>
+                    <h3 data-i18n="accordion.blocks.examLocationTitle"></h3>
                     <div class="info-card" id="examLocation"></div>
                   </div>
                   <div class="accordion-block full">
-                    <h3 data-i18n="accordion.blocks.examChecklistTitle">A não esquecer</h3>
+                    <h3 data-i18n="accordion.blocks.examChecklistTitle"></h3>
                     <div class="info-card" id="examChecklist"></div>
                   </div>
                 </div>
@@ -226,11 +206,8 @@
             <details class="accordion-item" id="faq">
               <summary>
                 <div class="accordion-summary">
-                  <span class="accordion-title" data-i18n="accordion.sections.faq.title">
-                    Perguntas frequentes
-                  </span>
+                  <span class="accordion-title" data-i18n="accordion.sections.faq.title"></span>
                   <span class="accordion-meta" data-i18n="accordion.sections.faq.meta">
-                    Respostas rápidas
                   </span>
                 </div>
               </summary>
@@ -244,19 +221,12 @@
         <section class="section" id="alertas">
           <div class="callout">
             <div class="callout-content">
-              <span class="callout-title" data-i18n="alerts.title">
-                Precisa de ajuda durante a preparação?
-              </span>
-              <p data-i18n="alerts.text">
-                Se tiver dúvidas, sintomas inesperados ou dificuldades com a preparação, contacte
-                a equipa clínica do Hospital CUF Descobertas.
-              </p>
+              <span class="callout-title" data-i18n="alerts.title"></span>
+              <p data-i18n="alerts.text"></p>
             </div>
             <div class="callout-actions">
-              <a class="btn primary" href="#" data-i18n="alerts.cta">Contactar equipa</a>
-              <span class="callout-note" data-i18n="alerts.note">
-                Este guia não substitui a orientação médica individual.
-              </span>
+              <a class="btn primary" href="#" data-i18n="alerts.cta" data-i18n-aria="alerts.cta"></a>
+              <span class="callout-note" data-i18n="alerts.note"></span>
             </div>
           </div>
         </section>
@@ -264,16 +234,17 @@
 
       <footer class="site-footer">
         <div class="footer-content">
-          <span data-i18n="footer.disclaimer">
-            Informação de apoio à preparação para colonoscopia. Siga sempre a prescrição médica e
-            as indicações do Hospital CUF Descobertas
-          </span>
+          <span data-i18n="footer.disclaimer"></span>
           <div class="footer-actions">
-            <button type="button" class="btn subtle" id="resetWizard" style="font-size: 0.85rem; padding: 8px 16px;">
-              Refazer configuração
+            <button
+              type="button"
+              class="btn subtle"
+              id="resetWizard"
+              style="font-size: 0.85rem; padding: 8px 16px;"
+              data-i18n="wizard.reset"
+            >
             </button>
             <span class="footer-meta" data-i18n="footer.location">
-              Hospital CUF Descobertas, Lisboa
             </span>
           </div>
         </div>
@@ -283,12 +254,7 @@
     <div class="modal" id="videoModal" aria-hidden="true">
       <div class="modal-overlay" data-modal-close></div>
       <div class="modal-content" role="dialog" aria-modal="true">
-        <button
-          class="modal-close"
-          data-modal-close
-          aria-label="Fechar"
-          data-i18n-aria="modal.close"
-        >
+        <button class="modal-close" data-modal-close data-i18n-aria="modal.close">
           &times;
         </button>
         <div class="modal-body" id="modalBody"></div>
@@ -298,11 +264,11 @@
     <!-- Wizard Overlay -->
     <div id="wizardOverlay" class="wizard-overlay is-hidden">
       <!-- Splash Screen -->
-      <div id="wizardSplash" class="wizard-splash is-hidden">
-        <div class="wizard-splash-content">
-          <h1 class="wizard-splash-logo">CUF Prepara</h1>
+        <div id="wizardSplash" class="wizard-splash is-hidden">
+          <div class="wizard-splash-content">
+            <h1 class="wizard-splash-logo" data-i18n="wizard.splashTitle"></h1>
+          </div>
         </div>
-      </div>
 
       <!-- Wizard Container -->
       <div id="wizardContainer" class="wizard-container is-hidden">
@@ -317,21 +283,21 @@
 
           <!-- Step 1: Language -->
           <div class="wizard-step" data-step="0">
-            <h2 class="wizard-step-title">Escolha o idioma</h2>
-            <p class="wizard-step-subtitle">Choose your language</p>
+            <h2 class="wizard-step-title" data-i18n="wizard.step1Title"></h2>
+            <p class="wizard-step-subtitle" data-i18n="wizard.step1Subtitle"></p>
             <div class="wizard-options">
               <div class="wizard-option" data-wizard-lang="pt">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
-                  <h3 class="wizard-option-title">Português</h3>
-                  <p class="wizard-option-description">Conteúdo em português</p>
+                  <h3 class="wizard-option-title" data-i18n="wizard.pt"></h3>
+                  <p class="wizard-option-description" data-i18n="wizard.ptDesc"></p>
                 </div>
               </div>
               <div class="wizard-option" data-wizard-lang="en">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
-                  <h3 class="wizard-option-title">English</h3>
-                  <p class="wizard-option-description">Content in English</p>
+                  <h3 class="wizard-option-title" data-i18n="wizard.en"></h3>
+                  <p class="wizard-option-description" data-i18n="wizard.enDesc"></p>
                 </div>
               </div>
             </div>
@@ -339,11 +305,11 @@
 
           <!-- Step 2: Date & Time -->
           <div class="wizard-step" data-step="1">
-            <h2 class="wizard-step-title">Data e hora do exame</h2>
-            <p class="wizard-step-subtitle">Selecione quando será realizada a colonoscopia</p>
+            <h2 class="wizard-step-title" data-i18n="wizard.step2Title"></h2>
+            <p class="wizard-step-subtitle" data-i18n="wizard.step2Subtitle"></p>
             <div class="wizard-input-group">
               <div class="wizard-input-field">
-                <label for="wizardDate">Data do exame</label>
+                <label for="wizardDate" data-i18n="wizard.dateLabel"></label>
                 <div class="wizard-input-wrapper">
                   <svg class="wizard-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -355,7 +321,7 @@
                 </div>
               </div>
               <div class="wizard-input-field">
-                <label for="wizardTime">Hora do exame</label>
+                <label for="wizardTime" data-i18n="wizard.timeLabel"></label>
                 <div class="wizard-input-wrapper">
                   <svg class="wizard-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>
@@ -369,28 +335,28 @@
 
           <!-- Step 3: Medication -->
           <div class="wizard-step" data-step="2">
-            <h2 class="wizard-step-title">Medicação de preparação</h2>
-            <p class="wizard-step-subtitle">Qual foi prescrito pelo seu médico?</p>
+            <h2 class="wizard-step-title" data-i18n="wizard.step3Title"></h2>
+            <p class="wizard-step-subtitle" data-i18n="wizard.step3Subtitle"></p>
             <div class="wizard-options">
               <div class="wizard-option" data-wizard-medication="plenvu">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
-                  <h3 class="wizard-option-title">Plenvu</h3>
-                  <p class="wizard-option-description">Solução de preparação intestinal</p>
+                  <h3 class="wizard-option-title" data-i18n="wizard.plenvu"></h3>
+                  <p class="wizard-option-description" data-i18n="wizard.plenvuDesc"></p>
                 </div>
               </div>
               <div class="wizard-option" data-wizard-medication="moviprep">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
-                  <h3 class="wizard-option-title">Moviprep</h3>
-                  <p class="wizard-option-description">Solução de preparação intestinal</p>
+                  <h3 class="wizard-option-title" data-i18n="wizard.moviprep"></h3>
+                  <p class="wizard-option-description" data-i18n="wizard.moviprepDesc"></p>
                 </div>
               </div>
               <div class="wizard-option" data-wizard-medication="citrafleet">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
-                  <h3 class="wizard-option-title">Citrafleet</h3>
-                  <p class="wizard-option-description">Com Dulcolax (prescrito pelo médico)</p>
+                  <h3 class="wizard-option-title" data-i18n="wizard.citrafleet"></h3>
+                  <p class="wizard-option-description" data-i18n="wizard.citrafleetDesc"></p>
                 </div>
               </div>
             </div>
@@ -398,33 +364,45 @@
 
           <!-- Step 4: Constipation -->
           <div class="wizard-step" data-step="3">
-            <h2 class="wizard-step-title">Tem tendência para obstipação?</h2>
-            <p class="wizard-step-subtitle">Evacua com dificuldade ou irregularidade?</p>
+            <h2 class="wizard-step-title" data-i18n="wizard.step4Title"></h2>
+            <p class="wizard-step-subtitle" data-i18n="wizard.step4Subtitle"></p>
             <div class="wizard-options">
               <div class="wizard-option" data-wizard-constipation="true">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
-                  <h3 class="wizard-option-title">Sim</h3>
-                  <p class="wizard-option-description">Tenho tendência para obstipação</p>
+                  <h3 class="wizard-option-title" data-i18n="wizard.yes"></h3>
+                  <p class="wizard-option-description" data-i18n="wizard.yesDesc"></p>
                 </div>
               </div>
               <div class="wizard-option" data-wizard-constipation="false">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
-                  <h3 class="wizard-option-title">Não</h3>
-                  <p class="wizard-option-description">Não tenho problemas de obstipação</p>
+                  <h3 class="wizard-option-title" data-i18n="wizard.no"></h3>
+                  <p class="wizard-option-description" data-i18n="wizard.noDesc"></p>
                 </div>
               </div>
             </div>
             <div class="wizard-alert" id="constipationAlert" style="display: none;">
-              <p class="wizard-alert-text">Será adicionado Dulcolax aos 48h e 24h antes do exame para melhor preparação intestinal.</p>
+              <p class="wizard-alert-text" data-i18n="wizard.constipationAlert"></p>
             </div>
           </div>
 
           <!-- Navigation -->
           <div class="wizard-buttons">
-            <button type="button" class="wizard-btn wizard-btn-secondary" id="wizardBack" style="display: none;">Voltar</button>
-            <button type="button" class="wizard-btn wizard-btn-primary" id="wizardNext" disabled>Continuar</button>
+            <button
+              type="button"
+              class="wizard-btn wizard-btn-secondary"
+              id="wizardBack"
+              style="display: none;"
+              data-i18n="wizard.back"
+            ></button>
+            <button
+              type="button"
+              class="wizard-btn wizard-btn-primary"
+              id="wizardNext"
+              disabled
+              data-i18n="wizard.next"
+            ></button>
           </div>
         </div>
       </div>
