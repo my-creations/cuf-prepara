@@ -153,6 +153,12 @@ export class Wizard {
     this.elements.splash.classList.remove('is-hidden');
     this.elements.container.classList.add('is-hidden');
 
+    // Update splash text
+    const splashTitle = this.elements.splash.querySelector('.wizard-splash-logo');
+    if (splashTitle) {
+      splashTitle.textContent = translations['pt']?.wizard?.splashTitle || 'CUF Prepara';
+    }
+
     setTimeout(() => {
       this.elements.splash.classList.add('is-hidden');
       this.elements.container.classList.remove('is-hidden');
@@ -285,6 +291,22 @@ export class Wizard {
         const subtitleEl = stepEl.querySelector('.wizard-step-subtitle');
         if (titleEl) titleEl.textContent = this.getWizardText(step.title);
         if (subtitleEl) subtitleEl.textContent = this.getWizardText(step.subtitle);
+      }
+    });
+    
+    // Update language options
+    const languageOptions = {
+      'pt': { title: 'pt', desc: 'ptDesc' },
+      'en': { title: 'en', desc: 'enDesc' }
+    };
+    
+    Object.entries(languageOptions).forEach(([key, texts]) => {
+      const option = document.querySelector(`[data-wizard-lang="${key}"]`);
+      if (option) {
+        const titleEl = option.querySelector('.wizard-option-title');
+        const descEl = option.querySelector('.wizard-option-description');
+        if (titleEl) titleEl.textContent = this.getWizardText(texts.title);
+        if (descEl) descEl.textContent = this.getWizardText(texts.desc);
       }
     });
     
