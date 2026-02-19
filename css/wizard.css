@@ -4,8 +4,10 @@
   z-index: 100;
   background: var(--bg);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  overflow-y: auto;
+  padding: 20px 0;
 }
 
 .wizard-overlay.is-hidden {
@@ -105,6 +107,13 @@
   background: var(--primary);
 }
 
+.wizard-step-counter {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.94rem;
+  margin-bottom: 20px;
+}
+
 /* Steps */
 .wizard-step {
   display: none;
@@ -135,10 +144,11 @@
 }
 
 .wizard-step-subtitle {
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: var(--muted);
   margin-bottom: 32px;
   text-align: center;
+  line-height: 1.55;
 }
 
 /* Options */
@@ -149,19 +159,28 @@
 }
 
 .wizard-option {
+  appearance: none;
   display: flex;
   align-items: center;
   gap: 16px;
+  width: 100%;
   padding: 20px;
   border: 2px solid var(--border);
   border-radius: var(--radius);
   cursor: pointer;
   transition: all 0.2s ease;
   background: var(--card);
+  text-align: left;
 }
 
 .wizard-option:hover:not(.is-selected) {
   border-color: var(--primary);
+}
+
+.wizard-option:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 .wizard-option.is-selected {
@@ -213,9 +232,10 @@
 }
 
 .wizard-option-description {
-  font-size: 0.85rem;
+  font-size: 0.94rem;
   color: var(--muted);
   margin: 0;
+  line-height: 1.5;
 }
 
 /* Buttons */
@@ -276,7 +296,7 @@
 .wizard-input-field label {
   font-weight: 600;
   color: var(--text);
-  font-size: 0.9rem;
+  font-size: 0.96rem;
 }
 
 .wizard-input-wrapper {
@@ -364,14 +384,67 @@
 }
 
 .wizard-alert-text {
-  font-size: 0.9rem;
+  font-size: 0.96rem;
+  line-height: 1.5;
   color: var(--text);
   margin: 0;
 }
 
 @media (max-width: 720px) {
+  .wizard-overlay {
+    padding: 0;
+  }
+
+  .wizard-container {
+    min-height: 100dvh;
+    max-width: none;
+    padding: 12px;
+    display: flex;
+    align-items: flex-start;
+  }
+
   .wizard-card {
-    padding: 24px;
+    padding: 20px;
+    width: 100%;
+    margin: 0 auto;
+    min-height: calc(100dvh - 24px);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wizard-step-title {
+    font-size: 1.3rem;
+  }
+
+  .wizard-step-subtitle {
+    margin-bottom: 20px;
+  }
+
+  .wizard-option {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .wizard-option-description {
+    font-size: 0.9rem;
+  }
+
+  .wizard-buttons {
+    position: sticky;
+    bottom: 0;
+    margin-top: auto;
+    padding-top: 12px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0),
+      rgba(255, 255, 255, 0.9) 24%,
+      rgba(255, 255, 255, 1) 100%
+    );
+  }
+
+  .wizard-btn {
+    min-height: 48px;
+    padding: 12px 14px;
   }
 
   .wizard-splash-logo {
@@ -379,12 +452,35 @@
   }
 }
 
-/* Calendar & Time Picker Popup Styling */
+@media (max-width: 480px) {
+  .wizard-container {
+    padding: 0;
+  }
 
-/* Color scheme to match CUF branding - influences browser's default picker styling */
-* {
-  color-scheme: light;
+  .wizard-card {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+    box-shadow: none;
+    min-height: 100dvh;
+    padding: 16px;
+  }
+
+  .wizard-progress {
+    margin-bottom: 16px;
+  }
+
+  .wizard-step-counter {
+    margin-bottom: 16px;
+  }
+
+  .wizard-input-wrapper input {
+    padding: 14px;
+    padding-left: 40px;
+  }
 }
+
+/* Calendar & Time Picker Popup Styling */
 
 /* Force primary color in date picker for browsers that support it */
 input[type="date"],
@@ -393,9 +489,20 @@ input[type="time"] {
 }
 
 /* WebKit browsers - Chrome, Safari, Edge */
-::-webkit-calendar-picker-indicator {
-  opacity: 0;
+.wizard-input-wrapper input::-webkit-calendar-picker-indicator {
   cursor: pointer;
+}
+
+@media (pointer: fine) {
+  .wizard-input-wrapper input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+}
+
+@media (pointer: coarse) {
+  .wizard-input-wrapper input::-webkit-calendar-picker-indicator {
+    opacity: 1;
+  }
 }
 
 ::-webkit-datetime-edit {

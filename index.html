@@ -21,18 +21,33 @@
             <span class="logo-title" data-i18n="branding.title"></span>
           </div>
         </div>
-        <nav class="site-nav">
+        <nav class="site-nav" id="siteNav">
           <a href="#dieta-residuos" data-i18n="nav.residue"></a>
           <a href="#dieta-liquida" data-i18n="nav.liquid"></a>
           <a href="#plenvu" data-i18n="nav.plenvu"></a>
           <a href="#dia-exame" data-i18n="nav.examDay"></a>
           <a href="#faq" data-i18n="nav.faq"></a>
         </nav>
-        <div class="lang-toggle" aria-label="Language" data-i18n-aria="lang.label">
-          <button class="lang-btn is-active" data-lang="pt" data-i18n="lang.pt"></button>
-          <button class="lang-btn" data-lang="en" data-i18n="lang.en"></button>
+        <div class="header-actions">
+          <div class="lang-toggle" aria-label="Language" data-i18n-aria="lang.label">
+            <button class="lang-btn is-active" data-lang="pt" data-i18n="lang.pt"></button>
+            <button class="lang-btn" data-lang="en" data-i18n="lang.en"></button>
+          </div>
+          <button
+            type="button"
+            class="mobile-nav-toggle"
+            id="mobileNavToggle"
+            aria-label="Toggle navigation"
+            aria-expanded="false"
+            aria-controls="siteNav"
+          >
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </header>
+      <div class="mobile-nav-backdrop" id="mobileNavBackdrop" aria-hidden="true"></div>
 
       <main>
         <section class="hero" id="top">
@@ -280,26 +295,27 @@
             <div class="wizard-progress-dot"></div>
             <div class="wizard-progress-dot"></div>
           </div>
+          <p class="wizard-step-counter" id="wizardStepCounter" aria-live="polite"></p>
 
           <!-- Step 1: Language -->
           <div class="wizard-step" data-step="0">
             <h2 class="wizard-step-title" data-i18n="wizard.step1Title"></h2>
             <p class="wizard-step-subtitle" data-i18n="wizard.step1Subtitle"></p>
             <div class="wizard-options">
-              <div class="wizard-option" data-wizard-lang="pt">
+              <button type="button" class="wizard-option" data-wizard-lang="pt">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.pt"></h3>
                   <p class="wizard-option-description" data-i18n="wizard.ptDesc"></p>
                 </div>
-              </div>
-              <div class="wizard-option" data-wizard-lang="en">
+              </button>
+              <button type="button" class="wizard-option" data-wizard-lang="en">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.en"></h3>
                   <p class="wizard-option-description" data-i18n="wizard.enDesc"></p>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
 
@@ -338,27 +354,27 @@
             <h2 class="wizard-step-title" data-i18n="wizard.step3Title"></h2>
             <p class="wizard-step-subtitle" data-i18n="wizard.step3Subtitle"></p>
             <div class="wizard-options">
-              <div class="wizard-option" data-wizard-medication="plenvu">
+              <button type="button" class="wizard-option" data-wizard-medication="plenvu">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.plenvu"></h3>
                   <p class="wizard-option-description" data-i18n="wizard.plenvuDesc"></p>
                 </div>
-              </div>
-              <div class="wizard-option" data-wizard-medication="moviprep">
+              </button>
+              <button type="button" class="wizard-option" data-wizard-medication="moviprep">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.moviprep"></h3>
                   <p class="wizard-option-description" data-i18n="wizard.moviprepDesc"></p>
                 </div>
-              </div>
-              <div class="wizard-option" data-wizard-medication="citrafleet">
+              </button>
+              <button type="button" class="wizard-option" data-wizard-medication="citrafleet">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.citrafleet"></h3>
                   <p class="wizard-option-description" data-i18n="wizard.citrafleetDesc"></p>
                 </div>
-              </div>
+              </button>
             </div>
           </div>
 
@@ -367,20 +383,20 @@
             <h2 class="wizard-step-title" data-i18n="wizard.step4Title"></h2>
             <p class="wizard-step-subtitle" data-i18n="wizard.step4Subtitle"></p>
             <div class="wizard-options">
-              <div class="wizard-option" data-wizard-constipation="true">
+              <button type="button" class="wizard-option" data-wizard-constipation="true">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.yes"></h3>
                   <p class="wizard-option-description" data-i18n="wizard.yesDesc"></p>
                 </div>
-              </div>
-              <div class="wizard-option" data-wizard-constipation="false">
+              </button>
+              <button type="button" class="wizard-option" data-wizard-constipation="false">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.no"></h3>
                   <p class="wizard-option-description" data-i18n="wizard.noDesc"></p>
                 </div>
-              </div>
+              </button>
             </div>
             <div class="wizard-alert" id="constipationAlert" style="display: none;">
               <p class="wizard-alert-text" data-i18n="wizard.constipationAlert"></p>

@@ -25,6 +25,9 @@ import {
 import { setupModal } from "./modules/modal.js";
 
 const elements = {
+  siteNav: document.getElementById("siteNav"),
+  mobileNavToggle: document.getElementById("mobileNavToggle"),
+  mobileNavBackdrop: document.getElementById("mobileNavBackdrop"),
   heroExamDate: document.getElementById("heroExamDate"),
   heroDietDate: document.getElementById("heroDietDate"),
   heroMedsDate: document.getElementById("heroMedsDate"),
@@ -70,6 +73,93 @@ const elements = {
 const contentCache = new Map();
 
 const getContent = (lang) => contentCache.get(lang);
+const mobileMediaQuery = window.matchMedia("(max-width: 900px)");
+
+const setCurrentNavItem = (targetId = "") => {
+  document.querySelectorAll(".site-nav a").forEach((link) => {
+    const linkTarget = link.getAttribute("href")?.replace("#", "");
+    link.classList.toggle("is-current", Boolean(targetId) && linkTarget === targetId);
+  });
+};
+
+const closeMobileNav = () => {
+  document.body.classList.remove("nav-open");
+  if (elements.mobileNavToggle) {
+    elements.mobileNavToggle.setAttribute("aria-expanded", "false");
+  }
+};
+
+const openMobileNav = () => {
+  document.body.classList.add("nav-open");
+  if (elements.mobileNavToggle) {
+    elements.mobileNavToggle.setAttribute("aria-expanded", "true");
+  }
+};
+
+const setupMobileNav = () => {
+  const toggle = elements.mobileNavToggle;
+  if (!toggle) {
+    return;
+  }
+
+  toggle.addEventListener("click", () => {
+    const shouldOpen = !document.body.classList.contains("nav-open");
+    if (shouldOpen) {
+      openMobileNav();
+    } else {
+      closeMobileNav();
+    }
+  });
+
+  elements.mobileNavBackdrop?.addEventListener("click", closeMobileNav);
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeMobileNav();
+    }
+  });
+
+  const onMediaChange = (event) => {
+    if (!event.matches) {
+      closeMobileNav();
+    }
+  };
+
+  if (typeof mobileMediaQuery.addEventListener === "function") {
+    mobileMediaQuery.addEventListener("change", onMediaChange);
+  } else if (typeof mobileMediaQuery.addListener === "function") {
+    mobileMediaQuery.addListener(onMediaChange);
+  }
+};
+
+const setupAccordionBehavior = () => {
+  const accordion = document.getElementById("prepAccordion");
+  if (!accordion) {
+    return;
+  }
+
+  const accordionItems = Array.from(accordion.querySelectorAll("details.accordion-item"));
+  accordionItems.forEach((item) => {
+    item.addEventListener("toggle", () => {
+      if (!item.open) {
+        return;
+      }
+
+      if (mobileMediaQuery.matches) {
+        accordionItems.forEach((other) => {
+          if (other !== item) {
+            other.open = false;
+          }
+        });
+
+        requestAnimationFrame(() => {
+          item.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      }
+
+      setCurrentNavItem(item.id);
+    });
+  });
+};
 
 const updateCalendar = () => {
   if (!state.examDate) {
@@ -246,12 +336,19 @@ const applyLanguage = (lang) => {
 const openAccordionFromHash = () => {
   const targetId = window.location.hash.replace("#", "");
   if (!targetId) {
+    setCurrentNavItem("");
     return;
   }
   const target = document.getElementById(targetId);
   if (target && target.tagName === "DETAILS") {
     target.open = true;
+    if (mobileMediaQuery.matches) {
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
   }
+  setCurrentNavItem(targetId);
 };
 
 const initCalendarState = () => {
@@ -315,7 +412,15 @@ const setupActions = () => {
       const target = document.getElementById(targetId);
       if (target && target.tagName === "DETAILS") {
         target.open = true;
+        if (mobileMediaQuery.matches) {
+          requestAnimationFrame(() => {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        }
       }
+
+      setCurrentNavItem(targetId);
+      closeMobileNav();
     });
   });
 
@@ -356,6 +461,8 @@ const initializeApp = async () => {
 
   initCalendarState();
   applyLanguage(state.lang);
+  setupMobileNav();
+  setupAccordionBehavior();
   setupActions();
   setupModal(
     {

@@ -7,6 +7,7 @@ const WIZARD_KEY = 'cuf-prepara-wizard';
 export class Wizard {
   constructor(onComplete) {
     this.onComplete = onComplete;
+    this.isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
     this.currentStep = 0;
     this.data = {
       language: '',
@@ -36,9 +37,14 @@ export class Wizard {
     this.elements.container = document.getElementById('wizardContainer');
     this.elements.steps = document.querySelectorAll('.wizard-step');
     this.elements.progress = document.querySelectorAll('.wizard-progress-dot');
+    this.elements.stepCounter = document.getElementById('wizardStepCounter');
   }
 
   bindEvents() {
+    document.querySelectorAll('.wizard-option').forEach((option) => {
+      option.setAttribute('aria-pressed', option.classList.contains('is-selected') ? 'true' : 'false');
+    });
+
     // Language selection
     document.querySelectorAll('[data-wizard-lang]').forEach((btn) => {
       btn.addEventListener('click', (e) => {
@@ -89,50 +95,16 @@ export class Wizard {
       this.data.examTime = e.target.value;
     });
 
-    // Make entire input wrapper clickable to open picker
-    document.querySelectorAll('.wizard-input-wrapper').forEach((wrapper) => {
-      const input = wrapper.querySelector('input[type="date"], input[type="time"]');
-      if (input) {
-        wrapper.addEventListener('click', (e) => {
-          // Prevent default to stop event bubbling issues
-          e.preventDefault();
-          e.stopPropagation();
-          
-          // Always focus the input first
-          input.focus();
-          
-          // Try to open the picker using showPicker() API
-          if (typeof input.showPicker === 'function') {
-            try {
-              input.showPicker();
-            } catch (err) {
-              // If showPicker fails, fall back to click simulation
-              const clickEvent = new MouseEvent('click', {
-                view: window,
-                bubbles: true,
-                cancelable: true
-              });
-              input.dispatchEvent(clickEvent);
-            }
-          } else {
-            // Fallback for browsers without showPicker support
-            input.click();
-          }
-        });
-      }
-    });
+    if (!this.isCoarsePointer) {
+      // Keep enhanced showPicker behavior for desktop pointers.
+      document.querySelectorAll('.wizard-input-wrapper').forEach((wrapper) => {
+        const input = wrapper.querySelector('input[type="date"], input[type="time"]');
+        if (!input) {
+          return;
+        }
 
-    // Make labels trigger the picker too
-    document.querySelectorAll('.wizard-input-field label').forEach((label) => {
-      const inputId = label.getAttribute('for');
-      const input = document.getElementById(inputId);
-      if (input && (input.type === 'date' || input.type === 'time')) {
-        label.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          
+        wrapper.addEventListener('click', () => {
           input.focus();
-          
           if (typeof input.showPicker === 'function') {
             try {
               input.showPicker();
@@ -143,8 +115,30 @@ export class Wizard {
             input.click();
           }
         });
-      }
-    });
+      });
+
+      document.querySelectorAll('.wizard-input-field label').forEach((label) => {
+        const inputId = label.getAttribute('for');
+        const input = document.getElementById(inputId);
+        if (!input || (input.type !== 'date' && input.type !== 'time')) {
+          return;
+        }
+
+        label.addEventListener('click', (e) => {
+          e.preventDefault();
+          input.focus();
+          if (typeof input.showPicker === 'function') {
+            try {
+              input.showPicker();
+            } catch (err) {
+              input.click();
+            }
+          } else {
+            input.click();
+          }
+        });
+      });
+    }
   }
 
   showSplash() {
@@ -159,11 +153,12 @@ export class Wizard {
       splashTitle.textContent = translations['pt']?.wizard?.splashTitle || 'CUF Prepara';
     }
 
+    const splashDuration = this.isCoarsePointer ? 900 : 2000;
     setTimeout(() => {
       this.elements.splash.classList.add('is-hidden');
       this.elements.container.classList.remove('is-hidden');
       this.showStep(0);
-    }, 2000);
+    }, splashDuration);
   }
 
   showStep(step) {
@@ -176,6 +171,10 @@ export class Wizard {
     this.elements.progress.forEach((dot, i) => {
       dot.classList.toggle('is-active', i <= step);
     });
+
+    if (this.elements.stepCounter) {
+      this.elements.stepCounter.textContent = `${step + 1}/${this.elements.steps.length}`;
+    }
 
     this.updateButtons();
     // Update texts when showing step (in case language changed)
@@ -230,6 +229,7 @@ export class Wizard {
     // Remove is-selected from all options with this selector
     document.querySelectorAll(selector).forEach((el) => {
       el.classList.remove('is-selected');
+      el.setAttribute('aria-pressed', 'false');
     });
 
     // Add is-selected to the clicked option
@@ -243,6 +243,7 @@ export class Wizard {
     const selected = document.querySelector(`${selector}[data-wizard-${dataAttr}="${value}"]`);
     if (selected) {
       selected.classList.add('is-selected');
+      selected.setAttribute('aria-pressed', 'true');
     }
 
     this.validateStep();
@@ -404,7 +405,7 @@ export class Wizard {
   }
 
   t(key) {
-    return this.getWizardText(this.data.language || 'pt', key);
+    return this.getWizardText(key);
   }
 
   static reset() {
