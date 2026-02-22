@@ -28,9 +28,7 @@ export const translations = {
       dulcolaxLabel: "Dulcolax",
     },
     calendar: {
-      appleBtn: "Adicionar ao Apple Calendar",
-      googleBtn: "Adicionar ao Google Calendar",
-      googleOpen: "Abrir",
+      addBtn: "Adicionar ao Calendário",
       noDate: "Selecione uma data para ver o cronograma",
     },
     accordion: {
@@ -202,9 +200,7 @@ export const translations = {
       dulcolaxLabel: "Dulcolax",
     },
     calendar: {
-      appleBtn: "Add to Apple Calendar",
-      googleBtn: "Add to Google Calendar",
-      googleOpen: "Open",
+      addBtn: "Add to Calendar",
       noDate: "Select a date to see the schedule",
     },
     accordion: {

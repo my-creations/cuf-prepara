@@ -38,8 +38,6 @@ const elements = {
   heroDulcolaxLabel24: document.getElementById("heroDulcolaxLabel24"),
   heroDulcolaxValue48: document.getElementById("heroDulcolaxValue48"),
   heroDulcolaxValue24: document.getElementById("heroDulcolaxValue24"),
-  googleEvents: document.getElementById("googleEvents"),
-  toggleGoogle: document.getElementById("toggleGoogle"),
   downloadIcs: document.getElementById("downloadIcs"),
   navPlenvuLink: document.querySelector('a[data-i18n="nav.plenvu"]'),
   accordionPlenvuTitle: document.querySelector('[data-i18n="accordion.sections.plenvu.title"]'),
@@ -123,11 +121,6 @@ const ensureStylesheet = (href, id) =>
   });
 
 const setupActions = () => {
-  elements.toggleGoogle.addEventListener("click", () => {
-    state.showGoogleLinks = !state.showGoogleLinks;
-    elements.googleEvents.classList.toggle("is-visible", state.showGoogleLinks);
-  });
-
   elements.downloadIcs.addEventListener("click", () => {
     const examDateTime = buildExamDateTime(state.examDate, state.examTime || defaultExamTime);
     const schedule = buildSchedule(

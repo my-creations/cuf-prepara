@@ -341,6 +341,14 @@
   background: white;
 }
 
+.wizard-input-wrapper input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+
+.wizard-input-wrapper input::-moz-calendar-picker-indicator {
+  display: none;
+}
+
 .wizard-input-icon {
   position: absolute;
   left: 16px;
@@ -482,10 +490,19 @@ input[type="time"] {
 /* WebKit browsers - Chrome, Safari, Edge */
 .wizard-input-wrapper input::-webkit-calendar-picker-indicator {
   cursor: pointer;
-  opacity: 1;
 }
 
-/* Keep native picker affordance visible for reliability across mobile/hybrid browsers. */
+@media (pointer: fine) {
+  .wizard-input-wrapper input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+}
+
+@media (pointer: coarse) {
+  .wizard-input-wrapper input::-webkit-calendar-picker-indicator {
+    opacity: 1;
+  }
+}
 
 ::-webkit-datetime-edit {
   padding: 0;

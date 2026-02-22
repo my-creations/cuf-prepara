@@ -3,7 +3,6 @@ import { applyTranslations } from "../i18n.js";
 import {
   buildExamDateTime,
   buildSchedule,
-  renderGoogleLinks,
   renderHeroSummary,
 } from "./calendar.js";
 import {
@@ -262,7 +261,6 @@ export const createAppViewController = ({ elements, state, getContent }) => {
   const updateCalendar = () => {
     if (!state.examDate) {
       renderHeroSummary(elements, [], state.lang, state);
-      elements.googleEvents.classList.toggle("is-visible", false);
       renderAccordionMeta();
       return;
     }
@@ -278,8 +276,6 @@ export const createAppViewController = ({ elements, state, getContent }) => {
     );
 
     renderHeroSummary(elements, schedule, state.lang, state);
-    renderGoogleLinks(elements, schedule, state.lang);
-    elements.googleEvents.classList.toggle("is-visible", state.showGoogleLinks);
     renderAccordionMeta();
   };
 

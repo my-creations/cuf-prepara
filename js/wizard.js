@@ -7,7 +7,7 @@ const WIZARD_KEY = 'cuf-prepara-wizard';
 export class Wizard {
   constructor(onComplete) {
     this.onComplete = onComplete;
-    this.isCoarsePointer = this.detectCoarsePointer();
+    this.isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
     this.prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     this.currentStep = 0;
     this.data = {
@@ -20,19 +20,6 @@ export class Wizard {
       takesIronMedication: null,
     };
     this.elements = {};
-  }
-
-  detectCoarsePointer() {
-    try {
-      return (
-        window.matchMedia("(pointer: coarse)").matches ||
-        window.matchMedia("(any-pointer: coarse)").matches ||
-        window.matchMedia("(hover: none)").matches ||
-        (typeof navigator !== 'undefined' && navigator.maxTouchPoints > 0)
-      );
-    } catch {
-      return false;
-    }
   }
 
   init() {
@@ -62,22 +49,6 @@ export class Wizard {
   }
 
   bindEvents() {
-    const openDateTimePicker = (input) => {
-      if (!input) {
-        return;
-      }
-      input.focus();
-      if (typeof input.showPicker === 'function') {
-        try {
-          input.showPicker();
-          return;
-        } catch {
-          // Fall back to native click on browsers that reject showPicker.
-        }
-      }
-      input.click();
-    };
-
     document.querySelectorAll('.wizard-option').forEach((option) => {
       option.setAttribute('aria-pressed', option.classList.contains('is-selected') ? 'true' : 'false');
     });
@@ -141,64 +112,59 @@ export class Wizard {
     document.getElementById('wizardStart')?.addEventListener('click', () => this.start());
 
     // Input changes
-    const wizardDateInput = document.getElementById('wizardDate');
-    const wizardTimeInput = document.getElementById('wizardTime');
-
-    const syncDate = (e) => {
+    document.getElementById('wizardDate')?.addEventListener('change', (e) => {
       this.data.examDate = e.target.value;
       this.validateStep();
-    };
-
-    const syncTime = (e) => {
-      this.data.examTime = e.target.value;
-    };
-
-    wizardDateInput?.addEventListener('change', syncDate);
-    wizardDateInput?.addEventListener('input', syncDate);
-    wizardTimeInput?.addEventListener('change', syncTime);
-    wizardTimeInput?.addEventListener('input', syncTime);
-
-    // Some mobile browsers are flaky when tapping custom-wrapped date/time inputs.
-    [wizardDateInput, wizardTimeInput].forEach((input) => {
-      if (!input) {
-        return;
-      }
-      input.addEventListener('pointerup', () => openDateTimePicker(input));
-      input.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          openDateTimePicker(input);
-        }
-      });
     });
 
-    // Keep wrapper/label proxy open behavior for all pointers. Native input taps still work.
-    document.querySelectorAll('.wizard-input-wrapper').forEach((wrapper) => {
-      const input = wrapper.querySelector('input[type="date"], input[type="time"]');
-      if (!input) {
-        return;
-      }
+    document.getElementById('wizardTime')?.addEventListener('change', (e) => {
+      this.data.examTime = e.target.value;
+    });
 
-      wrapper.addEventListener('click', (e) => {
-        if (e.target === input) {
+    if (!this.isCoarsePointer) {
+      // Keep enhanced showPicker behavior for desktop pointers.
+      document.querySelectorAll('.wizard-input-wrapper').forEach((wrapper) => {
+        const input = wrapper.querySelector('input[type="date"], input[type="time"]');
+        if (!input) {
           return;
         }
-        openDateTimePicker(input);
-      });
-    });
 
-    document.querySelectorAll('.wizard-input-field label').forEach((label) => {
-      const inputId = label.getAttribute('for');
-      const input = document.getElementById(inputId);
-      if (!input || (input.type !== 'date' && input.type !== 'time')) {
-        return;
-      }
-
-      label.addEventListener('click', (e) => {
-        e.preventDefault();
-        openDateTimePicker(input);
+        wrapper.addEventListener('click', () => {
+          input.focus();
+          if (typeof input.showPicker === 'function') {
+            try {
+              input.showPicker();
+            } catch (err) {
+              input.click();
+            }
+          } else {
+            input.click();
+          }
+        });
       });
-    });
+
+      document.querySelectorAll('.wizard-input-field label').forEach((label) => {
+        const inputId = label.getAttribute('for');
+        const input = document.getElementById(inputId);
+        if (!input || (input.type !== 'date' && input.type !== 'time')) {
+          return;
+        }
+
+        label.addEventListener('click', (e) => {
+          e.preventDefault();
+          input.focus();
+          if (typeof input.showPicker === 'function') {
+            try {
+              input.showPicker();
+            } catch (err) {
+              input.click();
+            }
+          } else {
+            input.click();
+          }
+        });
+      });
+    }
   }
 
   showSplash() {

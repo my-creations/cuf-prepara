@@ -231,27 +231,6 @@
   flex: 1 1 220px;
 }
 
-.google-events {
-  display: none;
-  gap: 10px;
-  flex-direction: column;
-}
-
-.google-events.is-visible {
-  display: flex;
-}
-
-.google-link {
-  padding: 10px 14px;
-  border-radius: 12px;
-  background: var(--bg-soft);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 0.96rem;
-  line-height: 1.45;
-}
-
 .panel-title {
   font-weight: 600;
   color: var(--primary-dark);
