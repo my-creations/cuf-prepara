@@ -45,4 +45,9 @@ export const setupModal = (elements, getLang, getContent) => {
       `);
     });
   }
+
+  return {
+    openModal,
+    closeModal,
+  };
 };

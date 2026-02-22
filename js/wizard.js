@@ -8,6 +8,7 @@ export class Wizard {
   constructor(onComplete) {
     this.onComplete = onComplete;
     this.isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+    this.prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     this.currentStep = 0;
     this.data = {
       language: '',
@@ -15,6 +16,8 @@ export class Wizard {
       examTime: '08:30',
       medication: '',
       isConstipated: null,
+      takesAnticoagulation: null,
+      takesIronMedication: null,
     };
     this.elements = {};
   }
@@ -28,6 +31,11 @@ export class Wizard {
 
     this.cacheElements();
     this.bindEvents();
+    const hasDeepLinkHash = Boolean(window.location.hash);
+    if (hasDeepLinkHash || this.prefersReducedMotion) {
+      this.showWizardWithoutSplash();
+      return;
+    }
     this.showSplash();
   }
 
@@ -77,6 +85,24 @@ export class Wizard {
         if (alert) {
           alert.style.display = value ? 'block' : 'none';
         }
+      });
+    });
+
+    // Anticoagulation selection
+    document.querySelectorAll('[data-wizard-anticoagulation]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const option = e.target.closest('[data-wizard-anticoagulation]');
+        const value = option.dataset.wizardAnticoagulation === 'true';
+        this.selectOption('takesAnticoagulation', value, '[data-wizard-anticoagulation]');
+      });
+    });
+
+    // Iron supplements / medication selection
+    document.querySelectorAll('[data-wizard-iron]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const option = e.target.closest('[data-wizard-iron]');
+        const value = option.dataset.wizardIron === 'true';
+        this.selectOption('takesIronMedication', value, '[data-wizard-iron]');
       });
     });
 
@@ -161,6 +187,13 @@ export class Wizard {
     }, splashDuration);
   }
 
+  showWizardWithoutSplash() {
+    this.elements.overlay.classList.remove('is-hidden');
+    this.elements.splash.classList.add('is-hidden');
+    this.elements.container.classList.remove('is-hidden');
+    this.showStep(0);
+  }
+
   showStep(step) {
     this.currentStep = step;
 
@@ -216,6 +249,12 @@ export class Wizard {
       case 3: // Constipation
         isValid = this.data.isConstipated !== null;
         break;
+      case 4: // Anticoagulation
+        isValid = this.data.takesAnticoagulation !== null;
+        break;
+      case 5: // Iron supplements/medication
+        isValid = this.data.takesIronMedication !== null;
+        break;
       default:
         isValid = true;
     }
@@ -237,7 +276,9 @@ export class Wizard {
     const dataAttrMap = {
       'language': 'lang',
       'medication': 'medication',
-      'isConstipated': 'constipation'
+      'isConstipated': 'constipation',
+      'takesAnticoagulation': 'anticoagulation',
+      'takesIronMedication': 'iron'
     };
     const dataAttr = dataAttrMap[field] || field;
     const selected = document.querySelector(`${selector}[data-wizard-${dataAttr}="${value}"]`);
@@ -282,7 +323,9 @@ export class Wizard {
       { title: 'step1Title', subtitle: 'step1Subtitle' },
       { title: 'step2Title', subtitle: 'step2Subtitle' },
       { title: 'step3Title', subtitle: 'step3Subtitle' },
-      { title: 'step4Title', subtitle: 'step4Subtitle' }
+      { title: 'step4Title', subtitle: 'step4Subtitle' },
+      { title: 'step5Title', subtitle: 'step5Subtitle', subtitleHtml: 'step5SubtitleHtml' },
+      { title: 'step6Title', subtitle: 'step6Subtitle' }
     ];
     
     steps.forEach((step, index) => {
@@ -291,7 +334,14 @@ export class Wizard {
         const titleEl = stepEl.querySelector('.wizard-step-title');
         const subtitleEl = stepEl.querySelector('.wizard-step-subtitle');
         if (titleEl) titleEl.textContent = this.getWizardText(step.title);
-        if (subtitleEl) subtitleEl.textContent = this.getWizardText(step.subtitle);
+        if (subtitleEl) {
+          if (step.subtitleHtml) {
+            const subtitleHtml = this.getWizardText(step.subtitleHtml);
+            subtitleEl.innerHTML = subtitleHtml || this.getWizardText(step.subtitle);
+          } else {
+            subtitleEl.textContent = this.getWizardText(step.subtitle);
+          }
+        }
       }
     });
     
@@ -343,6 +393,38 @@ export class Wizard {
         if (descEl) descEl.textContent = this.getWizardText(texts.desc);
       }
     });
+
+    // Update anticoagulation options
+    const anticoagulationOptions = {
+      'true': { title: 'yes', desc: 'anticoagulationYesDesc' },
+      'false': { title: 'no', desc: 'anticoagulationNoDesc' }
+    };
+
+    Object.entries(anticoagulationOptions).forEach(([key, texts]) => {
+      const option = document.querySelector(`[data-wizard-anticoagulation="${key}"]`);
+      if (option) {
+        const titleEl = option.querySelector('.wizard-option-title');
+        const descEl = option.querySelector('.wizard-option-description');
+        if (titleEl) titleEl.textContent = this.getWizardText(texts.title);
+        if (descEl) descEl.textContent = this.getWizardText(texts.desc);
+      }
+    });
+
+    // Update iron options
+    const ironOptions = {
+      'true': { title: 'yes', desc: 'ironYesDesc' },
+      'false': { title: 'no', desc: 'ironNoDesc' }
+    };
+
+    Object.entries(ironOptions).forEach(([key, texts]) => {
+      const option = document.querySelector(`[data-wizard-iron="${key}"]`);
+      if (option) {
+        const titleEl = option.querySelector('.wizard-option-title');
+        const descEl = option.querySelector('.wizard-option-description');
+        if (titleEl) titleEl.textContent = this.getWizardText(texts.title);
+        if (descEl) descEl.textContent = this.getWizardText(texts.desc);
+      }
+    });
     
     // Update navigation buttons
     const nextBtn = document.getElementById('wizardNext');
@@ -370,7 +452,17 @@ export class Wizard {
 
   getWizardText(key) {
     const lang = this.data.language || 'pt';
-    return translations[lang]?.wizard?.[key] || translations['pt']?.wizard?.[key] || key;
+    const langValue = translations[lang]?.wizard?.[key];
+    if (langValue !== undefined) {
+      return langValue;
+    }
+
+    const fallbackValue = translations['pt']?.wizard?.[key];
+    if (fallbackValue !== undefined) {
+      return fallbackValue;
+    }
+
+    return key;
   }
 
   next() {

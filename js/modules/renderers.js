@@ -1,55 +1,104 @@
 import { getText } from "../i18n.js";
 import { loadJson, saveJson } from "../utils/storage.js";
 
+const shoppingCategoryLabels = {
+  pt: [
+    { key: "carbs", label: "Cereais e Hidratos" },
+    { key: "proteins", label: "Proteínas" },
+    { key: "dairy", label: "Laticínios" },
+    { key: "other", label: "Outros" },
+  ],
+  en: [
+    { key: "carbs", label: "Grains and Carbs" },
+    { key: "proteins", label: "Proteins" },
+    { key: "dairy", label: "Dairy" },
+    { key: "other", label: "Other" },
+  ],
+};
+
+const inferShoppingCategory = (item) => {
+  switch (item?.id) {
+    case "rice":
+      return "carbs";
+    case "protein":
+      return "proteins";
+    case "dairy":
+      return "dairy";
+    default:
+      return "other";
+  }
+};
+
+const createShoppingChecklistItem = (item, checklistKey) => {
+  const savedState = loadJson(checklistKey, {});
+  const wrapper = document.createElement("label");
+  wrapper.className = "check-item";
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.dataset.checkId = item.id;
+  checkbox.checked = Boolean(savedState[item.id]);
+  checkbox.addEventListener("change", () => {
+    const nextState = loadJson(checklistKey, {});
+    nextState[item.id] = checkbox.checked;
+    saveJson(checklistKey, nextState);
+    document.querySelectorAll(`input[data-check-id="${item.id}"]`).forEach((input) => {
+      if (input !== checkbox) {
+        input.checked = checkbox.checked;
+      }
+    });
+  });
+
+  const text = document.createElement("span");
+  text.textContent = item.text;
+
+  wrapper.appendChild(checkbox);
+  wrapper.appendChild(text);
+  return wrapper;
+};
+
 export const renderShoppingList = (listElement, content, checklistKey, lang, medication, isConstipated) => {
   if (!listElement) {
     return;
   }
 
   listElement.innerHTML = "";
-  const savedState = loadJson(checklistKey, {});
-
   const shoppingItems = [...content.shoppingList];
 
-  // Update the prep solution item with the selected medication
-  if (medication) {
-    const prepItem = shoppingItems.find(item => item.id === "prep");
-    if (prepItem) {
-      const medicationName = medication.charAt(0).toUpperCase() + medication.slice(1);
-      prepItem.text = medicationName;
-    }
-  }
-
-  // Add Dulcolax as separate item if constipated
-  if (isConstipated && !shoppingItems.find(item => item.id === "dulcolax")) {
-    shoppingItems.push({
-      id: "dulcolax",
-      text: lang === "pt" ? "Dulcolax (4 comprimidos)" : "Dulcolax (4 tablets)"
-    });
-  }
+  const categoryConfig = shoppingCategoryLabels[lang] || shoppingCategoryLabels.pt;
+  const groupedItems = new Map(categoryConfig.map(({ key }) => [key, []]));
 
   shoppingItems.forEach((item) => {
-    const wrapper = document.createElement("label");
-    wrapper.className = "check-item";
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.dataset.checkId = item.id;
-    checkbox.checked = Boolean(savedState[item.id]);
-    checkbox.addEventListener("change", () => {
-      const nextState = loadJson(checklistKey, {});
-      nextState[item.id] = checkbox.checked;
-      saveJson(checklistKey, nextState);
-      document.querySelectorAll(`input[data-check-id="${item.id}"]`).forEach((input) => {
-        if (input !== checkbox) {
-          input.checked = checkbox.checked;
-        }
-      });
+    const categoryKey = item.category || inferShoppingCategory(item);
+    if (!groupedItems.has(categoryKey)) {
+      groupedItems.set(categoryKey, []);
+    }
+    groupedItems.get(categoryKey).push(item);
+  });
+
+  categoryConfig.forEach(({ key, label }) => {
+    const items = groupedItems.get(key) || [];
+    if (items.length === 0) {
+      return;
+    }
+
+    const group = document.createElement("section");
+    group.className = "checklist-group";
+
+    const title = document.createElement("h4");
+    title.className = "checklist-category";
+    title.textContent = label;
+
+    const itemsWrapper = document.createElement("div");
+    itemsWrapper.className = "checklist-group-items";
+
+    items.forEach((item) => {
+      itemsWrapper.appendChild(createShoppingChecklistItem(item, checklistKey));
     });
-    const text = document.createElement("span");
-    text.textContent = item.text;
-    wrapper.appendChild(checkbox);
-    wrapper.appendChild(text);
-    listElement.appendChild(wrapper);
+
+    group.appendChild(title);
+    group.appendChild(itemsWrapper);
+    listElement.appendChild(group);
   });
 };
 
@@ -64,7 +113,6 @@ export const renderRecipes = (listElement, recipes, options = {}) => {
     const card = document.createElement("div");
     card.className = "card";
     card.innerHTML = `
-      ${recipe.phase ? `<span class="card-tag">${recipe.phase}</span>` : ""}
       <h3>${recipe.title}</h3>
       <p class="recipe-meta">${recipe.description}</p>
     `;
@@ -110,14 +158,20 @@ export const renderFoodGrid = (listElement, items) => {
       : item.icon === "cross"
       ? `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>`
       : "";
+    const imageAlt = item.imageAlt || item.title || getText("accordion.blocks.photoLabel");
+    const foodImageContent = item.image
+      ? `<img src="${item.image}" alt="${imageAlt}" loading="lazy" decoding="async" />`
+      : `<span>${getText("accordion.blocks.photoLabel")}</span>`;
+    const detailText = item.detail ? String(item.detail) : "\u00A0";
+    const detailClass = item.detail ? "recipe-meta" : "recipe-meta is-empty";
     
     card.innerHTML = `
       <div class="food-image">
-        <span>${getText("accordion.blocks.photoLabel")}</span>
+        ${foodImageContent}
       </div>
       <div class="food-content">
         <h4><span class="food-icon">${iconSvg}</span>${item.title}</h4>
-        ${item.detail ? `<p class="recipe-meta">${item.detail}</p>` : ""}
+        <p class="${detailClass}">${detailText}</p>
       </div>
     `;
     listElement.appendChild(card);

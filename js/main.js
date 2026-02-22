@@ -1,28 +1,24 @@
 import { translations } from "./data/translations.js";
 import { loadContent } from "./data/content.js";
-import { checklistKey, defaultExamTime } from "./constants.js";
+import { defaultExamTime } from "./constants.js";
 import { state } from "./state.js";
-import { applyTranslations } from "./i18n.js";
+import { getText } from "./i18n.js";
 import { Wizard, hasCompletedWizard, getWizardData } from "./wizard.js";
 import {
   buildExamDateTime,
   buildSchedule,
   downloadIcs,
   getDefaultExamDate,
-  renderGoogleLinks,
-  renderHeroSummary,
 } from "./modules/calendar.js";
-import { formatDate, formatTime } from "./utils/dates.js";
-import {
-  renderFaq,
-  renderFoodGrid,
-  renderInfoCard,
-  renderFocusList,
-  renderRecipes,
-  renderShoppingList,
-  renderVideos,
-} from "./modules/renderers.js";
 import { setupModal } from "./modules/modal.js";
+import { setupContactTeamAction } from "./modules/contactTeam.js";
+import { createNavigationController } from "./modules/navigation.js";
+import { createAppViewController } from "./modules/appView.js";
+import {
+  applyWizardDataToState,
+  initStateFromUrlParams,
+  preloadLocalizedContent,
+} from "./modules/appBootstrap.js";
 
 const elements = {
   siteNav: document.getElementById("siteNav"),
@@ -32,6 +28,10 @@ const elements = {
   heroDietDate: document.getElementById("heroDietDate"),
   heroMedsDate: document.getElementById("heroMedsDate"),
   heroMedsLabel: document.querySelector('[data-i18n="hero.cardMeds"]'),
+  heroAnticoagWarningRow: document.getElementById("heroAnticoagWarningRow"),
+  heroIronRow: document.getElementById("heroIronRow"),
+  heroIronLabel: document.getElementById("heroIronLabel"),
+  heroIronValue: document.getElementById("heroIronValue"),
   heroDulcolaxRow48: document.getElementById("heroDulcolaxRow48"),
   heroDulcolaxRow24: document.getElementById("heroDulcolaxRow24"),
   heroDulcolaxLabel48: document.getElementById("heroDulcolaxLabel48"),
@@ -41,6 +41,8 @@ const elements = {
   googleEvents: document.getElementById("googleEvents"),
   toggleGoogle: document.getElementById("toggleGoogle"),
   downloadIcs: document.getElementById("downloadIcs"),
+  navPlenvuLink: document.querySelector('a[data-i18n="nav.plenvu"]'),
+  accordionPlenvuTitle: document.querySelector('[data-i18n="accordion.sections.plenvu.title"]'),
   shoppingListResidue: document.getElementById("shoppingListResidue"),
   shoppingListLiquid: document.getElementById("shoppingListLiquid"),
   recipeCardsResidue: document.getElementById("recipeCardsResidue"),
@@ -68,313 +70,57 @@ const elements = {
   faqList: document.getElementById("faqList"),
   modal: document.getElementById("videoModal"),
   modalBody: document.getElementById("modalBody"),
+  contactTeamBtn: document.getElementById("contactTeamBtn"),
 };
 
 const contentCache = new Map();
+const contactTeamEmail = "";
+let modalControls = null;
 
 const getContent = (lang) => contentCache.get(lang);
 const mobileMediaQuery = window.matchMedia("(max-width: 900px)");
+const navigation = createNavigationController({ elements, mobileMediaQuery });
+const appView = createAppViewController({ elements, state, getContent });
 
-const setCurrentNavItem = (targetId = "") => {
-  document.querySelectorAll(".site-nav a").forEach((link) => {
-    const linkTarget = link.getAttribute("href")?.replace("#", "");
-    link.classList.toggle("is-current", Boolean(targetId) && linkTarget === targetId);
-  });
-};
-
-const closeMobileNav = () => {
-  document.body.classList.remove("nav-open");
-  if (elements.mobileNavToggle) {
-    elements.mobileNavToggle.setAttribute("aria-expanded", "false");
-  }
-};
-
-const openMobileNav = () => {
-  document.body.classList.add("nav-open");
-  if (elements.mobileNavToggle) {
-    elements.mobileNavToggle.setAttribute("aria-expanded", "true");
-  }
-};
-
-const setupMobileNav = () => {
-  const toggle = elements.mobileNavToggle;
-  if (!toggle) {
-    return;
-  }
-
-  toggle.addEventListener("click", () => {
-    const shouldOpen = !document.body.classList.contains("nav-open");
-    if (shouldOpen) {
-      openMobileNav();
-    } else {
-      closeMobileNav();
-    }
-  });
-
-  elements.mobileNavBackdrop?.addEventListener("click", closeMobileNav);
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") {
-      closeMobileNav();
-    }
-  });
-
-  const onMediaChange = (event) => {
-    if (!event.matches) {
-      closeMobileNav();
-    }
-  };
-
-  if (typeof mobileMediaQuery.addEventListener === "function") {
-    mobileMediaQuery.addEventListener("change", onMediaChange);
-  } else if (typeof mobileMediaQuery.addListener === "function") {
-    mobileMediaQuery.addListener(onMediaChange);
-  }
-};
-
-const setupAccordionBehavior = () => {
-  const accordion = document.getElementById("prepAccordion");
-  if (!accordion) {
-    return;
-  }
-
-  const accordionItems = Array.from(accordion.querySelectorAll("details.accordion-item"));
-  accordionItems.forEach((item) => {
-    item.addEventListener("toggle", () => {
-      if (!item.open) {
+const ensureStylesheet = (href, id) =>
+  new Promise((resolve, reject) => {
+    const existing = id ? document.getElementById(id) : null;
+    if (existing instanceof HTMLLinkElement) {
+      if (existing.sheet) {
+        resolve(existing);
         return;
       }
 
-      if (mobileMediaQuery.matches) {
-        accordionItems.forEach((other) => {
-          if (other !== item) {
-            other.open = false;
-          }
-        });
+      const onLoad = () => {
+        cleanup();
+        resolve(existing);
+      };
+      const onError = () => {
+        cleanup();
+        reject(new Error(`Failed to load stylesheet: ${href}`));
+      };
+      const cleanup = () => {
+        existing.removeEventListener("load", onLoad);
+        existing.removeEventListener("error", onError);
+      };
 
-        requestAnimationFrame(() => {
-          item.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      }
+      existing.addEventListener("load", onLoad, { once: true });
+      existing.addEventListener("error", onError, { once: true });
+      return;
+    }
 
-      setCurrentNavItem(item.id);
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    if (id) {
+      link.id = id;
+    }
+    link.addEventListener("load", () => resolve(link), { once: true });
+    link.addEventListener("error", () => reject(new Error(`Failed to load stylesheet: ${href}`)), {
+      once: true,
     });
+    document.head.append(link);
   });
-};
-
-const updateCalendar = () => {
-  if (!state.examDate) {
-    renderHeroSummary(elements, [], state.lang, state);
-    elements.googleEvents.classList.toggle("is-visible", false);
-    renderAccordionMeta();
-    return;
-  }
-
-  const examDateTime = buildExamDateTime(state.examDate, state.examTime || defaultExamTime);
-  const schedule = buildSchedule(
-    examDateTime,
-    state.lang,
-    state.isConstipated,
-    state.medication
-  );
-
-  renderHeroSummary(elements, schedule, state.lang, state);
-  renderGoogleLinks(elements, schedule, state.lang);
-  elements.googleEvents.classList.toggle("is-visible", state.showGoogleLinks);
-  renderAccordionMeta();
-};
-
-const renderAccordionContent = (content) => {
-  const recipes = content.recipes || [];
-  renderShoppingList(
-    elements.shoppingListResidue,
-    content,
-    checklistKey,
-    state.lang,
-    state.medication,
-    state.isConstipated
-  );
-  renderShoppingList(
-    elements.shoppingListLiquid,
-    content,
-    checklistKey,
-    state.lang,
-    state.medication,
-    state.isConstipated
-  );
-  renderRecipes(elements.recipeCardsResidue, recipes, { phase: content.accordion?.residuePhase });
-  renderRecipes(elements.recipeCardsLiquid, recipes, { phase: content.accordion?.liquidPhase });
-  renderFoodGrid(elements.residueForbidden, content.accordion?.residueForbidden || []);
-  renderFoodGrid(elements.residueAllowed, content.accordion?.residueAllowed || []);
-  renderFoodGrid(elements.liquidForbidden, content.accordion?.liquidForbidden || []);
-  renderFoodGrid(elements.liquidAllowed, content.accordion?.liquidAllowed || []);
-  renderInfoCard(elements.plenvuText, content.accordion?.plenvuText || "");
-  const plenvuVideoId = content.accordion?.plenvuVideoId;
-  const plenvuVideo = content.videos?.filter((video) => video.id === plenvuVideoId);
-  renderVideos(elements.plenvuVideoGrid, plenvuVideo || []);
-  renderInfoCard(elements.examLocation, content.accordion?.examLocation || "");
-  renderInfoCard(elements.examChecklist, content.accordion?.examChecklist || []);
-  if (elements.residueShoppingNote) {
-    elements.residueShoppingNote.textContent = content.accordion?.residueShoppingNote || "";
-  }
-  if (elements.liquidShoppingNote) {
-    elements.liquidShoppingNote.textContent = content.accordion?.liquidShoppingNote || "";
-  }
-  if (elements.residueIntro) {
-    elements.residueIntro.textContent = content.accordion?.residueIntro || "";
-  }
-  if (elements.liquidIntro) {
-    elements.liquidIntro.textContent = content.accordion?.liquidIntro || "";
-  }
-  renderFocusList(elements.residueFocus, content.accordion?.residueFocusTitle || "", content.accordion?.residueFocus || []);
-  renderFocusList(elements.liquidFocus, content.accordion?.liquidFocusTitle || "", content.accordion?.liquidFocus || []);
-
-  if (state.isConstipated) {
-    renderInfoCard(elements.residueDulcolaxReminder, content.accordion?.dulcolaxReminder || "");
-    renderInfoCard(elements.liquidDulcolaxReminder, content.accordion?.dulcolaxReminder || "");
-    if (elements.residueDulcolaxReminder) {
-      elements.residueDulcolaxReminder.classList.remove("is-hidden");
-    }
-    if (elements.liquidDulcolaxReminder) {
-      elements.liquidDulcolaxReminder.classList.remove("is-hidden");
-    }
-  } else {
-    if (elements.residueDulcolaxReminder) {
-      elements.residueDulcolaxReminder.classList.add("is-hidden");
-    }
-    if (elements.liquidDulcolaxReminder) {
-      elements.liquidDulcolaxReminder.classList.add("is-hidden");
-    }
-  }
-};
-
-const renderAccordionMeta = () => {
-  if (!state.examDate) {
-    const placeholders = [
-      elements.accordionMetaResidue,
-      elements.accordionMetaLiquid,
-      elements.accordionMetaPlenvu,
-      elements.accordionMetaExam,
-    ];
-    placeholders.forEach((node) => {
-      if (node) {
-        node.textContent = "--";
-      }
-    });
-    return;
-  }
-  const examDateTime = buildExamDateTime(state.examDate, state.examTime || defaultExamTime);
-  if (!examDateTime) {
-    return;
-  }
-
-  const dietStart = new Date(examDateTime);
-  dietStart.setDate(dietStart.getDate() - 3);
-  dietStart.setHours(0, 0, 0, 0);
-
-  const dietSecond = new Date(examDateTime);
-  dietSecond.setDate(dietSecond.getDate() - 2);
-  dietSecond.setHours(0, 0, 0, 0);
-
-  const liquidDay = new Date(examDateTime);
-  liquidDay.setDate(liquidDay.getDate() - 1);
-  liquidDay.setHours(0, 0, 0, 0);
-
-  const med10 = new Date(examDateTime);
-  med10.setHours(med10.getHours() - 10);
-
-  const dateOptions = { weekday: "long" };
-
-  const rangeSeparator = state.lang === "pt" ? " e " : " and ";
-
-  if (elements.accordionMetaResidue) {
-    elements.accordionMetaResidue.textContent = `${formatDate(
-      dietStart,
-      state.lang,
-      dateOptions
-    )}${rangeSeparator}${formatDate(dietSecond, state.lang, dateOptions)}`;
-  }
-  if (elements.accordionMetaLiquid) {
-    elements.accordionMetaLiquid.textContent = `${formatDate(
-      liquidDay,
-      state.lang,
-      dateOptions
-    )}`;
-  }
-  if (elements.accordionMetaPlenvu) {
-    elements.accordionMetaPlenvu.textContent = `${formatDate(
-      med10,
-      state.lang,
-      dateOptions
-    )} · ${formatTime(med10, state.lang)}`;
-  }
-  if (elements.accordionMetaExam) {
-    elements.accordionMetaExam.textContent = `${formatDate(
-      examDateTime,
-      state.lang,
-      dateOptions
-    )} · ${formatTime(examDateTime, state.lang)}`;
-  }
-};
-
-const applyLanguage = (lang) => {
-  state.lang = lang;
-  document.documentElement.lang = lang;
-  document.querySelectorAll(".lang-btn").forEach((button) => {
-    button.classList.toggle("is-active", button.dataset.lang === lang);
-  });
-  
-  applyTranslations();
-  const content = getContent(lang) || getContent("pt");
-  if (content) {
-    renderAccordionContent(content);
-    renderFaq(elements, content);
-  }
-  renderAccordionMeta();
-  updateCalendar();
-};
-
-const openAccordionFromHash = () => {
-  const targetId = window.location.hash.replace("#", "");
-  if (!targetId) {
-    setCurrentNavItem("");
-    return;
-  }
-  const target = document.getElementById(targetId);
-  if (target && target.tagName === "DETAILS") {
-    target.open = true;
-    if (mobileMediaQuery.matches) {
-      requestAnimationFrame(() => {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      });
-    }
-  }
-  setCurrentNavItem(targetId);
-};
-
-const initCalendarState = () => {
-  const params = new URLSearchParams(window.location.search);
-  const urlLang = params.get("lang");
-  const urlDate = params.get("exame");
-  const urlTime = params.get("hora");
-
-  if (urlLang && translations[urlLang]) {
-    state.lang = urlLang;
-  }
-
-  if (urlDate) {
-    state.examDate = urlDate;
-  }
-  if (urlTime) {
-    state.examTime = urlTime;
-  }
-
-  if (!state.examDate) {
-    state.examDate = getDefaultExamDate();
-  }
-  if (!state.examTime) {
-    state.examTime = defaultExamTime;
-  }
-};
 
 const setupActions = () => {
   elements.toggleGoogle.addEventListener("click", () => {
@@ -388,19 +134,23 @@ const setupActions = () => {
       examDateTime,
       state.lang,
       state.isConstipated,
-      state.medication
+      state.medication,
+      state.takesAnticoagulation,
+      state.takesIronMedication
     );
     downloadIcs(schedule, state.lang);
   });
 
   document.querySelectorAll(".lang-btn").forEach((button) => {
-    button.addEventListener("click", () => applyLanguage(button.dataset.lang));
+    button.addEventListener("click", () => appView.applyLanguage(button.dataset.lang));
   });
 
-  document.getElementById("resetWizard")?.addEventListener("click", () => {
-    if (confirm("Deseja refazer a configuração? Todos os dados serão apagados.")) {
-      Wizard.reset();
-    }
+  document.querySelectorAll("[data-reset-wizard-trigger]").forEach((button) => {
+    button.addEventListener("click", () => {
+      if (confirm("Deseja refazer a configuração? Todos os dados serão apagados.")) {
+        Wizard.reset();
+      }
+    });
   });
 
   document.querySelectorAll(".site-nav a").forEach((link) => {
@@ -409,6 +159,7 @@ const setupActions = () => {
       if (!targetId) {
         return;
       }
+
       const target = document.getElementById(targetId);
       if (target && target.tagName === "DETAILS") {
         target.open = true;
@@ -419,52 +170,60 @@ const setupActions = () => {
         }
       }
 
-      setCurrentNavItem(targetId);
-      closeMobileNav();
+      navigation.setCurrentNavItem(targetId);
+      navigation.closeMobileNav();
     });
   });
 
-  window.addEventListener("hashchange", openAccordionFromHash);
+  window.addEventListener("hashchange", navigation.openAccordionFromHash);
 };
 
 const handleWizardComplete = (wizardData) => {
   state.wizardCompleted = true;
-  state.lang = wizardData.language;
-  state.examDate = wizardData.examDate;
-  state.examTime = wizardData.examTime || defaultExamTime;
-  state.medication = wizardData.medication;
-  state.isConstipated = wizardData.isConstipated;
+  applyWizardDataToState({
+    appState: state,
+    wizardData,
+    defaultExamTime,
+  });
 
   initializeApp();
 };
 
 const initializeApp = async () => {
+  if (!state.wizardCompleted) {
+    const savedWizard = getWizardData();
+    applyWizardDataToState({
+      appState: state,
+      wizardData: savedWizard,
+      defaultExamTime,
+    });
+  }
+
+  initStateFromUrlParams({
+    appState: state,
+    translations,
+    defaultExamTime,
+    getDefaultExamDate,
+  });
+
+  // Render language strings + hero/timeline metadata immediately to reduce CLS before JSON content loads.
+  appView.applyLanguage(state.lang);
+
   try {
-    const contentPt = await loadContent("pt");
-    const contentEn = await loadContent("en");
-    contentCache.set("pt", contentPt);
-    contentCache.set("en", contentEn);
+    await preloadLocalizedContent({
+      contentCache,
+      loadContent,
+      languages: ["pt", "en"],
+    });
   } catch (error) {
     console.error(error);
   }
 
-  if (!state.wizardCompleted) {
-    const savedWizard = getWizardData();
-    if (savedWizard) {
-      state.lang = savedWizard.language;
-      state.examDate = savedWizard.examDate;
-      state.examTime = savedWizard.examTime || defaultExamTime;
-      state.medication = savedWizard.medication;
-      state.isConstipated = savedWizard.isConstipated;
-    }
-  }
+  appView.applyLanguage(state.lang);
+  navigation.setupMobileNav();
+  navigation.setupAccordionBehavior();
 
-  initCalendarState();
-  applyLanguage(state.lang);
-  setupMobileNav();
-  setupAccordionBehavior();
-  setupActions();
-  setupModal(
+  modalControls = setupModal(
     {
       modal: elements.modal,
       modalBody: elements.modalBody,
@@ -474,25 +233,39 @@ const initializeApp = async () => {
     getContent
   );
 
-  openAccordionFromHash();
+  setupContactTeamAction({
+    button: elements.contactTeamBtn,
+    modalControls,
+    modalBody: elements.modalBody,
+    getText,
+    recipientEmail: contactTeamEmail,
+  });
+
+  setupActions();
+  navigation.openAccordionFromHash();
 };
 
-const init = () => {
+const init = async () => {
   if (hasCompletedWizard()) {
     state.wizardCompleted = true;
     const savedWizard = getWizardData();
-    if (savedWizard) {
-      state.lang = savedWizard.language;
-      state.examDate = savedWizard.examDate;
-      state.examTime = savedWizard.examTime || defaultExamTime;
-      state.medication = savedWizard.medication;
-      state.isConstipated = savedWizard.isConstipated;
-    }
+    applyWizardDataToState({
+      appState: state,
+      wizardData: savedWizard,
+      defaultExamTime,
+    });
     initializeApp();
-  } else {
-    const wizard = new Wizard(handleWizardComplete);
-    wizard.init();
+    return;
   }
+
+  try {
+    await ensureStylesheet("css/wizard.css", "wizardStylesheet");
+  } catch (error) {
+    console.error(error);
+  }
+
+  const wizard = new Wizard(handleWizardComplete);
+  wizard.init();
 };
 
 init();

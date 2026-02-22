@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 200" role="img" aria-hidden="true">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fffbeb"/>
+      <stop offset="100%" stop-color="#fef3c7"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#0f172a" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+  <rect width="320" height="200" rx="20" fill="url(#bg)"/>
+  <circle cx="274" cy="26" r="54" fill="#f59e0b" opacity="0.14"/>
+  <circle cx="44" cy="182" r="58" fill="#fcd34d" opacity="0.16"/>
+  <path d="M18 20 C56 4, 104 16, 128 40 C92 44, 52 54, 20 84 Z" fill="url(#shine)" opacity="0.55"/>
+  <g filter="url(#shadow)">
+      <g transform="translate(54 52)">
+        <ellipse cx="78" cy="84" rx="52" ry="18" fill="#e5e7eb"/>
+        <path d="M26 84 C26 54, 130 54, 130 84 C130 104, 26 104, 26 84Z" fill="#ffffff"/>
+        <path d="M38 74 C56 56, 92 56, 118 74" stroke="#fef08a" stroke-width="8" fill="none" stroke-linecap="round"/>
+        <path d="M146 44 C174 34, 196 56, 186 82 C176 108, 140 106, 130 78 C124 62, 132 48, 146 44Z" fill="#d6b68a"/>
+        <path d="M210 46 C230 38, 246 52, 240 68 C234 84, 212 86, 202 72 C194 62, 198 50, 210 46Z" fill="#fde68a"/>
+        <path d="M206 44 C216 36, 228 36, 238 44" stroke="#f59e0b" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </g></g>
+</svg>

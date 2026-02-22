@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="CUF Prepara">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#00a2ce"/>
+      <stop offset="100%" stop-color="#016f8e"/>
+    </linearGradient>
+  </defs>
+  <rect x="4" y="4" width="56" height="56" rx="16" fill="#eef8fb" stroke="#b9dde9" stroke-width="2"/>
+  <path d="M22 18h20v6H28v8h12v6H28v8h14v6H22z" fill="url(#g)"/>
+  <circle cx="47" cy="18" r="5" fill="#00a2ce" opacity="0.18"/>
+</svg>

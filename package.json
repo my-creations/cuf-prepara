@@ -1,0 +1,18 @@
+{
+  "name": "cuf-prepara",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "npm run test:unit",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "build:css": "node scripts/build-css.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "jsdom": "^24.1.3",
+    "vitest": "^2.1.8"
+  }
+}

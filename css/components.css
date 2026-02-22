@@ -76,14 +76,15 @@
 }
 
 .btn.primary {
-  background: var(--primary);
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
   color: white;
   box-shadow: none;
 }
 
 .btn.primary:hover {
-  background: var(--primary-dark);
-  border-color: var(--primary-dark);
+  background: #015d77;
+  border-color: #015d77;
   box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
@@ -118,7 +119,7 @@
   border-radius: 999px;
   font-size: 0.85rem;
   line-height: 1.3;
-  color: var(--primary);
+  color: var(--primary-dark);
 }
 
 .section-kicker {
@@ -147,7 +148,6 @@
   padding: 20px;
   display: grid;
   gap: 10px;
-  animation: floatIn 0.8s ease forwards;
   position: relative;
   overflow: hidden;
 }
@@ -268,7 +268,79 @@
   border-radius: 16px;
   padding: 24px;
   text-align: center;
-  color: var(--primary);
+  color: var(--primary-dark);
+}
+
+.contact-modal {
+  display: grid;
+  gap: 12px;
+}
+
+.contact-modal-title {
+  margin: 0;
+  color: var(--primary-dark);
+  font-size: 1.2rem;
+}
+
+.contact-modal-subtitle {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.contact-form {
+  display: grid;
+  gap: 14px;
+}
+
+.contact-form-field {
+  display: grid;
+  gap: 6px;
+}
+
+.contact-form-label {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.contact-form-input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font: inherit;
+  color: var(--text);
+  background: white;
+}
+
+.contact-form-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 122, 147, 0.14);
+}
+
+.contact-form-textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+.contact-form-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.contact-form-actions .btn {
+  min-width: 120px;
+  justify-content: center;
 }
 
 
@@ -314,7 +386,7 @@
 
 .accordion-title {
   font-weight: 600;
-  color: var(--primary);
+  color: var(--primary-dark);
   font-size: 1.15rem;
   text-align: center;
 }
@@ -325,6 +397,12 @@
   line-height: 1.45;
   padding: 4px 0;
   text-align: center;
+  min-height: calc(0.98rem * 1.45);
+}
+
+.accordion-meta:empty::before {
+  content: "00/00";
+  visibility: hidden;
 }
 
 .accordion-item summary {
@@ -355,6 +433,7 @@
 .accordion-block {
   display: grid;
   gap: 8px;
+  align-content: start;
   padding: 16px;
   border-radius: 16px;
   border: 1px solid rgba(1, 111, 142, 0.14);
@@ -372,6 +451,10 @@
   margin-bottom: 0;
 }
 
+.accordion-block h3:empty {
+  display: none;
+}
+
 .accordion-note {
   color: var(--muted);
   font-size: 0.97rem;
@@ -383,7 +466,12 @@
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 14px;
   align-items: stretch;
+  align-content: start;
   grid-auto-rows: 1fr;
+}
+
+.food-grid:empty {
+  min-height: 260px;
 }
 
 .food-card {
@@ -444,17 +532,30 @@
   overflow: hidden;
 }
 
+.food-card .recipe-meta.is-empty {
+  visibility: hidden;
+}
+
 .food-image {
   min-height: 120px;
   border-radius: 12px;
   background: var(--bg-soft);
   display: grid;
   place-items: center;
-  color: var(--primary);
+  color: var(--primary-dark);
   font-size: 0.92rem;
   font-weight: 600;
   position: relative;
   overflow: hidden;
+}
+
+.food-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: relative;
+  z-index: 1;
 }
 
 .food-image::after {
@@ -506,6 +607,12 @@
   display: none;
 }
 
+.info-card.dulcolax-reminder {
+  background: rgba(245, 184, 0, 0.12);
+  border: 1px solid rgba(245, 184, 0, 0.3);
+  color: #7a5a00;
+}
+
 #faq.accordion-item {
   background: var(--card);
 }
@@ -518,9 +625,111 @@
   border-top: none;
 }
 
+#faqList:empty {
+  min-height: 560px;
+  position: relative;
+}
+
+#faqList:empty::before {
+  content: "";
+  display: block;
+  height: 72px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(1, 111, 142, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.96)),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(216, 240, 247, 0.5) 0 10px,
+      rgba(255, 255, 255, 0) 10px 20px
+    );
+}
+
+#faqList:empty::after {
+  content: "";
+  display: block;
+  margin-top: 12px;
+  min-height: 460px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(1, 111, 142, 0.08);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.94)),
+    repeating-linear-gradient(
+      to bottom,
+      rgba(216, 240, 247, 0.42) 0 40px,
+      rgba(255, 255, 255, 0) 40px 92px
+    );
+}
+
+#plenvuText:empty {
+  min-height: 92px;
+}
+
+#examLocation:empty,
+#examChecklist:empty {
+  min-height: 72px;
+}
+
+/* Larger placeholders for accordion sections with many dynamic cards/items */
+#residueForbidden:empty,
+#residueAllowed:empty {
+  min-height: 820px;
+}
+
+#liquidForbidden:empty,
+#liquidAllowed:empty {
+  min-height: 540px;
+}
+
+#shoppingListResidue:empty {
+  min-height: 620px;
+}
+
+#shoppingListLiquid:empty {
+  min-height: 320px;
+}
+
+#recipeCardsResidue:empty,
+#recipeCardsLiquid:empty {
+  min-height: 420px;
+}
+
 @media (min-width: 768px) {
   .accordion-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  #faqList:empty {
+    min-height: 860px;
+  }
+
+  #faqList:empty::after {
+    min-height: 760px;
+  }
+
+  #residueForbidden:empty,
+  #residueAllowed:empty {
+    min-height: 1500px;
+  }
+
+  #liquidForbidden:empty,
+  #liquidAllowed:empty {
+    min-height: 980px;
+  }
+
+  #shoppingListResidue:empty {
+    min-height: 980px;
+  }
+
+  #shoppingListLiquid:empty {
+    min-height: 520px;
+  }
+
+  #recipeCardsResidue:empty,
+  #recipeCardsLiquid:empty {
+    min-height: 700px;
   }
 }
 
@@ -542,6 +751,10 @@
     text-align: left;
   }
 
+  .accordion-meta {
+    min-height: calc(0.98rem * 1.45 * 2);
+  }
+
   .accordion-item summary {
     justify-content: flex-start;
     text-align: left;
@@ -559,6 +772,16 @@
     padding: 20px 16px;
   }
 
+  .contact-form-actions {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .contact-form-actions .btn {
+    width: 100%;
+    min-width: 0;
+  }
+
   .lang-btn {
     padding: 6px 10px;
   }
@@ -566,15 +789,8 @@
   .check-item {
     align-items: flex-start;
   }
-}
 
-@keyframes floatIn {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .check-item input {
+    margin-top: 2px;
   }
 }

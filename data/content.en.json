@@ -23,35 +23,156 @@
       "Clear gelatin"
     ],
     "residueForbidden": [
-      { "title": "Seeds and nuts", "icon": "cross", "detail": "Nuts, seeds" },
-      { "title": "Whole-grain foods", "icon": "cross", "detail": "Whole bread, oats, quinoa" },
-      { "title": "Leafy vegetables", "icon": "cross", "detail": "Salads and vegetables" },
-      { "title": "Fruits", "icon": "cross", "detail": "Raw fruits with peel and seeds" },
-      { "title": "Legumes", "icon": "cross", "detail": "Beans, chickpeas, lentils, peas" },
-      { "title": "Milk", "icon": "cross", "detail": "" }
+      {
+        "title": "Seeds and nuts",
+        "icon": "cross",
+        "detail": "Nuts, seeds",
+        "image": "assets/food/nutsSeeds.svg",
+        "imageAlt": "Seeds and nuts"
+      },
+      {
+        "title": "Whole-grain foods",
+        "icon": "cross",
+        "detail": "Whole bread, oats, quinoa",
+        "image": "assets/food/wholegrain.svg",
+        "imageAlt": "Whole-grain foods"
+      },
+      {
+        "title": "Leafy vegetables",
+        "icon": "cross",
+        "detail": "Salads and vegetables",
+        "image": "assets/food/vegetables.svg",
+        "imageAlt": "Leafy vegetables"
+      },
+      {
+        "title": "Fruits",
+        "icon": "cross",
+        "detail": "Raw fruits with peel and seeds",
+        "image": "assets/food/fruits.svg",
+        "imageAlt": "Fruits"
+      },
+      {
+        "title": "Legumes",
+        "icon": "cross",
+        "detail": "Beans, chickpeas, lentils, peas",
+        "image": "assets/food/legumes.svg",
+        "imageAlt": "Legumes"
+      },
+      {
+        "title": "Milk",
+        "icon": "cross",
+        "detail": "",
+        "image": "assets/food/milkDairy.svg",
+        "imageAlt": "Milk"
+      }
     ],
     "residueAllowed": [
-      { "title": "Clear drinks", "icon": "check", "detail": "Tea, lemonade, orangeade, or coffee" },
-      { "title": "Lean meats", "icon": "check", "detail": "Turkey breast, chicken breast, veal, or beef (boiled or grilled)" },
-      { "title": "Lean fish", "icon": "check", "detail": "Hake, mackerel, seabass, sole, or cod (boiled or grilled)" },
-      { "title": "Rice / Pasta / Potato", "icon": "check", "detail": "Simply cooked" },
-      { "title": "White bread", "icon": "check", "detail": "Wheat bread, sliced white bread (no seeds), bread roll" },
-      { "title": "Yogurts", "icon": "check", "detail": "Plain or Greek (no pieces)" }
+      {
+        "title": "Clear drinks",
+        "icon": "check",
+        "detail": "Tea, lemonade, orangeade, or coffee",
+        "image": "assets/food/clearDrinks.svg",
+        "imageAlt": "Clear drinks"
+      },
+      {
+        "title": "Lean meats",
+        "icon": "check",
+        "detail": "Turkey breast, chicken breast, veal, or beef (boiled or grilled)",
+        "image": "assets/food/leanMeat.svg",
+        "imageAlt": "Lean meats"
+      },
+      {
+        "title": "Lean fish",
+        "icon": "check",
+        "detail": "Hake, mackerel, seabass, sole, or cod (boiled or grilled)",
+        "image": "assets/food/leanFish.svg",
+        "imageAlt": "Lean fish"
+      },
+      {
+        "title": "Rice / Pasta / Potato",
+        "icon": "check",
+        "detail": "Simply cooked",
+        "image": "assets/food/ricePastaPotato.svg",
+        "imageAlt": "Rice, pasta and potato"
+      },
+      {
+        "title": "White bread",
+        "icon": "check",
+        "detail": "Wheat bread, sliced white bread (no seeds), bread roll",
+        "image": "assets/food/whiteBread.svg",
+        "imageAlt": "White bread"
+      },
+      {
+        "title": "Yogurts",
+        "icon": "check",
+        "detail": "Plain or Greek (no pieces)",
+        "image": "assets/food/yogurt.svg",
+        "imageAlt": "Yogurts"
+      }
     ],
     "liquidForbidden": [
-      { "title": "Red drinks", "icon": "cross", "detail": "Red/purple juices" },
-      { "title": "Milk", "icon": "cross", "detail": "" },
-      { "title": "Alcohol", "icon": "cross", "detail": "Wine, beer, spirits" },
-      { "title": "Chunky soups", "icon": "cross", "detail": "Unstrained broth" }
+      {
+        "title": "Red/purple drinks",
+        "icon": "cross",
+        "detail": "",
+        "image": "assets/food/redDrinks.svg",
+        "imageAlt": "Red/purple drinks"
+      },
+      {
+        "title": "Milk",
+        "icon": "cross",
+        "detail": "",
+        "image": "assets/food/milkDairy.svg",
+        "imageAlt": "Milk and dairy"
+      },
+      {
+        "title": "Alcohol",
+        "icon": "cross",
+        "detail": "Wine, beer, spirits",
+        "image": "assets/food/alcohol.svg",
+        "imageAlt": "Alcohol"
+      },
+      {
+        "title": "Chunky soups",
+        "icon": "cross",
+        "detail": "Unstrained broth",
+        "image": "assets/food/chunkySoup.svg",
+        "imageAlt": "Chunky soups"
+      }
     ],
     "liquidAllowed": [
-      { "title": "Water", "icon": "check", "detail": "Non-carbonated" },
-      { "title": "Clear tea", "icon": "check", "detail": "Caffeine-free" },
-      { "title": "Strained broth", "icon": "check", "detail": "Vegetable or chicken" },
-      { "title": "Clear gelatin", "icon": "check", "detail": "No fruit" }
+      {
+        "title": "Water, Tea and Coffee",
+        "icon": "check",
+        "detail": "May be sweetened with sugar",
+        "image": "assets/food/waterTea.svg",
+        "imageAlt": "Water, Tea and Coffee"
+      },
+      {
+        "title": "Pulp-free fruit juices",
+        "icon": "check",
+        "detail": "Orangeade or lemonade",
+        "image": "assets/food/clearJuices.svg",
+        "imageAlt": "Pulp-free fruit juices"
+      },
+      {
+        "title": "Strained broth",
+        "icon": "check",
+        "detail": "Vegetable or chicken",
+        "image": "assets/food/broth.svg",
+        "imageAlt": "Strained broth"
+      },
+      {
+        "title": "Clear gelatin",
+        "icon": "check",
+        "detail": "Except red and purple",
+        "image": "assets/food/gelatin.svg",
+        "imageAlt": "Clear gelatin"
+      }
     ],
-    "dulcolaxReminder": "Dulcolax at 48h and 24h before the exam (4 tablets total).",
+    "dulcolaxReminder": "⚠️ Do not forget: Take Dulcolax 48 hours and 24 hours before the exam.",
     "plenvuText": "Prepare the solution according to the package instructions. Sip each dose slowly and alternate with clear liquids to stay hydrated. Always follow your doctor's prescription.",
+    "plenvuMedicationNote": "You can obtain $medicamento at the pharmacy; no prescription is required.",
     "plenvuVideoId": "video-meds",
     "examLocation": "Building 1, floor 1, reception 1B - Special exams.",
     "examChecklist": [
@@ -63,36 +184,94 @@
   },
   "shoppingList": [
     {
-      "id": "prep",
-      "text": "Prep solution"
+      "id": "water",
+      "text": "Water and Flavored Water",
+      "category": "other"
     },
     {
-      "id": "water",
-      "text": "Water and caffeine-free tea"
+      "id": "tea-infusions",
+      "text": "Teas and Infusions",
+      "category": "other"
     },
     {
       "id": "isotonic",
-      "text": "Clear isotonic drinks"
-    },
-    {
-      "id": "broth",
-      "text": "Strained vegetable or chicken broth"
+      "text": "Pulp-free juices",
+      "category": "other"
     },
     {
       "id": "gelatin",
-      "text": "Clear gelatin"
+      "text": "Clear gelatin",
+      "category": "other"
+    },
+    {
+      "id": "coffee",
+      "text": "Coffee",
+      "category": "other"
+    },
+    {
+      "id": "white-bread",
+      "text": "White bread",
+      "category": "carbs"
+    },
+    {
+      "id": "seedless-rolls",
+      "text": "Sliced white bread (no seeds)",
+      "category": "carbs"
+    },
+    {
+      "id": "maria-crackers",
+      "text": "Maria biscuits or water crackers",
+      "category": "carbs"
+    },
+    {
+      "id": "dry-cakes",
+      "text": "Plain dry biscuits/cakes",
+      "category": "carbs"
     },
     {
       "id": "rice",
-      "text": "White rice, plain pasta"
+      "text": "White rice, pasta, potatoes",
+      "category": "carbs"
     },
     {
-      "id": "protein",
-      "text": "White fish or chicken breast"
+      "id": "lean-meats",
+      "text": "Lean meats (turkey breast, chicken breast, veal, beef)",
+      "category": "proteins"
     },
     {
-      "id": "wipes",
-      "text": "Wet wipes and barrier cream"
+      "id": "lean-fish",
+      "text": "Lean fish (hake, mackerel, seabass, sole, cod)",
+      "category": "proteins"
+    },
+    {
+      "id": "eggs",
+      "text": "Eggs",
+      "category": "proteins"
+    },
+    {
+      "id": "ham",
+      "text": "Ham",
+      "category": "proteins"
+    },
+    {
+      "id": "dairy",
+      "text": "Plain yogurts (no pieces)",
+      "category": "dairy"
+    },
+    {
+      "id": "fresh-cheese",
+      "text": "Fresh cheese",
+      "category": "dairy"
+    },
+    {
+      "id": "sliced-flamengo-cheese",
+      "text": "Sliced flamengo cheese",
+      "category": "dairy"
+    },
+    {
+      "id": "butter",
+      "text": "Butter",
+      "category": "dairy"
     }
   ],
   "recipes": [

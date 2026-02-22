@@ -117,7 +117,6 @@
 /* Steps */
 .wizard-step {
   display: none;
-  animation: stepIn 0.4s ease;
 }
 
 .wizard-step.is-active {
@@ -548,5 +547,20 @@ input[type="time"] {
   input[type="date"]:focus,
   input[type="time"]:focus {
     color-scheme: light;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wizard-splash-content,
+  .wizard-step {
+    animation: none !important;
+  }
+
+  .wizard-option,
+  .wizard-btn,
+  .wizard-option-radio,
+  .wizard-option-radio::after,
+  .wizard-progress-dot {
+    transition: none !important;
   }
 }

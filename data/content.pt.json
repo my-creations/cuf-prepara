@@ -2,97 +2,265 @@
   "accordion": {
     "residuePhase": "3 a 2 dias antes",
     "liquidPhase": "Véspera",
-    "residueIntro": "Nos dois a três dias que antecedem a colonoscopia, é fundamental começar a adaptar a alimentação para facilitar a limpeza do intestino. Durante estes dias, recomenda-se uma dieta baixa em resíduos, privilegiando alimentos simples, cozidos e de fácil digestão.",
+    "residueIntro": "No terceiro e segundo dia antes do exame, é fundamental começar a adaptar a alimentação para facilitar a limpeza do intestino. Durante estes dias, recomenda-se uma dieta pobre em resíduos, privilegiando alimentos simples, cozidos e de fácil digestão.",
     "liquidIntro": "Na véspera do exame, a dieta deve ser baseada em líquidos claros para manter a hidratação e facilitar a limpeza intestinal.",
-    "residueShoppingNote": "A base da lista é a mesma, mas priorize itens pobres em resíduos.",
-    "liquidShoppingNote": "Mantenha a lista, mas foque nos líquidos claros.",
-    "residueFocusTitle": "Ingredientes chave nesta fase",
-    "residueFocus": [
-      "Arroz branco",
-      "Massa simples",
-      "Peixe branco",
-      "Frango cozido",
-      "Chá suave"
-    ],
-    "liquidFocusTitle": "Líquidos essenciais",
-    "liquidFocus": [
-      "Caldo coado",
-      "Água",
-      "Chá",
-      "Isotónicos claros",
-      "Gelatina clara"
-    ],
+    "residueShoppingNote": "No terceiro e segundo dia antes do exame, use esta lista como referência para organizar refeições simples e pobres em resíduos.",
+    "liquidShoppingNote": "Na véspera do exame, use esta lista como referência e dê prioridade a líquidos claros.",
+    "residueFocusTitle": "",
+    "residueFocus": [],
+    "liquidFocusTitle": "",
+    "liquidFocus": [],
     "residueForbidden": [
-      { "title": "Frutas", "icon": "cross", "detail": "Frutas cruas com casca e sementes" },
-      { "title": "Hortaliças", "icon": "cross", "detail": "Saladas e Legumes" },
-      { "title": "Leguminosas", "icon": "cross", "detail": "Feijão, grão, lentilhas, ervilhas" },
-      { "title": "Sementes e frutos secos", "icon": "cross", "detail": "Nozes, amêndoas, sementes" },
-      { "title": "Alimentos integrais", "icon": "cross", "detail": "Pão integral, aveia, quinoa" },
-      { "title": "Leite", "icon": "cross", "detail": "" }
+      {
+        "title": "Frutas",
+        "icon": "cross",
+        "detail": "",
+        "image": "assets/food/fruits.svg",
+        "imageAlt": "Frutas"
+      },
+      {
+        "title": "Hortaliças",
+        "icon": "cross",
+        "detail": "Saladas e Legumes",
+        "image": "assets/food/vegetables.svg",
+        "imageAlt": "Hortaliças"
+      },
+      {
+        "title": "Leguminosas",
+        "icon": "cross",
+        "detail": "Feijão, grão, lentilhas, ervilhas",
+        "image": "assets/food/legumes.svg",
+        "imageAlt": "Leguminosas"
+      },
+      {
+        "title": "Sementes e frutos secos",
+        "icon": "cross",
+        "detail": "Nozes, amêndoas, sementes",
+        "image": "assets/food/nutsSeeds.svg",
+        "imageAlt": "Sementes e frutos secos"
+      },
+      {
+        "title": "Alimentos integrais",
+        "icon": "cross",
+        "detail": "Pão integral, aveia, quinoa",
+        "image": "assets/food/wholegrain.svg",
+        "imageAlt": "Alimentos integrais"
+      },
+      {
+        "title": "Leite",
+        "icon": "cross",
+        "detail": "",
+        "image": "assets/food/milkDairy.svg",
+        "imageAlt": "Leite"
+      }
     ],
     "residueAllowed": [
-      { "title": "Bebidas Transparentes", "icon": "check", "detail": "Chás e Infusões, Limonada, Laranjada ou Café" },
-      { "title": "Carnes Magras", "icon": "check", "detail": "Peito de Peru, Peito de Frango, Vitela e Vaca (Cozida ou Grelhada)" },
-      { "title": "Peixes Magros", "icon": "check", "detail": "Pescada, Carapau, Robalo, Liguado ou Bacalhau (Cozidos ou Grelhados)" },
-      { "title": "Arroz / Massa / Batata", "icon": "check", "detail": "Cozinhado de forma simples" },
-      { "title": "Pão Branco", "icon": "check", "detail": "Pão de Trigo, Pão de Forma (Sem Sementes), Papo Seco" },
-      { "title": "Iogurtes", "icon": "check", "detail": "Naturais ou Gregos (Sem Pedaços)" }
+      {
+        "title": "Bebidas Transparentes",
+        "icon": "check",
+        "detail": "Chás e Infusões, Limonada, Laranjada ou Café",
+        "image": "assets/food/clearDrinks.svg",
+        "imageAlt": "Bebidas transparentes"
+      },
+      {
+        "title": "Carnes Magras",
+        "icon": "check",
+        "detail": "Peito de Peru, Peito de Frango, Vitela e Vaca (Cozida ou Grelhada)",
+        "image": "assets/food/leanMeat.svg",
+        "imageAlt": "Carnes magras"
+      },
+      {
+        "title": "Peixes Magros",
+        "icon": "check",
+        "detail": "Pescada, Carapau, Robalo, Liguado ou Bacalhau (Cozidos ou Grelhados)",
+        "image": "assets/food/leanFish.svg",
+        "imageAlt": "Peixes magros"
+      },
+      {
+        "title": "Arroz / Massa / Batata",
+        "icon": "check",
+        "detail": "Cozinhado de forma simples",
+        "image": "assets/food/ricePastaPotato.svg",
+        "imageAlt": "Arroz, massa e batata"
+      },
+      {
+        "title": "Pão Branco",
+        "icon": "check",
+        "detail": "Pão de Trigo, Pão de Forma (Sem Sementes), Papo Seco",
+        "image": "assets/food/whiteBread.svg",
+        "imageAlt": "Pão branco"
+      },
+      {
+        "title": "Iogurtes",
+        "icon": "check",
+        "detail": "Naturais ou Gregos (Sem Pedaços)",
+        "image": "assets/food/yogurt.svg",
+        "imageAlt": "Iogurtes"
+      }
     ],
     "liquidForbidden": [
-      { "title": "Bebidas vermelhas", "icon": "cross", "detail": "Sumos vermelhos/roxos" },
-      { "title": "Leite e lácteos", "icon": "cross", "detail": "Leite, iogurtes" },
-      { "title": "Álcool", "icon": "cross", "detail": "Vinho, cerveja, licores" },
-      { "title": "Sopas com resíduos", "icon": "cross", "detail": "Caldo sem coar" }
+      {
+        "title": "Bebidas vermelhas/roxas",
+        "icon": "cross",
+        "detail": "",
+        "image": "assets/food/redDrinks.svg",
+        "imageAlt": "Bebidas vermelhas/roxas"
+      },
+      {
+        "title": "Leite",
+        "icon": "cross",
+        "detail": "",
+        "image": "assets/food/milkDairy.svg",
+        "imageAlt": "Leite"
+      },
+      {
+        "title": "Bebidas alcoólicas",
+        "icon": "cross",
+        "detail": "",
+        "image": "assets/food/alcohol.svg",
+        "imageAlt": "Bebidas alcoólicas"
+      },
+      {
+        "title": "Sopas com resíduos",
+        "icon": "cross",
+        "detail": "",
+        "image": "assets/food/chunkySoup.svg",
+        "imageAlt": "Sopas com resíduos"
+      }
     ],
     "liquidAllowed": [
-      { "title": "Água", "icon": "check", "detail": "Sem gás" },
-      { "title": "Chá claro", "icon": "check", "detail": "Sem cafeína" },
-      { "title": "Caldo coado", "icon": "check", "detail": "Legumes ou galinha" },
-      { "title": "Gelatina clara", "icon": "check", "detail": "Sem fruta" }
+      {
+        "title": "Água, Chá e Café",
+        "icon": "check",
+        "detail": "Pode adoçar com açúcar",
+        "image": "assets/food/waterTea.svg",
+        "imageAlt": "Água, Chá e Café"
+      },
+      {
+        "title": "Sumos de fruta sem polpa",
+        "icon": "check",
+        "detail": "Laranjada ou limonada",
+        "image": "assets/food/clearJuices.svg",
+        "imageAlt": "Sumos de fruta sem polpa"
+      },
+      {
+        "title": "Caldo coado",
+        "icon": "check",
+        "detail": "Legumes ou galinha",
+        "image": "assets/food/broth.svg",
+        "imageAlt": "Caldo coado"
+      },
+      {
+        "title": "Gelatina clara",
+        "icon": "check",
+        "detail": "Excepto vermelhas e roxas",
+        "image": "assets/food/gelatin.svg",
+        "imageAlt": "Gelatina clara"
+      }
     ],
-    "dulcolaxReminder": "Dulcolax aos 48h e 24h antes do exame (4 comprimidos no total).",
-    "plenvuText": "Prepare a solução conforme as instruções da embalagem. Beba cada toma lentamente e intercale com líquidos claros para manter a hidratação. Siga sempre a prescrição do seu médico.",
+    "dulcolaxReminder": "⚠️ Não esquecer: Toma de Dulcolax 48 horas e 24 horas antes do exame.",
+    "plenvuText": "O sucesso do exame depende, em grande parte, de uma boa preparação intestinal. É importante que o intestino esteja bem limpo, sem fezes.",
+    "plenvuMedicationNote": "Adquira na farmácia o produto de preparação $medicamento (não precisa de receita médica) e siga cuidadosamente as instruções seguintes:",
     "plenvuVideoId": "video-meds",
-    "examLocation": "Edifício 1, piso 1, recepção 1B - Exames especiais.",
+    "examLocation": "Edifício 1, piso 1, recepção 1C - Exames especiais.",
     "examChecklist": [
       "Documento de identificação",
       "Cartão seguro ou sistema de saúde",
       "Prescrição médica do exame",
-      "Análises sanguíneas recentes (menos de 6 meses) que incluam hemograma, plaquetas, INR e aPTT"
+      "Análises sanguíneas recentes (menos de 6 meses) que incluam hemograma, plaquetas, INR e aPTT",
+      "Vir acompanhado por 1 adulto responsável, que o possa levar a casa e acompanhar no resto do dia"
     ]
   },
   "shoppingList": [
     {
-      "id": "prep",
-      "text": "Solução de preparação"
+      "id": "water",
+      "text": "Água e Água Aromatizada",
+      "category": "other"
     },
     {
-      "id": "water",
-      "text": "Água e chá sem cafeína"
+      "id": "tea-infusions",
+      "text": "Chás e Infusões",
+      "category": "other"
     },
     {
       "id": "isotonic",
-      "text": "Bebidas isotónicas claras"
-    },
-    {
-      "id": "broth",
-      "text": "Caldo de legumes ou galinha coado"
+      "text": "Sumos sem polpa",
+      "category": "other"
     },
     {
       "id": "gelatin",
-      "text": "Gelatina clara"
+      "text": "Gelatina clara",
+      "category": "other"
+    },
+    {
+      "id": "coffee",
+      "text": "Café",
+      "category": "other"
+    },
+    {
+      "id": "white-bread",
+      "text": "Pão branco",
+      "category": "carbs"
+    },
+    {
+      "id": "seedless-rolls",
+      "text": "Pão de forma sem sementes",
+      "category": "carbs"
+    },
+    {
+      "id": "maria-crackers",
+      "text": "Bolacha tipo Maria ou água e sal",
+      "category": "carbs"
+    },
+    {
+      "id": "dry-cakes",
+      "text": "Bolinhos secos",
+      "category": "carbs"
     },
     {
       "id": "rice",
-      "text": "Arroz branco, massa simples"
+      "text": "Arroz branco, massa, batata",
+      "category": "carbs"
     },
     {
-      "id": "protein",
-      "text": "Peixe branco ou peito de frango"
+      "id": "lean-meats",
+      "text": "Carnes magras (peito de peru, peito de frango, vitela e vaca)",
+      "category": "proteins"
     },
     {
-      "id": "wipes",
-      "text": "Toalhitas húmidas e creme barreira"
+      "id": "lean-fish",
+      "text": "Peixes magros (pescada, carapau, robalo, linguado, bacalhau)",
+      "category": "proteins"
+    },
+    {
+      "id": "eggs",
+      "text": "Ovos",
+      "category": "proteins"
+    },
+    {
+      "id": "ham",
+      "text": "Fiambre",
+      "category": "proteins"
+    },
+    {
+      "id": "dairy",
+      "text": "Iogurtes naturais (sem pedaços)",
+      "category": "dairy"
+    },
+    {
+      "id": "fresh-cheese",
+      "text": "Queijo fresco",
+      "category": "dairy"
+    },
+    {
+      "id": "sliced-flamengo-cheese",
+      "text": "Queijo flamengo fatiado",
+      "category": "dairy"
+    },
+    {
+      "id": "butter",
+      "text": "Manteiga",
+      "category": "dairy"
     }
   ],
   "recipes": [
@@ -166,7 +334,7 @@
     },
     {
       "question": "Posso beber água no dia do exame?",
-      "answer": "Depende da hora indicada. Respeite sempre o jejum definido pela equipa clínica."
+      "answer": "Pode ingerir água ou outros líquidos transparentes até 2 horas antes do exame."
     },
     {
       "question": "E se não conseguir terminar a solução?",
@@ -174,7 +342,7 @@
     },
     {
       "question": "Como sei se a preparação foi eficaz?",
-      "answer": "As dejeções devem ficar transparentes/amareladas. Em caso de dúvida, contacte a equipa."
+      "answer": "As dejeções devem ser líquidas e ficar transparentes/amareladas. Em caso de dúvida, contacte a equipa."
     }
   ]
 }

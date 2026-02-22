@@ -45,7 +45,14 @@ const getDayLabel = (eventDate, examDateTime, lang) => {
   return `${dayName}, ${dateStr}`;
 };
 
-export const buildSchedule = (examDateTime, lang, isConstipated = false, medication = "") => {
+export const buildSchedule = (
+  examDateTime,
+  lang,
+  isConstipated = false,
+  medication = "",
+  takesAnticoagulation = false,
+  takesIronMedication = false
+) => {
   if (!examDateTime) {
     return [];
   }
@@ -59,6 +66,10 @@ export const buildSchedule = (examDateTime, lang, isConstipated = false, medicat
 
   const med10 = new Date(examDateTime);
   med10.setHours(med10.getHours() - 10);
+
+  const sevenDaysBefore = new Date(examDateTime);
+  sevenDaysBefore.setDate(sevenDaysBefore.getDate() - 7);
+  sevenDaysBefore.setHours(0, 0, 0, 0);
 
   const events = [
     {
@@ -79,6 +90,26 @@ export const buildSchedule = (examDateTime, lang, isConstipated = false, medicat
 
   const hasMedication = Boolean(medication);
   const hasMed16 = medication === "citrafleet" || !hasMedication;
+
+  if (takesAnticoagulation) {
+    events.push({
+      id: "anticoagConsult",
+      title: getText("timeline.anticoagConsult"),
+      dateTime: new Date(sevenDaysBefore),
+      showTime: false,
+      highlight: false,
+    });
+  }
+
+  if (takesIronMedication) {
+    events.push({
+      id: "ironStop",
+      title: getText("timeline.ironStop"),
+      dateTime: new Date(sevenDaysBefore),
+      showTime: false,
+      highlight: false,
+    });
+  }
 
   if (hasMed16) {
     events.push({
@@ -129,6 +160,14 @@ export const buildSchedule = (examDateTime, lang, isConstipated = false, medicat
 };
 
 const buildEventDetails = (event, lang) => {
+  if (event.id === "anticoagConsult") {
+    return getText("hero.anticoagWarning");
+  }
+
+  if (event.id === "ironStop") {
+    return getText("hero.ironSuppAction");
+  }
+
   const lines = [getText("calendarInfo.meds"), getText("calendarInfo.note")];
   if (event.showTime) {
     lines.unshift(`${getText("timeline.withTime")}: ${formatTime(event.dateTime, lang)}`);
@@ -152,6 +191,19 @@ export const renderHeroSummary = (elements, schedule, lang, state) => {
     elements.heroExamDate.textContent = "--";
     elements.heroDietDate.textContent = "--";
     elements.heroMedsDate.textContent = "--";
+    if (elements.heroAnticoagWarningRow) {
+      if (state.takesAnticoagulation) {
+        elements.heroAnticoagWarningRow.classList.add("is-visible");
+      } else {
+        elements.heroAnticoagWarningRow.classList.remove("is-visible");
+      }
+    }
+    if (elements.heroIronValue) {
+      elements.heroIronValue.textContent = "--";
+    }
+    if (elements.heroIronRow) {
+      elements.heroIronRow.classList.remove("is-visible");
+    }
     if (elements.heroDulcolaxRow48) {
       elements.heroDulcolaxRow48.classList.remove("is-visible");
     }
@@ -179,6 +231,28 @@ export const renderHeroSummary = (elements, schedule, lang, state) => {
       ? "Toma do"
       : "Taking";
   }
+  if (elements.heroAnticoagWarningRow) {
+    if (state.takesAnticoagulation) {
+      elements.heroAnticoagWarningRow.classList.add("is-visible");
+    } else {
+      elements.heroAnticoagWarningRow.classList.remove("is-visible");
+    }
+  }
+  if (elements.heroIronRow) {
+    if (state.takesIronMedication) {
+      const ironStopDate = new Date(examEvent.dateTime);
+      ironStopDate.setDate(ironStopDate.getDate() - 7);
+      if (elements.heroIronValue) {
+        elements.heroIronValue.textContent = formatDate(ironStopDate, lang);
+      }
+      elements.heroIronRow.classList.add("is-visible");
+    } else {
+      if (elements.heroIronValue) {
+        elements.heroIronValue.textContent = "--";
+      }
+      elements.heroIronRow.classList.remove("is-visible");
+    }
+  }
   if (elements.heroDulcolaxRow48 && elements.heroDulcolaxRow24) {
     const dulcolax48 = schedule.find((item) => item.id === "dulcolax48");
     const dulcolax24 = schedule.find((item) => item.id === "dulcolax24");
@@ -188,14 +262,14 @@ export const renderHeroSummary = (elements, schedule, lang, state) => {
       if (elements.heroDulcolaxLabel48) {
         elements.heroDulcolaxLabel48.textContent =
           lang === "pt"
-            ? "Primeira toma de Dulcolax (2 comprimidos)"
-            : "First Dulcolax dose (2 tablets)";
+            ? "1ª Dose de Dulcolax"
+            : "1st Dose of Dulcolax";
       }
       if (elements.heroDulcolaxLabel24) {
         elements.heroDulcolaxLabel24.textContent =
           lang === "pt"
-            ? "Segunda toma de Dulcolax (2 comprimidos)"
-            : "Second Dulcolax dose (2 tablets)";
+            ? "2ª Dose de Dulcolax"
+            : "2nd Dose of Dulcolax";
       }
       if (elements.heroDulcolaxValue48) {
         elements.heroDulcolaxValue48.textContent = dulcolax48

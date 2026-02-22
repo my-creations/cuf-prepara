@@ -6,4 +6,6 @@ export const state = {
   wizardCompleted: false,
   medication: "",
   isConstipated: false,
+  takesAnticoagulation: false,
+  takesIronMedication: false,
 };
