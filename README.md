@@ -1,37 +1,79 @@
 # CUF Prepara - Colonoscopy Preparation Guide
 
-A web-based interactive guide to help patients prepare for colonoscopy procedures at CUF healthcare.
+Interactive multilingual web guide to help patients prepare for colonoscopy procedures (diet, bowel prep, reminders, and exam day instructions).
 
 ## Overview
 
-CUF Prepara is an educational tool that guides patients through the colonoscopy preparation process, including:
-- Low-residue diet guidelines (3-2 days before)
-- Clear liquid diet instructions (day before)
-- PLENVU bowel preparation medication instructions
-- Exam day information and checklist
+CUF Prepara guides patients through the preparation process with:
+- low-residue diet guidance (3rd and 2nd day before exam)
+- clear liquid diet guidance (day before exam)
+- preparation medication instructions (Plenvu / Moviprep / Citrafleet)
+- exam day checklist and practical guidance
+- a personalized plan based on the wizard answers
 
-## Features
+## Current Features
 
-- **Multi-language support** - Portuguese (PT) and English (EN)
-- **Interactive wizard** - Step-by-step preparation guide
-- **Shopping lists** - Phase-appropriate food lists
-- **Medication reminders** - Dulcolax timing
-- **Calendar integration** - Visual timeline of preparation phases
-- **Responsive design** - Works on desktop and mobile devices
+- **PT / EN support**
+- **Wizard onboarding (6 steps)** with:
+  - language
+  - exam date/time
+  - prep medication
+  - constipation tendency
+  - anticoagulant/antiplatelet medication
+  - iron supplements / iron-containing medication
+- **Personalized hero plan** with conditional rows/warnings:
+  - Dulcolax (if constipation)
+  - iron supplements stop date (7 days before)
+  - anticoagulant/antiplatelet warning
+- **Calendar export (.ics)** via a single button (`Adicionar ao Calendário / Add to Calendar`)
+  - timed events exported with real time
+  - automatic reminders (`VALARM`) for timed events
+- **Preparation accordion** (diet phases, prep medication, exam day, FAQ)
+- **Plenvu visual preparation guide** (responsive HTML/CSS component)
+- **Shopping lists by category**
+- **Food cards with local SVG illustrations**
+- **Contact clinical team modal** (opens prefilled email draft via `mailto:`)
+- **Responsive UI** (desktop/mobile)
+
+## Architecture (Current)
+
+The app is now organized as a small modular vanilla JS application:
+
+- `js/main.js` - app coordinator/bootstrap
+- `js/wizard.js` - onboarding wizard flow and persistence
+- `js/modules/appBootstrap.js` - state hydration / preload helpers
+- `js/modules/appView.js` - UI rendering orchestration
+- `js/modules/calendar.js` - schedule generation, hero summary, `.ics` export
+- `js/modules/navigation.js` - nav + accordion behavior
+- `js/modules/contactTeam.js` - contact modal flow
+- `js/modules/modal.js` - reusable modal shell
+- `js/modules/renderers.js` - content renderers (lists/cards/videos/FAQ)
+
+Content is data-driven from:
+- `data/content.pt.json`
+- `data/content.en.json`
+- `js/data/translations.js`
 
 ## Project Structure
 
-```
+```text
 cuf-prepara/
-├── index.html          # Main HTML entry point
-├── css/                # Stylesheets
+├── index.html
+├── assets/
+│   ├── favicon.svg
+│   └── food/                 # Local SVG illustrations for food cards
+├── css/
 │   ├── reset.css
 │   ├── variables.css
 │   ├── layout.css
 │   ├── components.css
 │   ├── sections.css
-│   └── wizard.css
-├── js/                 # JavaScript modules
+│   ├── wizard.css
+│   └── app.min.css           # Generated bundle used by the page
+├── data/
+│   ├── content.pt.json
+│   └── content.en.json
+├── js/
 │   ├── main.js
 │   ├── state.js
 │   ├── i18n.js
@@ -41,25 +83,89 @@ cuf-prepara/
 │   │   ├── content.js
 │   │   └── translations.js
 │   ├── modules/
-│   │   ├── modal.js
+│   │   ├── appBootstrap.js
+│   │   ├── appView.js
 │   │   ├── calendar.js
+│   │   ├── contactTeam.js
+│   │   ├── modal.js
+│   │   ├── navigation.js
 │   │   └── renderers.js
 │   └── utils/
-│       ├── storage.js
+│       ├── dates.js
 │       ├── medication.js
-│       └── dates.js
-└── data/               # Content files
-    ├── content.pt.json
-    └── content.en.json
+│       └── storage.js
+├── scripts/
+│   └── build-css.mjs         # Builds css/app.min.css
+├── tests/
+│   ├── e2e/
+│   │   └── wizard-contact.spec.js
+│   └── unit/
+│       ├── appBootstrap.test.js
+│       ├── contactTeam.test.js
+│       └── navigation.test.js
+├── package.json
+├── vitest.config.js
+└── playwright.config.js
 ```
 
-## Usage
+## Running Locally
 
-Simply open `index.html` in a web browser. No build step or server required.
+You can open `index.html` directly, but using a local server is recommended (JSON fetches/content loading).
+
+Examples:
+
+```bash
+python3 -m http.server 5500
+```
+
+Then open:
+
+```text
+http://127.0.0.1:5500
+```
+
+## CSS Build
+
+The app uses `css/app.min.css` (generated bundle).
+
+After changing CSS files, rebuild:
+
+```bash
+npm run build:css
+```
+
+## Tests
+
+Install dependencies first:
+
+```bash
+npm install
+```
+
+Run unit tests (Vitest):
+
+```bash
+npm run test:unit
+```
+
+Run e2e tests (Playwright):
+
+```bash
+npx playwright install
+npm run test:e2e
+```
+
+## Notes
+
+- Calendar export is now `.ics` only (single CTA), compatible with Apple Calendar, Google Calendar (import/open), and Outlook.
+- Timed ICS events include reminders.
+- The contact button currently uses a `mailto:` flow (no backend email sending).
 
 ## Technologies
 
-- Vanilla JavaScript (no frameworks)
-- CSS custom properties
+- Vanilla JavaScript (ES modules)
 - HTML5
-- JSON for content management
+- CSS (custom properties + responsive layouts)
+- JSON content files (PT/EN)
+- Vitest (unit tests)
+- Playwright (e2e tests)
