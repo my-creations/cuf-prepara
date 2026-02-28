@@ -384,25 +384,60 @@
             <p class="wizard-step-subtitle" data-i18n="wizard.step2Subtitle">Selecione quando será realizada a colonoscopia</p>
             <div class="wizard-input-group">
               <div class="wizard-input-field">
-                <label for="wizardDate" data-i18n="wizard.dateLabel">Data do exame</label>
-                <div class="wizard-input-wrapper">
-                  <svg class="wizard-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                    <line x1="16" y1="2" x2="16" y2="6"></line>
-                    <line x1="8" y1="2" x2="8" y2="6"></line>
-                    <line x1="3" y1="10" x2="21" y2="10"></line>
-                  </svg>
-                  <input type="date" id="wizardDate" lang="pt-PT" required />
+                <label for="wizardDateTrigger" data-i18n="wizard.dateLabel">Data do exame</label>
+                <div class="wizard-picker" data-picker="date">
+                  <button
+                    type="button"
+                    class="wizard-picker-trigger is-placeholder"
+                    id="wizardDateTrigger"
+                    aria-expanded="false"
+                    aria-controls="wizardDatePanel"
+                  >
+                    <svg class="wizard-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                      <line x1="16" y1="2" x2="16" y2="6"></line>
+                      <line x1="8" y1="2" x2="8" y2="6"></line>
+                      <line x1="3" y1="10" x2="21" y2="10"></line>
+                    </svg>
+                    <span class="wizard-picker-text" id="wizardDateText" data-i18n="wizard.datePlaceholder">Selecionar data</span>
+                    <span class="wizard-picker-chevron" aria-hidden="true">▾</span>
+                  </button>
+                  <input type="hidden" id="wizardDate" required />
+                  <div class="wizard-picker-panel wizard-date-panel is-hidden" id="wizardDatePanel" role="dialog" aria-modal="false">
+                    <div class="wizard-calendar-header">
+                      <button type="button" class="wizard-calendar-nav" id="wizardDatePrev" aria-label="Mês anterior">
+                        <span aria-hidden="true">‹</span>
+                      </button>
+                      <p class="wizard-calendar-month" id="wizardCalendarMonthLabel"></p>
+                      <button type="button" class="wizard-calendar-nav" id="wizardDateNext" aria-label="Próximo mês">
+                        <span aria-hidden="true">›</span>
+                      </button>
+                    </div>
+                    <div class="wizard-calendar-weekdays" id="wizardCalendarWeekdays"></div>
+                    <div class="wizard-calendar-grid" id="wizardCalendarGrid"></div>
+                    <button type="button" class="wizard-calendar-today" id="wizardDateToday" data-i18n="wizard.today">Hoje</button>
+                  </div>
                 </div>
               </div>
               <div class="wizard-input-field">
-                <label for="wizardTime" data-i18n="wizard.timeLabel">Hora do exame</label>
-                <div class="wizard-input-wrapper">
-                  <svg class="wizard-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <polyline points="12 6 12 12 16 14"></polyline>
-                  </svg>
-                  <input type="time" id="wizardTime" value="08:30" required />
+                <label for="wizardTimeTrigger" data-i18n="wizard.timeLabel">Hora do exame</label>
+                <div class="wizard-picker" data-picker="time">
+                  <button
+                    type="button"
+                    class="wizard-picker-trigger"
+                    id="wizardTimeTrigger"
+                    aria-expanded="false"
+                    aria-controls="wizardTimePanel"
+                  >
+                    <svg class="wizard-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"></circle>
+                      <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span class="wizard-picker-text" id="wizardTimeText">08:30</span>
+                    <span class="wizard-picker-chevron" aria-hidden="true">▾</span>
+                  </button>
+                  <input type="hidden" id="wizardTime" value="08:30" required />
+                  <div class="wizard-picker-panel wizard-time-panel is-hidden" id="wizardTimePanel" role="listbox" aria-label="Exam time options"></div>
                 </div>
               </div>
             </div>

@@ -14,8 +14,10 @@ test('wizard flow completes and contact popup opens', async ({ page }) => {
   await page.locator('[data-wizard-lang="en"]').click();
   await page.locator('#wizardNext').click();
 
-  await page.locator('#wizardDate').fill('2026-03-12');
-  await page.locator('#wizardTime').fill('08:30');
+  await page.locator('#wizardDateTrigger').click();
+  await page.locator('#wizardDateToday').click();
+  await page.locator('#wizardTimeTrigger').click();
+  await page.locator('#wizardTimePanel button[data-time-value="08:30"]').click();
   await expect(page.locator('#wizardNext')).toBeEnabled();
   await page.locator('#wizardNext').click();
 
@@ -42,6 +44,6 @@ test('wizard flow completes and contact popup opens', async ({ page }) => {
   await page.locator('#contactTeamForm input[name="email"]').fill('user@example.com');
   await page.locator('#contactTeamForm textarea[name="issue"]').fill('Need help with preparation timings');
 
-  await page.locator('#videoModal [data-modal-close]').first().click();
+  await page.locator('#videoModal .modal-close').click();
   await expect(page.locator('#videoModal')).not.toHaveClass(/is-open/);
 });

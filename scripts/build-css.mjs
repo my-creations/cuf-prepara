@@ -12,6 +12,7 @@ const sourceFiles = [
   "css/layout.css",
   "css/components.css",
   "css/sections.css",
+  "css/wizard.css",
 ];
 
 const minifyCss = (css) =>

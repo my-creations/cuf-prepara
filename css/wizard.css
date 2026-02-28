@@ -279,7 +279,7 @@
   background: var(--border);
 }
 
-/* Date/Time Inputs */
+/* Date/Time Pickers */
 .wizard-input-group {
   display: flex;
   flex-direction: column;
@@ -298,79 +298,245 @@
   font-size: 0.96rem;
 }
 
-.wizard-input-wrapper {
+.wizard-picker {
   position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-  cursor: pointer;
-  border-radius: var(--radius);
-  background: var(--card);
-  transition: all 0.2s ease;
 }
 
-.wizard-input-wrapper input {
+.wizard-picker-trigger {
   width: 100%;
-  padding: 16px;
-  padding-left: 40px;
+  min-height: 56px;
+  padding: 14px 16px;
   border: 2px solid var(--border);
   border-radius: var(--radius);
-  font-size: 1rem;
-  background: transparent;
-  color: var(--text);
-  transition: all 0.2s ease;
-  cursor: pointer;
+  background: var(--card);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
   font-family: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  color: var(--text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
 }
 
-.wizard-input-wrapper:hover {
+.wizard-picker-trigger:hover {
   background: var(--accent-soft);
-}
-
-.wizard-input-wrapper:hover input {
   border-color: var(--primary);
 }
 
-.wizard-input-wrapper input:focus {
+.wizard-picker-trigger:focus-visible {
   outline: none;
   border-color: var(--primary);
-  background: white;
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  background-color: white;
 }
 
-.wizard-input-wrapper:has(input:focus) {
-  background: white;
+.wizard-picker-trigger[aria-expanded="true"] {
+  border-color: var(--primary);
+  background-color: white;
 }
 
-.wizard-input-wrapper input::-webkit-calendar-picker-indicator {
-  display: none;
+.wizard-picker-text {
+  line-height: 1.35;
+  color: var(--text);
 }
 
-.wizard-input-wrapper input::-moz-calendar-picker-indicator {
-  display: none;
+.wizard-picker-trigger.is-placeholder .wizard-picker-text {
+  color: var(--muted);
 }
 
 .wizard-input-icon {
-  position: absolute;
-  left: 16px;
   pointer-events: none;
   color: var(--primary);
-  opacity: 0.8;
-  z-index: 1;
+  opacity: 0.9;
   flex-shrink: 0;
   width: 20px;
   height: 20px;
   user-select: none;
 }
 
-.wizard-input-wrapper:hover .wizard-input-icon,
-.wizard-input-wrapper:has(input:focus) .wizard-input-icon {
-  opacity: 1;
+.wizard-picker-chevron {
+  margin-left: auto;
+  color: var(--muted);
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.wizard-date-time-row {
+.wizard-picker-trigger[aria-expanded="true"] .wizard-picker-chevron {
+  transform: rotate(180deg);
+  color: var(--primary-dark);
+}
+
+.wizard-picker-panel {
+  position: absolute;
+  inset: calc(100% + 8px) 0 auto;
+  z-index: 8;
+  border-radius: 16px;
+  border: 1px solid rgba(1, 111, 142, 0.2);
+  background: white;
+  box-shadow: 0 16px 26px rgba(8, 49, 59, 0.16);
+  padding: 12px;
+}
+
+.wizard-picker-panel.is-hidden {
+  display: none;
+}
+
+.wizard-calendar-header {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  grid-template-columns: 38px 1fr 38px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.wizard-calendar-nav {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  color: var(--primary-dark);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.wizard-calendar-nav:hover {
+  border-color: var(--primary);
+  background: var(--accent-soft);
+}
+
+.wizard-calendar-nav:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.wizard-calendar-month {
+  margin: 0;
+  text-align: center;
+  color: var(--primary-dark);
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.wizard-calendar-weekdays,
+.wizard-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.wizard-calendar-weekdays {
+  margin-bottom: 6px;
+}
+
+.wizard-calendar-weekdays span {
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.wizard-calendar-day {
+  min-height: 36px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: white;
+  color: var(--text);
+  cursor: pointer;
+  font-size: 0.92rem;
+}
+
+.wizard-calendar-day.is-outside {
+  opacity: 0.45;
+}
+
+.wizard-calendar-day.is-today {
+  border-color: rgba(1, 111, 142, 0.25);
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.wizard-calendar-day.is-selected {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  font-weight: 700;
+}
+
+.wizard-calendar-day:hover:not(.is-selected) {
+  background: var(--accent-soft);
+  border-color: rgba(1, 111, 142, 0.2);
+}
+
+.wizard-calendar-day:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.wizard-calendar-today {
+  margin-top: 10px;
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-soft);
+  color: var(--primary-dark);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wizard-calendar-today:hover {
+  border-color: var(--primary);
+  background: var(--accent-soft);
+}
+
+.wizard-calendar-today:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.wizard-time-panel {
+  max-height: 260px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.wizard-time-option {
+  min-height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.wizard-time-option:hover:not(.is-selected) {
+  border-color: var(--primary);
+  background: var(--accent-soft);
+}
+
+.wizard-time-option.is-selected {
+  border-color: var(--primary);
+  background: var(--accent-soft);
+  color: var(--primary-dark);
+}
+
+.wizard-time-option:focus-visible {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
 /* Alert */
@@ -473,80 +639,18 @@
     margin-bottom: 16px;
   }
 
-  .wizard-input-wrapper input {
-    padding: 14px;
-    padding-left: 40px;
+  .wizard-picker-trigger {
+    min-height: 52px;
+    padding: 12px 14px;
   }
-}
 
-/* Calendar & Time Picker Popup Styling */
-
-/* Force primary color in date picker for browsers that support it */
-input[type="date"],
-input[type="time"] {
-  accent-color: var(--primary);
-}
-
-/* WebKit browsers - Chrome, Safari, Edge */
-.wizard-input-wrapper input::-webkit-calendar-picker-indicator {
-  cursor: pointer;
-}
-
-@media (pointer: fine) {
-  .wizard-input-wrapper input::-webkit-calendar-picker-indicator {
-    opacity: 0;
+  .wizard-picker-panel {
+    padding: 10px;
   }
-}
 
-@media (pointer: coarse) {
-  .wizard-input-wrapper input::-webkit-calendar-picker-indicator {
-    opacity: 1;
-  }
-}
-
-::-webkit-datetime-edit {
-  padding: 0;
-}
-
-::-webkit-datetime-edit-fields-wrapper {
-  padding: 0;
-}
-
-::-webkit-datetime-edit-text {
-  color: var(--muted);
-  padding: 0 2px;
-}
-
-::-webkit-datetime-edit-month-field,
-::-webkit-datetime-edit-day-field,
-::-webkit-datetime-edit-year-field,
-::-webkit-datetime-edit-hour-field,
-::-webkit-datetime-edit-minute-field,
-::-webkit-datetime-edit-ampm-field {
-  color: var(--text);
-}
-
-/* Firefox-specific styles */
-::-moz-datetime-edit {
-  padding: 0;
-}
-
-::-moz-datetime-edit-fields-wrapper {
-  padding: 0;
-}
-
-/* Firefox date picker styling */
-::-moz-date-picker {
-  color: var(--text);
-  background: var(--card);
-  border-color: var(--border);
-}
-
-/* Chrome/Safari/Edge popup appearance hints */
-@supports (-webkit-appearance: none) {
-  input[type="date"]:focus,
-  input[type="time"]:focus {
-    color-scheme: light;
+  .wizard-time-panel {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: 230px;
   }
 }
 
