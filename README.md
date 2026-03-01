@@ -148,6 +148,12 @@ Run unit tests (Vitest):
 npm run test:unit
 ```
 
+Run unit tests with coverage report (enforces 80% minimum across configured modules):
+
+```bash
+npm run test:unit:coverage
+```
+
 Run e2e tests (Playwright):
 
 ```bash
