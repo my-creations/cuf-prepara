@@ -1,11 +1,5 @@
 import { test, expect } from '@playwright/test';
 
-test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => {
-    localStorage.clear();
-  });
-});
-
 const completeWizard = async (
   page,
   {
@@ -108,5 +102,5 @@ test('wizard completion persists after page reload', async ({ page }) => {
 
   await expect(page.locator('#wizardOverlay')).toBeHidden();
   await expect(page.locator('#contactTeamBtn')).toContainText('Contact the team');
-  await expect(page.locator('#heroMedsLabel')).toContainText('Taking Moviprep');
+  await expect(page.locator('[data-i18n="hero.cardMeds"]')).toContainText('Taking Moviprep');
 });
