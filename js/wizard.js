@@ -82,6 +82,7 @@ export class Wizard {
       medication: '',
       isConstipated: null,
       takesAnticoagulation: null,
+      takesSubcutaneousMedication: null,
       takesIronMedication: null,
     };
     this.elements = {};
@@ -172,6 +173,14 @@ export class Wizard {
         const option = e.target.closest('[data-wizard-anticoagulation]');
         const value = option.dataset.wizardAnticoagulation === 'true';
         this.selectOption('takesAnticoagulation', value, '[data-wizard-anticoagulation]');
+      });
+    });
+
+    document.querySelectorAll('[data-wizard-subcutaneous]').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const option = e.target.closest('[data-wizard-subcutaneous]');
+        const value = option.dataset.wizardSubcutaneous === 'true';
+        this.selectOption('takesSubcutaneousMedication', value, '[data-wizard-subcutaneous]');
       });
     });
 
@@ -396,6 +405,7 @@ export class Wizard {
       button.className = 'wizard-calendar-day';
       button.textContent = String(day.getDate());
       button.dataset.calendarDate = dayValue;
+      button.setAttribute('data-testid', `wizard-calendar-day-${dayValue}`);
       button.setAttribute('aria-label', this.formatDateDisplay(day));
       button.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
 
@@ -426,6 +436,7 @@ export class Wizard {
       button.type = 'button';
       button.className = 'wizard-time-option';
       button.dataset.timeValue = value;
+      button.setAttribute('data-testid', `wizard-time-option-${value.replace(':', '-')}`);
       button.textContent = this.formatTimeDisplay(value);
       button.setAttribute('aria-selected', value === selectedValue ? 'true' : 'false');
       if (value === selectedValue) {
@@ -622,6 +633,9 @@ export class Wizard {
         isValid = this.data.takesAnticoagulation !== null;
         break;
       case 5:
+        isValid = this.data.takesSubcutaneousMedication !== null;
+        break;
+      case 6:
         isValid = this.data.takesIronMedication !== null;
         break;
       default:
@@ -644,6 +658,7 @@ export class Wizard {
       medication: 'medication',
       isConstipated: 'constipation',
       takesAnticoagulation: 'anticoagulation',
+      takesSubcutaneousMedication: 'subcutaneous',
       takesIronMedication: 'iron',
     };
     const dataAttr = dataAttrMap[field] || field;
@@ -671,6 +686,7 @@ export class Wizard {
       { title: 'step4Title', subtitle: 'step4Subtitle' },
       { title: 'step5Title', subtitle: 'step5Subtitle', subtitleHtml: 'step5SubtitleHtml' },
       { title: 'step6Title', subtitle: 'step6Subtitle' },
+      { title: 'step7Title', subtitle: 'step7Subtitle' },
     ];
 
     steps.forEach((step, index) => {
@@ -755,6 +771,19 @@ export class Wizard {
       true: { title: 'yes', desc: 'ironYesDesc' },
       false: { title: 'no', desc: 'ironNoDesc' },
     };
+
+    const subcutaneousOptions = {
+      true: { title: 'yes' },
+      false: { title: 'no' },
+    };
+
+    Object.entries(subcutaneousOptions).forEach(([key, texts]) => {
+      const option = document.querySelector(`[data-wizard-subcutaneous="${key}"]`);
+      if (option) {
+        const titleEl = option.querySelector('.wizard-option-title');
+        if (titleEl) titleEl.textContent = this.getWizardText(texts.title);
+      }
+    });
 
     Object.entries(ironOptions).forEach(([key, texts]) => {
       const option = document.querySelector(`[data-wizard-iron="${key}"]`);

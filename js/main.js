@@ -32,6 +32,9 @@ const elements = {
   heroIronRow: document.getElementById("heroIronRow"),
   heroIronLabel: document.getElementById("heroIronLabel"),
   heroIronValue: document.getElementById("heroIronValue"),
+  heroSubcutaneousRow: document.getElementById("heroSubcutaneousRow"),
+  heroSubcutaneousLabel: document.getElementById("heroSubcutaneousLabel"),
+  heroSubcutaneousValue: document.getElementById("heroSubcutaneousValue"),
   heroDulcolaxRow48: document.getElementById("heroDulcolaxRow48"),
   heroDulcolaxRow24: document.getElementById("heroDulcolaxRow24"),
   heroDulcolaxLabel48: document.getElementById("heroDulcolaxLabel48"),
@@ -129,6 +132,7 @@ const setupActions = () => {
       state.isConstipated,
       state.medication,
       state.takesAnticoagulation,
+      state.takesSubcutaneousMedication,
       state.takesIronMedication
     );
     downloadIcs(schedule, state.lang);

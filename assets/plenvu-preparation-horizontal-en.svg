@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" role="img" aria-labelledby="title desc">
+  <title id="title">Plenvu preparation</title>
+  <desc id="desc">Horizontal diagram with instructions for the first and second Plenvu Doses.</desc>
+  <style>
+    text { font-family: Helvetica, Arial, sans-serif; fill: #161616; }
+    .frame { fill: #ffffff; stroke: #b7b7b7; stroke-width: 4; }
+    .divider { stroke: #b7b7b7; stroke-width: 4; }
+    .Dose-title { font-size: 22px; font-weight: 700; }
+    .Dose-sub { font-size: 18px; font-weight: 700; }
+    .copy { font-size: 15px; }
+    .ml { font-size: 16px; font-weight: 700; }
+    .note { font-size: 16px; }
+    .Sachet { fill: #ffffff; stroke: #8a8a8a; stroke-width: 3; stroke-dasharray: 6 4; rx: 5; }
+    .Sachet-letter { font-size: 22px; font-weight: 700; fill: #555555; }
+    .clock-face { fill: #ffffff; stroke: #232323; stroke-width: 3; }
+    .clock-hand { stroke: #232323; stroke-width: 3; stroke-linecap: round; }
+    .spark { fill: #c8c8c8; }
+  </style>
+  <defs>
+    <linearGradient id="pinkLiquid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f7e0ff"/>
+      <stop offset="68%" stop-color="#dba4eb"/>
+      <stop offset="100%" stop-color="#cf85e3"/>
+    </linearGradient>
+    <linearGradient id="goldLiquid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff4b7"/>
+      <stop offset="68%" stop-color="#f0d25f"/>
+      <stop offset="100%" stop-color="#e5bc39"/>
+    </linearGradient>
+    <linearGradient id="blueLiquid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#e1f1ff"/>
+      <stop offset="68%" stop-color="#abd3f1"/>
+      <stop offset="100%" stop-color="#8ebfe3"/>
+    </linearGradient>
+    <g id="cupPink">
+      <ellipse cx="0" cy="-29" rx="22" ry="6" fill="#ffffff" fill-opacity="0.86" stroke="#d6b8df" stroke-width="2"/>
+      <path d="M-20 -29 L-14 25 Q0 31 14 25 L20 -29 Z" fill="url(#pinkLiquid)" stroke="#d6b8df" stroke-width="2"/>
+      <ellipse cx="0" cy="-5" rx="10" ry="2.5" fill="#ffffff" fill-opacity="0.56"/>
+    </g>
+    <g id="cupGold">
+      <ellipse cx="0" cy="-29" rx="22" ry="6" fill="#ffffff" fill-opacity="0.86" stroke="#d9cb8e" stroke-width="2"/>
+      <path d="M-20 -29 L-14 25 Q0 31 14 25 L20 -29 Z" fill="url(#goldLiquid)" stroke="#d9cb8e" stroke-width="2"/>
+      <ellipse cx="0" cy="-5" rx="10" ry="2.5" fill="#ffffff" fill-opacity="0.56"/>
+    </g>
+    <g id="cupBlue">
+      <ellipse cx="0" cy="-29" rx="22" ry="6" fill="#ffffff" fill-opacity="0.86" stroke="#b8cfe0" stroke-width="2"/>
+      <path d="M-20 -29 L-14 25 Q0 31 14 25 L20 -29 Z" fill="url(#blueLiquid)" stroke="#b8cfe0" stroke-width="2"/>
+      <ellipse cx="0" cy="-5" rx="10" ry="2.5" fill="#ffffff" fill-opacity="0.56"/>
+    </g>
+    <g id="SachetPlain">
+      <rect class="Sachet" x="-20" y="-14" width="40" height="28" transform="rotate(-16)"/>
+      <line x1="-11" y1="-8" x2="11" y2="-14" stroke="#9a9a9a" stroke-width="2"/>
+    </g>
+    <g id="SachetA">
+      <rect class="Sachet" x="-22" y="-14" width="44" height="28" transform="rotate(-10)"/>
+      <text class="Sachet-letter" x="0" y="8" text-anchor="middle">A</text>
+    </g>
+    <g id="SachetB">
+      <rect class="Sachet" x="-22" y="-14" width="44" height="28" transform="rotate(8)"/>
+      <text class="Sachet-letter" x="0" y="8" text-anchor="middle">B</text>
+    </g>
+    <g id="clock">
+      <circle class="clock-face" cx="0" cy="0" r="17"/>
+      <line class="clock-hand" x1="0" y1="0" x2="0" y2="-9"/>
+      <line class="clock-hand" x1="0" y1="0" x2="7" y2="6"/>
+      <circle cx="0" cy="0" r="2" fill="#232323"/>
+    </g>
+  </defs>
+
+  <rect class="frame" x="20" y="20" width="920" height="620" rx="10"/>
+  <line class="divider" x1="165" y1="22" x2="165" y2="638"/>
+  <line class="divider" x1="22" y1="330" x2="938" y2="330"/>
+
+  <text class="Dose-title" x="92" y="135" text-anchor="middle">
+    <tspan x="92" dy="0">1st Dose of</tspan>
+    <tspan x="92" dy="28">Plenvu®</tspan>
+  </text>
+  <text class="Dose-sub" x="92" y="200" text-anchor="middle">Sachet 1</text>
+
+  <g transform="translate(305 155)">
+    <use href="#cupPink"/>
+    <g transform="translate(10 -65) rotate(-10)">
+      <use href="#SachetPlain"/>
+    </g>
+    <circle class="spark" cx="-7" cy="-55" r="2"/>
+    <circle class="spark" cx="0" cy="-60" r="2"/>
+    <circle class="spark" cx="7" cy="-55" r="2"/>
+  </g>
+  <text class="ml" x="305" y="225" text-anchor="middle">500ml</text>
+  <text class="copy" x="305" y="255" text-anchor="middle">
+    <tspan x="305" dy="0">Open Sachet 1 and</tspan>
+    <tspan x="305" dy="18">dissolve it in</tspan>
+    <tspan x="305" dy="18">500 ml of cold water</tspan>
+  </text>
+
+  <g transform="translate(555 155)">
+    <use href="#cupPink"/>
+  </g>
+  <text class="ml" x="555" y="225" text-anchor="middle">500ml</text>
+  <text class="copy" x="555" y="255" text-anchor="middle">
+    <tspan x="555" dy="0">Drink dose 1 over</tspan>
+    <tspan x="555" dy="18">30-45 min</tspan>
+  </text>
+
+  <g transform="translate(805 155)">
+    <use href="#cupBlue"/>
+  </g>
+  <text class="ml" x="805" y="225" text-anchor="middle">500ml</text>
+  <text class="copy" x="805" y="255" text-anchor="middle">
+    <tspan x="805" dy="0">Then drink at least</tspan>
+    <tspan x="805" dy="18">500 ml of clear</tspan>
+    <tspan x="805" dy="18">liquids</tspan>
+  </text>
+
+  <text class="Dose-title" x="92" y="445" text-anchor="middle">
+    <tspan x="92" dy="0">2nd Dose of</tspan>
+    <tspan x="92" dy="28">Plenvu®</tspan>
+  </text>
+  <text class="Dose-sub" x="92" y="510" text-anchor="middle">
+    <tspan x="92" dy="0">Sachet A</tspan>
+    <tspan x="92" dy="22">+</tspan>
+    <tspan x="92" dy="22">Sachet B</tspan>
+  </text>
+
+  <g transform="translate(305 465)">
+    <use href="#cupGold"/>
+    <g transform="translate(-18 -65)">
+      <use href="#SachetA"/>
+    </g>
+    <g transform="translate(18 -65)">
+      <use href="#SachetB"/>
+    </g>
+    <circle class="spark" cx="-7" cy="-55" r="2"/>
+    <circle class="spark" cx="0" cy="-60" r="2"/>
+    <circle class="spark" cx="7" cy="-55" r="2"/>
+  </g>
+  <text class="ml" x="305" y="535" text-anchor="middle">500ml</text>
+  <text class="copy" x="305" y="565" text-anchor="middle">
+    <tspan x="305" dy="0">Dissolve Sachets A and B</tspan>
+    <tspan x="305" dy="18">in 500 ml of cold water</tspan>
+  </text>
+
+  <g transform="translate(555 465)">
+    <use href="#clock" y="-65"/>
+    <use href="#cupGold"/>
+  </g>
+  <text class="ml" x="555" y="535" text-anchor="middle">500ml</text>
+  <text class="copy" x="555" y="565" text-anchor="middle">
+    <tspan x="555" dy="0">1 hour after dose 1,</tspan>
+    <tspan x="555" dy="18">drink dose 2 over</tspan>
+    <tspan x="555" dy="18">30-45 min</tspan>
+  </text>
+
+  <g transform="translate(805 465)">
+    <use href="#cupBlue"/>
+  </g>
+  <text class="ml" x="805" y="535" text-anchor="middle">500ml</text>
+  <text class="copy" x="805" y="565" text-anchor="middle">
+    <tspan x="805" dy="0">Finally, drink at least</tspan>
+    <tspan x="805" dy="18">500 ml of clear</tspan>
+    <tspan x="805" dy="18">liquids</tspan>
+  </text>
+
+  <text class="note" x="480" y="680" text-anchor="middle">
+    <tspan x="480" dy="0">**Clear liquids: water, jelly,</tspan>
+    <tspan x="480" dy="18">pulp-free fruit juice, tea and coffee</tspan>
+  </text>
+</svg>

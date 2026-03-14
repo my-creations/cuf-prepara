@@ -104,6 +104,14 @@
   display: flex;
 }
 
+.hero-card-row.subcutaneous-row {
+  display: none;
+}
+
+.hero-card-row.subcutaneous-row.is-visible {
+  display: flex;
+}
+
 .hero-card-row strong {
   color: var(--primary-dark);
   text-align: right;
@@ -361,6 +369,24 @@
   margin-top: 12px;
   display: grid;
   gap: 10px;
+}
+
+.prep-guide-picture {
+  display: block;
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  grid-column: 1 / -1;
+}
+
+.prep-guide-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(1, 111, 142, 0.12);
+  background: #fff;
+  box-shadow: 0 8px 18px rgba(1, 111, 142, 0.06);
 }
 
 .prep-guide-card {
@@ -1146,6 +1172,16 @@
     visibility: hidden;
   }
 
+  html.hash-preparacao.hero-has-subcutaneous .hero-card-row.subcutaneous-row,
+  html.hash-preparacao.hero-has-subcutaneous .hero-card-row.subcutaneous-row.is-visible {
+    display: flex;
+    min-height: 28px;
+  }
+
+  html.hash-preparacao.hero-has-subcutaneous .hero-card-row.subcutaneous-row:not(.is-visible) {
+    visibility: hidden;
+  }
+
   html.hash-preparacao.hero-has-dulcolax .hero-card-row.dulcolax-row,
   html.hash-preparacao.hero-has-dulcolax .hero-card-row.dulcolax-row.is-visible {
     display: flex;
@@ -1197,6 +1233,17 @@
     text-align: center;
   }
 
+  .hero-card-row.subcutaneous-row {
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-card-row.subcutaneous-row strong {
+    text-align: center;
+  }
+
   .hero-card-row.anticoag-warning-row {
     text-align: center;
   }
@@ -1235,6 +1282,11 @@
 
   html.hash-preparacao.hero-has-iron .hero-card-row.iron-row,
   html.hash-preparacao.hero-has-iron .hero-card-row.iron-row.is-visible {
+    min-height: 56px;
+  }
+
+  html.hash-preparacao.hero-has-subcutaneous .hero-card-row.subcutaneous-row,
+  html.hash-preparacao.hero-has-subcutaneous .hero-card-row.subcutaneous-row.is-visible {
     min-height: 56px;
   }
 

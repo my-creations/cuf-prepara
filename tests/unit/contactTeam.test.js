@@ -48,11 +48,12 @@ describe('contactTeam module', () => {
     button.click();
 
     expect(modalControls.openModal).toHaveBeenCalledTimes(1);
-    const form = modalBody.querySelector('#contactTeamForm');
+    const form = modalBody.querySelector('[data-testid="contact-team-form"]');
     expect(form).not.toBeNull();
+    expect(modalBody.querySelector('[data-testid="contact-team-submit-button"]')).not.toBeNull();
 
-    form.querySelector('input[name="email"]').value = 'user@example.com';
-    form.querySelector('textarea[name="issue"]').value = 'I have a preparation question';
+    form.querySelector('[data-testid="contact-team-email-input"]').value = 'user@example.com';
+    form.querySelector('[data-testid="contact-team-issue-input"]').value = 'I have a preparation question';
     form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
 
     expect(navigate).toHaveBeenCalledTimes(1);

@@ -50,6 +50,7 @@ export const buildSchedule = (
   isConstipated = false,
   medication = "",
   takesAnticoagulation = false,
+  takesSubcutaneousMedication = false,
   takesIronMedication = false
 ) => {
   if (!examDateTime) {
@@ -104,6 +105,16 @@ export const buildSchedule = (
     events.push({
       id: "ironStop",
       title: getText("timeline.ironStop"),
+      dateTime: new Date(sevenDaysBefore),
+      showTime: false,
+      highlight: false,
+    });
+  }
+
+  if (takesSubcutaneousMedication) {
+    events.push({
+      id: "subcutaneousStop",
+      title: getText("timeline.subcutaneousStop"),
       dateTime: new Date(sevenDaysBefore),
       showTime: false,
       highlight: false,
@@ -167,6 +178,10 @@ const buildEventDetails = (event, lang) => {
     return getText("hero.ironSuppAction");
   }
 
+  if (event.id === "subcutaneousStop") {
+    return getText("hero.subcutaneousAction");
+  }
+
   const lines = [getText("calendarInfo.meds"), getText("calendarInfo.note")];
   if (event.showTime) {
     lines.unshift(`${getText("timeline.withTime")}: ${formatTime(event.dateTime, lang)}`);
@@ -223,6 +238,12 @@ export const renderHeroSummary = (elements, schedule, lang, state) => {
     if (elements.heroIronRow) {
       elements.heroIronRow.classList.remove("is-visible");
     }
+    if (elements.heroSubcutaneousValue) {
+      elements.heroSubcutaneousValue.textContent = "--";
+    }
+    if (elements.heroSubcutaneousRow) {
+      elements.heroSubcutaneousRow.classList.remove("is-visible");
+    }
     if (elements.heroDulcolaxRow48) {
       elements.heroDulcolaxRow48.classList.remove("is-visible");
     }
@@ -256,10 +277,11 @@ export const renderHeroSummary = (elements, schedule, lang, state) => {
   }
   if (elements.heroIronRow) {
     if (state.takesIronMedication) {
-      const ironStopDate = new Date(examEvent.dateTime);
-      ironStopDate.setDate(ironStopDate.getDate() - 7);
+      const ironStopEvent = schedule.find((item) => item.id === "ironStop");
       if (elements.heroIronValue) {
-        elements.heroIronValue.textContent = formatHeroPlanDate(ironStopDate, lang);
+        elements.heroIronValue.textContent = ironStopEvent
+          ? formatHeroPlanDate(ironStopEvent.dateTime, lang)
+          : "--";
       }
       elements.heroIronRow.classList.add("is-visible");
     } else {
@@ -267,6 +289,22 @@ export const renderHeroSummary = (elements, schedule, lang, state) => {
         elements.heroIronValue.textContent = "--";
       }
       elements.heroIronRow.classList.remove("is-visible");
+    }
+  }
+  if (elements.heroSubcutaneousRow) {
+    if (state.takesSubcutaneousMedication) {
+      const subcutaneousStopEvent = schedule.find((item) => item.id === "subcutaneousStop");
+      if (elements.heroSubcutaneousValue) {
+        elements.heroSubcutaneousValue.textContent = subcutaneousStopEvent
+          ? formatHeroPlanDate(subcutaneousStopEvent.dateTime, lang)
+          : "--";
+      }
+      elements.heroSubcutaneousRow.classList.add("is-visible");
+    } else {
+      if (elements.heroSubcutaneousValue) {
+        elements.heroSubcutaneousValue.textContent = "--";
+      }
+      elements.heroSubcutaneousRow.classList.remove("is-visible");
     }
   }
   if (elements.heroDulcolaxRow48 && elements.heroDulcolaxRow24) {

@@ -7,14 +7,15 @@ const escapeHtml = (value = "") =>
     .replaceAll("'", "&#39;");
 
 const buildContactFormModalHtml = (getText) => `
-  <div class="contact-modal">
+  <div class="contact-modal" data-testid="contact-team-modal">
     <h3 class="contact-modal-title">${escapeHtml(getText("contactForm.title"))}</h3>
     <p class="contact-modal-subtitle">${escapeHtml(getText("contactForm.subtitle"))}</p>
-    <form id="contactTeamForm" class="contact-form">
+    <form id="contactTeamForm" class="contact-form" data-testid="contact-team-form">
       <label class="contact-form-field">
         <span class="contact-form-label">${escapeHtml(getText("contactForm.emailLabel"))}</span>
         <input
           class="contact-form-input"
+          data-testid="contact-team-email-input"
           type="email"
           name="email"
           required
@@ -26,6 +27,7 @@ const buildContactFormModalHtml = (getText) => `
         <span class="contact-form-label">${escapeHtml(getText("contactForm.issueLabel"))}</span>
         <textarea
           class="contact-form-input contact-form-textarea"
+          data-testid="contact-team-issue-input"
           name="issue"
           rows="5"
           required
@@ -34,8 +36,8 @@ const buildContactFormModalHtml = (getText) => `
       </label>
       <p class="contact-form-note">${escapeHtml(getText("contactForm.note"))}</p>
       <div class="contact-form-actions">
-        <button type="button" class="btn ghost" data-modal-close>${escapeHtml(getText("contactForm.cancel"))}</button>
-        <button type="submit" class="btn primary">${escapeHtml(getText("contactForm.send"))}</button>
+        <button type="button" class="btn ghost" data-testid="contact-team-cancel-button" data-modal-close>${escapeHtml(getText("contactForm.cancel"))}</button>
+        <button type="submit" class="btn primary" data-testid="contact-team-submit-button">${escapeHtml(getText("contactForm.send"))}</button>
       </div>
     </form>
   </div>

@@ -2,54 +2,28 @@
   "accordion": {
     "residuePhase": "3 to 2 days before",
     "liquidPhase": "Day before",
-    "residueIntro": "In the two to three days leading up to the colonoscopy, it's important to start adjusting your diet to help bowel cleansing. A low-residue diet is recommended, focusing on simple, cooked, easy-to-digest foods.",
+    "residueIntro": "On the third and second day before the exam, it is essential to start adjusting your diet to help clean the bowel. During these days, a low-residue diet is recommended, focusing on simple, cooked, easy-to-digest foods.",
     "liquidIntro": "On the day before the exam, the diet should be based on clear liquids to maintain hydration and support bowel cleansing.",
-    "residueShoppingNote": "Keep the same list, but prioritize low-residue items.",
-    "liquidShoppingNote": "Keep the list, but focus on clear liquids.",
-    "residueFocusTitle": "Key items for this phase",
-    "residueFocus": [
-      "White rice",
-      "Plain pasta",
-      "White fish",
-      "Boiled chicken",
-      "Mild tea"
-    ],
-    "liquidFocusTitle": "Essential liquids",
-    "liquidFocus": [
-      "Strained broth",
-      "Water",
-      "Tea",
-      "Clear isotonic drinks",
-      "Clear gelatin"
-    ],
+    "residueShoppingNote": "On the third and second day before the exam, use this list as a reference to organize simple, low-residue meals.",
+    "liquidShoppingNote": "On the day before the exam, use this list as a reference and prioritize clear liquids.",
+    "residueFocusTitle": "",
+    "residueFocus": [],
+    "liquidFocusTitle": "",
+    "liquidFocus": [],
     "residueForbidden": [
-      {
-        "title": "Seeds and nuts",
-        "icon": "cross",
-        "detail": "Nuts, seeds",
-        "image": "assets/food/nutsSeeds.svg",
-        "imageAlt": "Seeds and nuts"
-      },
-      {
-        "title": "Whole-grain foods",
-        "icon": "cross",
-        "detail": "Whole bread, oats, quinoa",
-        "image": "assets/food/wholegrain.svg",
-        "imageAlt": "Whole-grain foods"
-      },
-      {
-        "title": "Leafy vegetables",
-        "icon": "cross",
-        "detail": "Salads and vegetables",
-        "image": "assets/food/vegetables.svg",
-        "imageAlt": "Leafy vegetables"
-      },
       {
         "title": "Fruits",
         "icon": "cross",
-        "detail": "Raw fruits with peel and seeds",
+        "detail": "",
         "image": "assets/food/fruits.svg",
         "imageAlt": "Fruits"
+      },
+      {
+        "title": "Vegetables",
+        "icon": "cross",
+        "detail": "Salads and vegetables",
+        "image": "assets/food/vegetables.svg",
+        "imageAlt": "Vegetables"
       },
       {
         "title": "Legumes",
@@ -57,6 +31,20 @@
         "detail": "Beans, chickpeas, lentils, peas",
         "image": "assets/food/legumes.svg",
         "imageAlt": "Legumes"
+      },
+      {
+        "title": "Seeds and nuts",
+        "icon": "cross",
+        "detail": "Walnuts, almonds, seeds",
+        "image": "assets/food/nutsSeeds.svg",
+        "imageAlt": "Seeds and nuts"
+      },
+      {
+        "title": "Whole-grain foods",
+        "icon": "cross",
+        "detail": "Whole-wheat bread, oats, quinoa",
+        "image": "assets/food/wholegrain.svg",
+        "imageAlt": "Whole-grain foods"
       },
       {
         "title": "Milk",
@@ -123,21 +111,21 @@
         "icon": "cross",
         "detail": "",
         "image": "assets/food/milkDairy.svg",
-        "imageAlt": "Milk and dairy"
+        "imageAlt": "Milk"
       },
       {
-        "title": "Alcohol",
+        "title": "Alcoholic drinks",
         "icon": "cross",
-        "detail": "Wine, beer, spirits",
+        "detail": "",
         "image": "assets/food/alcohol.svg",
-        "imageAlt": "Alcohol"
+        "imageAlt": "Alcoholic drinks"
       },
       {
-        "title": "Chunky soups",
+        "title": "Soups with residue",
         "icon": "cross",
-        "detail": "Unstrained broth",
+        "detail": "",
         "image": "assets/food/chunkySoup.svg",
-        "imageAlt": "Chunky soups"
+        "imageAlt": "Soups with residue"
       }
     ],
     "liquidAllowed": [
@@ -171,15 +159,16 @@
       }
     ],
     "dulcolaxReminder": "⚠️ Do not forget: Take Dulcolax 48 hours and 24 hours before the exam.",
-    "plenvuText": "Prepare the solution according to the package instructions. Sip each dose slowly and alternate with clear liquids to stay hydrated. Always follow your doctor's prescription.",
-    "plenvuMedicationNote": "You can obtain $medicamento at the pharmacy; no prescription is required.",
+    "plenvuText": "The success of the exam depends, to a great extent, on good bowel preparation. It is important for the bowel to be very clean, with no stool.",
+    "plenvuMedicationNote": "Buy the bowel preparation product $medicamento at the pharmacy (no prescription is required) and carefully follow the instructions below:",
     "plenvuVideoId": "video-meds",
-    "examLocation": "Building 1, floor 1, reception 1B - Special exams.",
+    "examLocation": "Building 1, floor 1, reception 1C - Special exams.",
     "examChecklist": [
       "Identification document",
       "Insurance card or national health system card",
       "Exam prescription",
-      "Recent blood tests (within 6 months) including CBC, platelets, INR, and aPTT"
+      "Recent blood tests (less than 6 months old) including CBC, platelets, INR and aPTT",
+      "Come accompanied by 1 responsible adult, who can take you home and stay with you for the rest of the day"
     ]
   },
   "shoppingList": [
@@ -334,7 +323,7 @@
     {
       "id": "video-day",
       "title": "On the exam day",
-      "description": "What to bring and how to arrive.",
+      "description": "What to bring and how to prepare for arrival.",
       "duration": "01:45"
     }
   ],
@@ -345,7 +334,7 @@
     },
     {
       "question": "Can I drink water on the exam day?",
-      "answer": "It depends on the indicated time. Always respect the fasting period given."
+      "answer": "You may drink water or other clear liquids up to 2 hours before the exam."
     },
     {
       "question": "What if I cannot finish the solution?",
@@ -353,7 +342,7 @@
     },
     {
       "question": "How do I know the prep was effective?",
-      "answer": "Bowel movements should become clear/yellowish. If unsure, contact the team."
+      "answer": "Bowel movements should be liquid and become clear/yellowish. If in doubt, contact the team."
     }
   ]
 }

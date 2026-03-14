@@ -1,0 +1,70 @@
+import { BasePage } from "./base-page.js";
+import { AppModal } from "./components/app-modal.js";
+import { ContactTeamModal } from "./components/contact-team-modal.js";
+
+export class PreparationPage extends BasePage {
+  constructor(page) {
+    super(page);
+    this.body = page.locator("body");
+    this.heroTitle = this.getByTestId("hero-title");
+    this.heroCard = this.getByTestId("hero-card");
+    this.siteNav = this.getByTestId("site-nav");
+    this.navMedication = this.getByTestId("nav-medication");
+    this.navFaq = this.getByTestId("nav-faq");
+    this.heroAnticoagulationWarning = this.getByTestId("hero-anticoagulation-warning");
+    this.heroIronRow = this.getByTestId("hero-iron-row");
+    this.heroIronLabel = this.getByTestId("hero-iron-label");
+    this.heroSubcutaneousRow = this.getByTestId("hero-subcutaneous-row");
+    this.heroSubcutaneousLabel = this.getByTestId("hero-subcutaneous-label");
+    this.heroDulcolaxRow48 = this.getByTestId("hero-dulcolax-row-48");
+    this.heroDulcolaxRow24 = this.getByTestId("hero-dulcolax-row-24");
+    this.mobileNavToggle = this.getByTestId("mobile-nav-toggle");
+    this.mobileNavBackdrop = this.getByTestId("mobile-nav-backdrop");
+    this.accordionMedication = this.getByTestId("accordion-medication");
+    this.accordionFaq = this.getByTestId("accordion-faq");
+    this.medicationText = this.getByTestId("medication-text");
+    this.medicationVideoGrid = this.getByTestId("medication-video-grid");
+    this.faqList = this.getByTestId("faq-list");
+    this.contactTeamButton = this.getByTestId("contact-team-button");
+  }
+
+  videoCard(videoId) {
+    return this.getByTestId(`video-card-${videoId}`);
+  }
+
+  videoTrigger(videoId) {
+    return this.getByTestId(`video-trigger-${videoId}`);
+  }
+
+  async openMedicationSection() {
+    await this.navMedication.click();
+    await this.waitForUrlHash("#medicacao-preparacao");
+    return this;
+  }
+
+  async openFaqSection() {
+    await this.navFaq.click();
+    await this.waitForUrlHash("#faq");
+    return this;
+  }
+
+  async openMobileNavigation() {
+    await this.mobileNavToggle.click();
+    return this;
+  }
+
+  async closeMobileNavigation() {
+    await this.mobileNavBackdrop.click();
+    return this;
+  }
+
+  async openMedicationVideo(videoId) {
+    await this.videoTrigger(videoId).click();
+    return new AppModal(this.page);
+  }
+
+  async openContactTeamForm() {
+    await this.contactTeamButton.click();
+    return new ContactTeamModal(this.page);
+  }
+}

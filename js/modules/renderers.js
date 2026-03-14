@@ -128,6 +128,7 @@ export const renderVideos = (listElement, videos) => {
   videos.forEach((video) => {
     const card = document.createElement("div");
     card.className = "media-card";
+    card.setAttribute("data-testid", `video-card-${video.id}`);
     card.innerHTML = `
       <div class="media-thumb">
         <span class="media-duration">${video.duration}</span>
@@ -136,7 +137,7 @@ export const renderVideos = (listElement, videos) => {
         <h3>${video.title}</h3>
         <p class="recipe-meta">${video.description}</p>
       </div>
-      <button class="btn ghost" data-video-id="${video.id}">
+      <button class="btn ghost" data-testid="video-trigger-${video.id}" data-video-id="${video.id}">
         ${getText("media.play")}
       </button>
     `;
@@ -220,9 +221,10 @@ export const renderFaq = (elements, content) => {
     return;
   }
   elements.faqList.innerHTML = "";
-  content.faqs.forEach((faq) => {
+  content.faqs.forEach((faq, index) => {
     const item = document.createElement("details");
     item.className = "faq-item";
+    item.setAttribute("data-testid", `faq-item-${index}`);
     item.open = false;
     item.innerHTML = `
       <summary><span>${faq.question}</span></summary>

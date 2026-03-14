@@ -1,106 +1,105 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "./fixtures.js";
 
-const completeWizard = async (
-  page,
-  {
-    language = 'en',
-    medication = 'plenvu',
-    isConstipated = false,
-    takesAnticoagulation = false,
-    takesIronMedication = false,
-    time = '08:30',
-  } = {}
-) => {
-  await expect(page.locator('.wizard-step[data-step="0"]')).toBeVisible({ timeout: 10000 });
+test("wizard flow completes and contact popup opens", async ({
+  wizardPage,
+  preparationPage,
+  contactTeamModal,
+}) => {
+  await wizardPage.goto();
 
-  await page.locator(`[data-wizard-lang="${language}"]`).click();
-  await page.locator('#wizardNext').click();
+  await expect(wizardPage.step("language")).toBeVisible({ timeout: 10000 });
 
-  await page.locator('#wizardDateTrigger').click();
-  await page.locator('#wizardDateToday').click();
-  await page.locator('#wizardTimeTrigger').click();
-  await page.locator(`#wizardTimePanel button[data-time-value="${time}"]`).click();
-  await expect(page.locator('#wizardNext')).toBeEnabled();
-  await page.locator('#wizardNext').click();
+  await wizardPage.selectLanguage("en");
+  await wizardPage.continue();
 
-  await page.locator(`[data-wizard-medication="${medication}"]`).click();
-  await page.locator('#wizardNext').click();
+  await wizardPage.selectExamDateToday();
+  await wizardPage.selectExamTime("08:30");
+  await expect(wizardPage.nextButton).toBeEnabled();
+  await wizardPage.continue();
 
-  await page.locator(`[data-wizard-constipation="${isConstipated}"]`).click();
-  await page.locator('#wizardNext').click();
+  await wizardPage.selectMedication("plenvu");
+  await wizardPage.continue();
 
-  await page.locator(`[data-wizard-anticoagulation="${takesAnticoagulation}"]`).click();
-  await page.locator('#wizardNext').click();
+  await wizardPage.answerConstipation(false);
+  await wizardPage.continue();
 
-  await page.locator(`[data-wizard-iron="${takesIronMedication}"]`).click();
-  await page.locator('#wizardNext').click();
+  await expect(wizardPage.stepSubtitle("anticoagulation")).toContainText("Anticoagulants");
+  await expect(wizardPage.stepSubtitle("anticoagulation")).toContainText("Antiplatelets");
+  await wizardPage.answerAnticoagulation(false);
+  await wizardPage.continue();
 
-  await expect(page.locator('#wizardOverlay')).toBeHidden();
-};
+  await expect(wizardPage.stepSubtitle("subcutaneous")).toContainText("Ozempic");
+  await expect(wizardPage.stepSubtitle("subcutaneous")).toContainText("Mounjaro");
+  await wizardPage.answerSubcutaneousMedication(false);
+  await wizardPage.continue();
 
-test('wizard flow completes and contact popup opens', async ({ page }) => {
-  await page.goto('/');
+  await wizardPage.answerIronMedication(false);
+  await wizardPage.continue();
 
-  await completeWizard(page, {
-    language: 'en',
-    medication: 'plenvu',
-    isConstipated: false,
-    takesAnticoagulation: false,
-    takesIronMedication: false,
-    time: '08:30',
+  await expect(wizardPage.overlay).toBeHidden();
+
+  await preparationPage.openContactTeamForm();
+
+  await expect(contactTeamModal.root).toHaveClass(/is-open/);
+  await expect(contactTeamModal.form).toBeVisible();
+
+  await contactTeamModal.fillForm({
+    email: "user@example.com",
+    issue: "Need help with preparation timings",
   });
 
-  await page.locator('#contactTeamBtn').click();
-  await expect(page.locator('#videoModal')).toHaveClass(/is-open/);
-  await expect(page.locator('#contactTeamForm')).toBeVisible();
-
-  await page.locator('#contactTeamForm input[name="email"]').fill('user@example.com');
-  await page.locator('#contactTeamForm textarea[name="issue"]').fill('Need help with preparation timings');
-
-  await page.locator('#videoModal .modal-close').click();
-  await expect(page.locator('#videoModal')).not.toHaveClass(/is-open/);
+  await contactTeamModal.close();
+  await expect(contactTeamModal.root).not.toHaveClass(/is-open/);
 });
 
-test('wizard with constipation and safety meds shows extra rows and downloads ICS', async ({ page }) => {
-  await page.goto('/');
-
-  await completeWizard(page, {
-    language: 'pt',
-    medication: 'citrafleet',
+test("wizard with constipation and safety meds shows extra rows and downloads ICS", async ({
+  page,
+  wizardPage,
+  preparationPage,
+}) => {
+  await wizardPage.complete({
+    language: "pt",
+    medication: "citrafleet",
     isConstipated: true,
     takesAnticoagulation: true,
+    takesSubcutaneousMedication: true,
     takesIronMedication: true,
-    time: '09:00',
+    examTime: "09:00",
   });
 
-  await expect(page.locator('#heroDulcolaxRow48')).toHaveClass(/is-visible/);
-  await expect(page.locator('#heroDulcolaxRow24')).toHaveClass(/is-visible/);
-  await expect(page.locator('#heroAnticoagWarningRow')).toHaveClass(/is-visible/);
-  await expect(page.locator('#heroIronRow')).toHaveClass(/is-visible/);
-  await expect(page.locator('#heroIronValue')).not.toHaveText('--');
+  await expect(preparationPage.heroDulcolaxRow48).toHaveClass(/is-visible/);
+  await expect(preparationPage.heroDulcolaxRow24).toHaveClass(/is-visible/);
+  await expect(preparationPage.heroAnticoagulationWarning).toHaveClass(/is-visible/);
+  await expect(preparationPage.heroSubcutaneousRow).toHaveClass(/is-visible/);
+  await expect(preparationPage.heroIronRow).toHaveClass(/is-visible/);
+  await expect(page.locator("#heroIronValue")).not.toHaveText("--");
+  await expect(page.locator("#heroSubcutaneousValue")).not.toHaveText("--");
 
   const [download] = await Promise.all([
-    page.waitForEvent('download'),
-    page.locator('#downloadIcs').click(),
+    page.waitForEvent("download"),
+    page.locator("#downloadIcs").click(),
   ]);
   expect(download.suggestedFilename()).toMatch(/\.ics$/);
 });
 
-test('wizard completion persists after page reload', async ({ page }) => {
-  await page.goto('/');
-
-  await completeWizard(page, {
-    language: 'en',
-    medication: 'moviprep',
+test("wizard completion persists after page reload", async ({
+  page,
+  wizardPage,
+  preparationPage,
+}) => {
+  await wizardPage.complete({
+    language: "en",
+    medication: "moviprep",
     isConstipated: false,
     takesAnticoagulation: false,
+    takesSubcutaneousMedication: false,
     takesIronMedication: false,
-    time: '10:00',
+    examTime: "10:00",
   });
 
   await page.reload();
 
-  await expect(page.locator('#wizardOverlay')).toBeHidden();
-  await expect(page.locator('#contactTeamBtn')).toContainText('Contact the team');
-  await expect(page.locator('[data-i18n="hero.cardMeds"]')).toContainText('Taking Moviprep');
+  await expect(wizardPage.overlay).toBeHidden();
+  await expect(preparationPage.contactTeamButton).toContainText("Contact the team");
+  await expect(preparationPage.heroCard).toContainText("Taking Moviprep");
 });

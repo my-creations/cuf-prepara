@@ -33,6 +33,9 @@
               if (wizard.takesIronMedication) {
                 document.documentElement.classList.add("hero-has-iron");
               }
+              if (wizard.takesSubcutaneousMedication) {
+                document.documentElement.classList.add("hero-has-subcutaneous");
+              }
               if (wizard.isConstipated) {
                 document.documentElement.classList.add("hero-has-dulcolax");
               }
@@ -59,16 +62,17 @@
             <span class="logo-title" data-i18n="branding.title">CUF Prepara</span>
           </div>
         </div>
-        <nav class="site-nav" id="siteNav">
-          <a href="#dieta-residuos" data-i18n="nav.residue">Dieta pobre em resíduos</a>
-          <a href="#dieta-liquida" data-i18n="nav.liquid">Dieta líquida</a>
-          <a href="#medicacao-preparacao" data-i18n="nav.plenvu">Toma do Plenvu</a>
-          <a href="#dia-exame" data-i18n="nav.examDay">Dia do exame</a>
-          <a href="#faq" data-i18n="nav.faq">FAQ</a>
+        <nav class="site-nav" id="siteNav" data-testid="site-nav">
+          <a href="#dieta-residuos" data-i18n="nav.residue" data-testid="nav-residue">Dieta pobre em resíduos</a>
+          <a href="#dieta-liquida" data-i18n="nav.liquid" data-testid="nav-liquid">Dieta líquida</a>
+          <a href="#medicacao-preparacao" data-i18n="nav.plenvu" data-testid="nav-medication">Toma do Plenvu</a>
+          <a href="#dia-exame" data-i18n="nav.examDay" data-testid="nav-exam-day">Dia do exame</a>
+          <a href="#faq" data-i18n="nav.faq" data-testid="nav-faq">FAQ</a>
           <button
             type="button"
             class="site-nav-reset site-nav-reset-mobile"
             data-reset-wizard-trigger
+            data-testid="nav-reset-mobile"
             data-i18n="wizard.reset"
           >Alterar Data do Exame</button>
         </nav>
@@ -76,17 +80,19 @@
           type="button"
           class="site-nav-reset site-nav-reset-desktop"
           data-reset-wizard-trigger
+          data-testid="nav-reset-desktop"
           data-i18n="wizard.reset"
         >Alterar Data do Exame</button>
         <div class="header-actions">
           <div class="lang-toggle" role="group" aria-label="Language" data-i18n-aria="lang.label">
-            <button class="lang-btn is-active" data-lang="pt" data-i18n="lang.pt">PT</button>
-            <button class="lang-btn" data-lang="en" data-i18n="lang.en">EN</button>
+            <button class="lang-btn is-active" data-lang="pt" data-i18n="lang.pt" data-testid="lang-toggle-pt">PT</button>
+            <button class="lang-btn" data-lang="en" data-i18n="lang.en" data-testid="lang-toggle-en">EN</button>
           </div>
           <button
             type="button"
             class="mobile-nav-toggle"
             id="mobileNavToggle"
+            data-testid="mobile-nav-toggle"
             aria-label="Toggle navigation"
             aria-expanded="false"
             aria-controls="siteNav"
@@ -97,55 +103,59 @@
           </button>
         </div>
       </header>
-      <div class="mobile-nav-backdrop" id="mobileNavBackdrop" aria-hidden="true"></div>
+      <div class="mobile-nav-backdrop" id="mobileNavBackdrop" data-testid="mobile-nav-backdrop" aria-hidden="true"></div>
 
       <main>
         <section class="hero" id="top">
           <div class="hero-content">
-            <h1 data-i18n="hero.title">Guia de Preparação para Colonoscopia</h1>
+              <h1 data-i18n="hero.title" data-testid="hero-title">Guia de Preparação para Colonoscopia</h1>
             <p class="hero-subtitle" data-i18n="hero.subtitle">
               Tudo o que precisa para uma preparação intestinal eficaz, com calendário inteligente, dieta por fases e lembretes
             </p>
           </div>
           <div class="hero-media">
-            <div class="hero-card">
+              <div class="hero-card" data-testid="hero-card">
               <div class="hero-card-top">
                 <span data-i18n="hero.cardTitle">Plano personalizado</span>
                 <span class="pill" data-i18n="hero.cardPill">Lisboa</span>
               </div>
               <div class="hero-card-body">
-                <div class="hero-card-row anticoag-warning-row" id="heroAnticoagWarningRow">
+                <div class="hero-card-row anticoag-warning-row" id="heroAnticoagWarningRow" data-testid="hero-anticoagulation-warning">
                   <span data-i18n="hero.anticoagWarning">⚠️ Se toma medicação anticoagulante/antiagregante, consulte o seu médico antes do procedimento para saber se a deve parar ou substituir.</span>
                 </div>
-                <div class="hero-card-row iron-row" id="heroIronRow">
-                  <span id="heroIronLabel" data-i18n="hero.ironSuppLabel">Suspender Suplementos</span>
+                <div class="hero-card-row iron-row" id="heroIronRow" data-testid="hero-iron-row">
+                  <span id="heroIronLabel" data-i18n="hero.ironSuppLabel" data-testid="hero-iron-label">Suspender Suplementos</span>
                   <strong id="heroIronValue">domingo, 15/02/2026</strong>
+                </div>
+                <div class="hero-card-row subcutaneous-row" id="heroSubcutaneousRow" data-testid="hero-subcutaneous-row">
+                  <span id="heroSubcutaneousLabel" data-i18n="hero.subcutaneousLabel" data-testid="hero-subcutaneous-label">Suspender medicação subcutânea</span>
+                  <strong id="heroSubcutaneousValue">domingo, 15/02/2026</strong>
                 </div>
                 <div class="hero-card-row">
                   <span data-i18n="hero.cardDiet">Início da Dieta</span>
-                  <strong id="heroDietDate">quinta, 19/02/2026</strong>
+                  <strong id="heroDietDate" data-testid="hero-diet-date">quinta, 19/02/2026</strong>
                 </div>
-                <div class="hero-card-row dulcolax-row" id="heroDulcolaxRow48">
-                  <span id="heroDulcolaxLabel48" data-i18n="hero.dulcolaxLabel">1ª Dose de Dulcolax</span>
+                <div class="hero-card-row dulcolax-row" id="heroDulcolaxRow48" data-testid="hero-dulcolax-row-48">
+                  <span id="heroDulcolaxLabel48" data-i18n="hero.dulcolaxLabel" data-testid="hero-dulcolax-label-48">1ª Dose de Dulcolax</span>
                   <strong id="heroDulcolaxValue48">sexta, 20/02/2026 · 08:30</strong>
                 </div>
-                <div class="hero-card-row dulcolax-row" id="heroDulcolaxRow24">
-                  <span id="heroDulcolaxLabel24" data-i18n="hero.dulcolaxLabel">2ª Dose de Dulcolax</span>
+                <div class="hero-card-row dulcolax-row" id="heroDulcolaxRow24" data-testid="hero-dulcolax-row-24">
+                  <span id="heroDulcolaxLabel24" data-i18n="hero.dulcolaxLabel" data-testid="hero-dulcolax-label-24">2ª Dose de Dulcolax</span>
                   <strong id="heroDulcolaxValue24">sábado, 21/02/2026 · 08:30</strong>
                 </div>
                 <div class="hero-card-row">
                   <span data-i18n="hero.cardMeds">Toma do</span>
-                  <strong id="heroMedsDate">sábado, 21/02/2026 · 22:30</strong>
+                  <strong id="heroMedsDate" data-testid="hero-medication-date">sábado, 21/02/2026 · 22:30</strong>
                 </div>
                 <div class="hero-card-row">
                   <span data-i18n="hero.cardExam">Exame</span>
-                  <strong id="heroExamDate">domingo, 22/02/2026 · 08:30</strong>
+                  <strong id="heroExamDate" data-testid="hero-exam-date">domingo, 22/02/2026 · 08:30</strong>
                 </div>
               </div>
               <div class="hero-card-footer">
               </div>
               <div class="hero-card-actions calendar-actions">
-                <button class="btn primary" id="downloadIcs" data-i18n="calendar.addBtn">Adicionar ao Calendário</button>
+                <button class="btn primary" id="downloadIcs" data-testid="calendar-download-button" data-i18n="calendar.addBtn">Adicionar ao Calendário</button>
               </div>
             </div>
           </div>
@@ -163,7 +173,7 @@
             </div>
           </div>
           <div class="accordion" id="prepAccordion">
-            <details class="accordion-item" id="dieta-residuos">
+            <details class="accordion-item" id="dieta-residuos" data-testid="accordion-residue">
               <summary>
                 <div class="accordion-summary">
                   <span class="accordion-title" data-i18n="accordion.sections.residue.title">Dieta pobre em resíduos</span>
@@ -202,7 +212,7 @@
               </div>
             </details>
 
-            <details class="accordion-item" id="dieta-liquida">
+            <details class="accordion-item" id="dieta-liquida" data-testid="accordion-liquid">
               <summary>
                 <div class="accordion-summary">
                   <span class="accordion-title" data-i18n="accordion.sections.liquid.title">Dieta líquida</span>
@@ -241,7 +251,7 @@
               </div>
             </details>
 
-            <details class="accordion-item" id="medicacao-preparacao">
+            <details class="accordion-item" id="medicacao-preparacao" data-testid="accordion-medication">
               <summary>
                 <div class="accordion-summary">
                   <span class="accordion-title" data-i18n="accordion.sections.plenvu.title">Toma do Plenvu</span>
@@ -252,17 +262,17 @@
                 <div class="accordion-grid">
                   <div class="accordion-block full">
                     <h3 data-i18n="accordion.blocks.plenvuTextTitle"></h3>
-                    <div class="info-card" id="plenvuText"></div>
+                    <div class="info-card" id="plenvuText" data-testid="medication-text"></div>
                   </div>
-                  <div class="accordion-block">
+                  <div class="accordion-block full">
                     <h3 data-i18n="accordion.blocks.videoTitle">Vídeo de preparação</h3>
-                    <div class="media-grid" id="plenvuVideoGrid"></div>
+                    <div class="media-grid" id="plenvuVideoGrid" data-testid="medication-video-grid"></div>
                   </div>
                 </div>
               </div>
             </details>
 
-            <details class="accordion-item" id="dia-exame">
+            <details class="accordion-item" id="dia-exame" data-testid="accordion-exam-day">
               <summary>
                 <div class="accordion-summary">
                   <span class="accordion-title" data-i18n="accordion.sections.examDay.title">Dia do exame</span>
@@ -283,7 +293,7 @@
               </div>
             </details>
 
-            <details class="accordion-item" id="faq">
+            <details class="accordion-item" id="faq" data-testid="accordion-faq">
               <summary>
                 <div class="accordion-summary">
                   <span class="accordion-title" data-i18n="accordion.sections.faq.title">Perguntas frequentes</span>
@@ -292,7 +302,7 @@
               </summary>
               <div class="accordion-panel">
                 <p class="faq-lead" data-i18n="accordion.sections.faq.lead"></p>
-                <div class="faq" id="faqList"></div>
+                <div class="faq" id="faqList" data-testid="faq-list"></div>
               </div>
             </details>
           </div>
@@ -305,7 +315,7 @@
               <p data-i18n="alerts.text">Se tiver dúvidas, sintomas inesperados ou dificuldades com a preparação, contacte a equipa clínica do Hospital CUF Descobertas</p>
             </div>
             <div class="callout-actions">
-              <a id="contactTeamBtn" class="btn primary" href="#" data-i18n="alerts.cta" data-i18n-aria="alerts.cta">Contactar equipa</a>
+              <a id="contactTeamBtn" class="btn primary" href="#" data-testid="contact-team-button" data-i18n="alerts.cta" data-i18n-aria="alerts.cta">Contactar equipa</a>
               <span class="callout-note" data-i18n="alerts.note">Este guia não substitui a orientação médica individual</span>
             </div>
           </div>
@@ -323,27 +333,27 @@
       </footer>
     </div>
 
-    <div class="modal" id="videoModal" aria-hidden="true">
-      <div class="modal-overlay" data-modal-close></div>
+    <div class="modal" id="videoModal" data-testid="app-modal" aria-hidden="true">
+      <div class="modal-overlay" data-testid="app-modal-overlay" data-modal-close></div>
       <div class="modal-content" role="dialog" aria-modal="true">
-        <button class="modal-close" data-modal-close data-i18n-aria="modal.close" aria-label="Fechar">
+        <button class="modal-close" data-testid="modal-close-button" data-modal-close data-i18n-aria="modal.close" aria-label="Fechar">
           &times;
         </button>
-        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-body" id="modalBody" data-testid="app-modal-body"></div>
       </div>
     </div>
 
     <!-- Wizard Overlay -->
-    <div id="wizardOverlay" class="wizard-overlay is-hidden">
+    <div id="wizardOverlay" class="wizard-overlay is-hidden" data-testid="wizard-overlay">
       <!-- Splash Screen -->
-        <div id="wizardSplash" class="wizard-splash is-hidden">
+        <div id="wizardSplash" class="wizard-splash is-hidden" data-testid="wizard-splash">
           <div class="wizard-splash-content">
             <h1 class="wizard-splash-logo" data-i18n="wizard.splashTitle">CUF Prepara</h1>
           </div>
         </div>
 
       <!-- Wizard Container -->
-      <div id="wizardContainer" class="wizard-container is-hidden">
+      <div id="wizardContainer" class="wizard-container is-hidden" data-testid="wizard-container">
         <div class="wizard-card">
           <!-- Progress -->
           <div class="wizard-progress">
@@ -353,22 +363,23 @@
             <div class="wizard-progress-dot"></div>
             <div class="wizard-progress-dot"></div>
             <div class="wizard-progress-dot"></div>
+            <div class="wizard-progress-dot"></div>
           </div>
-          <p class="wizard-step-counter" id="wizardStepCounter" aria-live="polite"></p>
+          <p class="wizard-step-counter" id="wizardStepCounter" data-testid="wizard-step-counter" aria-live="polite"></p>
 
           <!-- Step 1: Language -->
-          <div class="wizard-step" data-step="0">
-            <h2 class="wizard-step-title" data-i18n="wizard.step1Title">Escolha o idioma</h2>
-            <p class="wizard-step-subtitle" data-i18n="wizard.step1Subtitle">Choose your language</p>
+          <div class="wizard-step" data-step="0" data-testid="wizard-step-language">
+            <h2 class="wizard-step-title" data-testid="wizard-step-title" data-i18n="wizard.step1Title">Escolha o idioma</h2>
+            <p class="wizard-step-subtitle" data-testid="wizard-step-subtitle" data-i18n="wizard.step1Subtitle">Choose your language</p>
             <div class="wizard-options">
-              <button type="button" class="wizard-option" data-wizard-lang="pt">
+              <button type="button" class="wizard-option" data-wizard-lang="pt" data-testid="wizard-language-pt">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.pt">Português</h3>
                   <p class="wizard-option-description" data-i18n="wizard.ptDesc">Conteúdo em português</p>
                 </div>
               </button>
-              <button type="button" class="wizard-option" data-wizard-lang="en">
+              <button type="button" class="wizard-option" data-wizard-lang="en" data-testid="wizard-language-en">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.en">English</h3>
@@ -379,9 +390,9 @@
           </div>
 
           <!-- Step 2: Date & Time -->
-          <div class="wizard-step" data-step="1">
-            <h2 class="wizard-step-title" data-i18n="wizard.step2Title">Data e hora do exame</h2>
-            <p class="wizard-step-subtitle" data-i18n="wizard.step2Subtitle">Selecione quando será realizada a colonoscopia</p>
+          <div class="wizard-step" data-step="1" data-testid="wizard-step-datetime">
+            <h2 class="wizard-step-title" data-testid="wizard-step-title" data-i18n="wizard.step2Title">Data e hora do exame</h2>
+            <p class="wizard-step-subtitle" data-testid="wizard-step-subtitle" data-i18n="wizard.step2Subtitle">Selecione quando será realizada a colonoscopia</p>
             <div class="wizard-input-group">
               <div class="wizard-input-field">
                 <label for="wizardDateTrigger" data-i18n="wizard.dateLabel">Data do exame</label>
@@ -390,6 +401,7 @@
                     type="button"
                     class="wizard-picker-trigger is-placeholder"
                     id="wizardDateTrigger"
+                    data-testid="wizard-date-trigger"
                     aria-expanded="false"
                     aria-controls="wizardDatePanel"
                   >
@@ -403,19 +415,19 @@
                     <span class="wizard-picker-chevron" aria-hidden="true">▾</span>
                   </button>
                   <input type="hidden" id="wizardDate" required />
-                  <div class="wizard-picker-panel wizard-date-panel is-hidden" id="wizardDatePanel" role="dialog" aria-modal="false">
+                  <div class="wizard-picker-panel wizard-date-panel is-hidden" id="wizardDatePanel" data-testid="wizard-date-panel" role="dialog" aria-modal="false">
                     <div class="wizard-calendar-header">
-                      <button type="button" class="wizard-calendar-nav" id="wizardDatePrev" aria-label="Mês anterior">
+                      <button type="button" class="wizard-calendar-nav" id="wizardDatePrev" data-testid="wizard-calendar-prev-button" aria-label="Mês anterior">
                         <span aria-hidden="true">‹</span>
                       </button>
                       <p class="wizard-calendar-month" id="wizardCalendarMonthLabel"></p>
-                      <button type="button" class="wizard-calendar-nav" id="wizardDateNext" aria-label="Próximo mês">
+                      <button type="button" class="wizard-calendar-nav" id="wizardDateNext" data-testid="wizard-calendar-next-button" aria-label="Próximo mês">
                         <span aria-hidden="true">›</span>
                       </button>
                     </div>
                     <div class="wizard-calendar-weekdays" id="wizardCalendarWeekdays"></div>
-                    <div class="wizard-calendar-grid" id="wizardCalendarGrid"></div>
-                    <button type="button" class="wizard-calendar-today" id="wizardDateToday" data-i18n="wizard.today">Hoje</button>
+                    <div class="wizard-calendar-grid" id="wizardCalendarGrid" data-testid="wizard-calendar-grid"></div>
+                    <button type="button" class="wizard-calendar-today" id="wizardDateToday" data-testid="wizard-date-today" data-i18n="wizard.today">Hoje</button>
                   </div>
                 </div>
               </div>
@@ -426,6 +438,7 @@
                     type="button"
                     class="wizard-picker-trigger"
                     id="wizardTimeTrigger"
+                    data-testid="wizard-time-trigger"
                     aria-expanded="false"
                     aria-controls="wizardTimePanel"
                   >
@@ -437,30 +450,30 @@
                     <span class="wizard-picker-chevron" aria-hidden="true">▾</span>
                   </button>
                   <input type="hidden" id="wizardTime" value="08:30" required />
-                  <div class="wizard-picker-panel wizard-time-panel is-hidden" id="wizardTimePanel" role="listbox" aria-label="Exam time options"></div>
+                  <div class="wizard-picker-panel wizard-time-panel is-hidden" id="wizardTimePanel" data-testid="wizard-time-panel" role="listbox" aria-label="Exam time options"></div>
                 </div>
               </div>
             </div>
           </div>
 
           <!-- Step 3: Medication -->
-          <div class="wizard-step" data-step="2">
-            <h2 class="wizard-step-title" data-i18n="wizard.step3Title">Medicação de preparação</h2>
-            <p class="wizard-step-subtitle" data-i18n="wizard.step3Subtitle">Que medicação foi recomendada para a preparação?</p>
+          <div class="wizard-step" data-step="2" data-testid="wizard-step-medication">
+            <h2 class="wizard-step-title" data-testid="wizard-step-title" data-i18n="wizard.step3Title">Medicação de preparação</h2>
+            <p class="wizard-step-subtitle" data-testid="wizard-step-subtitle" data-i18n="wizard.step3Subtitle">Que medicação foi recomendada para a preparação?</p>
             <div class="wizard-options">
-              <button type="button" class="wizard-option" data-wizard-medication="plenvu">
+              <button type="button" class="wizard-option" data-wizard-medication="plenvu" data-testid="wizard-medication-plenvu">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.plenvu">Plenvu</h3>
                 </div>
               </button>
-              <button type="button" class="wizard-option" data-wizard-medication="moviprep">
+              <button type="button" class="wizard-option" data-wizard-medication="moviprep" data-testid="wizard-medication-moviprep">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.moviprep">Moviprep</h3>
                 </div>
               </button>
-              <button type="button" class="wizard-option" data-wizard-medication="citrafleet">
+              <button type="button" class="wizard-option" data-wizard-medication="citrafleet" data-testid="wizard-medication-citrafleet">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.citrafleet">Citrafleet</h3>
@@ -470,18 +483,18 @@
           </div>
 
           <!-- Step 4: Constipation -->
-          <div class="wizard-step" data-step="3">
-            <h2 class="wizard-step-title" data-i18n="wizard.step4Title">Tem tendência para obstipação?</h2>
-            <p class="wizard-step-subtitle" data-i18n="wizard.step4Subtitle">Evacua com dificuldade ou irregularidade?</p>
+          <div class="wizard-step" data-step="3" data-testid="wizard-step-constipation">
+            <h2 class="wizard-step-title" data-testid="wizard-step-title" data-i18n="wizard.step4Title">Tem tendência para obstipação?</h2>
+            <p class="wizard-step-subtitle" data-testid="wizard-step-subtitle" data-i18n="wizard.step4Subtitle">Evacua com dificuldade ou irregularidade?</p>
             <div class="wizard-options">
-              <button type="button" class="wizard-option" data-wizard-constipation="true">
+              <button type="button" class="wizard-option" data-wizard-constipation="true" data-testid="wizard-constipation-true">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.yes">Sim</h3>
                   <p class="wizard-option-description" data-i18n="wizard.yesDesc">Tenho tendência para obstipação</p>
                 </div>
               </button>
-              <button type="button" class="wizard-option" data-wizard-constipation="false">
+              <button type="button" class="wizard-option" data-wizard-constipation="false" data-testid="wizard-constipation-false">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.no">Não</h3>
@@ -489,24 +502,24 @@
                 </div>
               </button>
             </div>
-            <div class="wizard-alert" id="constipationAlert" style="display: none;">
+            <div class="wizard-alert" id="constipationAlert" data-testid="wizard-constipation-alert" style="display: none;">
               <p class="wizard-alert-text" data-i18n="wizard.constipationAlert">Será adicionado Dulcolax às 48h e 24h antes do exame para melhor preparação intestinal</p>
             </div>
           </div>
 
           <!-- Step 5: Anticoagulation -->
-          <div class="wizard-step" data-step="4">
-            <h2 class="wizard-step-title" data-i18n="wizard.step5Title">Toma medicação anticoagulante e/ou antiagregante?</h2>
-            <p class="wizard-step-subtitle" data-i18n="wizard.step5Subtitle">Anticoagulante: Exemplos: Varfine, Sintrom, Pradaxa, Xarelto, Eliquis. Antiagregante: Exemplos: Aspirina, AAS, Cartia, Tyklid</p>
+          <div class="wizard-step" data-step="4" data-testid="wizard-step-anticoagulation">
+            <h2 class="wizard-step-title" data-testid="wizard-step-title" data-i18n="wizard.step5Title">Toma medicação anticoagulante e/ou antiagregante?</h2>
+            <p class="wizard-step-subtitle" data-testid="wizard-step-subtitle" data-i18n="wizard.step5Subtitle">Anticoagulante: Exemplos: Varfine, Sintrom, Pradaxa, Xarelto, Eliquis. Antiagregante: Exemplos: Aspirina, AAS, Cartia, Tyklid</p>
             <div class="wizard-options">
-              <button type="button" class="wizard-option" data-wizard-anticoagulation="true">
+              <button type="button" class="wizard-option" data-wizard-anticoagulation="true" data-testid="wizard-anticoagulation-true">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.yes">Sim</h3>
                   <p class="wizard-option-description" data-i18n="wizard.anticoagulationYesDesc">Sim, tomo medicação anticoagulante/antiagregante</p>
                 </div>
               </button>
-              <button type="button" class="wizard-option" data-wizard-anticoagulation="false">
+              <button type="button" class="wizard-option" data-wizard-anticoagulation="false" data-testid="wizard-anticoagulation-false">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.no">Não</h3>
@@ -516,19 +529,39 @@
             </div>
           </div>
 
-          <!-- Step 6: Iron supplements -->
-          <div class="wizard-step" data-step="5">
-            <h2 class="wizard-step-title" data-i18n="wizard.step6Title">Toma Suplementos ou Medicamentos com Ferro, incluindo Multivitamínicos?</h2>
-            <p class="wizard-step-subtitle" data-i18n="wizard.step6Subtitle"></p>
+          <!-- Step 6: Subcutaneous medication -->
+          <div class="wizard-step" data-step="5" data-testid="wizard-step-subcutaneous">
+            <h2 class="wizard-step-title" data-testid="wizard-step-title" data-i18n="wizard.step6Title">Toma algum medicamento injetável por via subcutânea (exceto insulina) para tratamento da diabetes e/ou emagrecimento?</h2>
+            <p class="wizard-step-subtitle" data-testid="wizard-step-subtitle" data-i18n="wizard.step6Subtitle">Exemplos: Ozempic (semaglutido) e Mounjaro (tirzepatida)</p>
             <div class="wizard-options">
-              <button type="button" class="wizard-option" data-wizard-iron="true">
+              <button type="button" class="wizard-option" data-wizard-subcutaneous="true" data-testid="wizard-subcutaneous-true">
+                <div class="wizard-option-radio"></div>
+                <div class="wizard-option-content">
+                  <h3 class="wizard-option-title" data-i18n="wizard.yes">Sim</h3>
+                </div>
+              </button>
+              <button type="button" class="wizard-option" data-wizard-subcutaneous="false" data-testid="wizard-subcutaneous-false">
+                <div class="wizard-option-radio"></div>
+                <div class="wizard-option-content">
+                  <h3 class="wizard-option-title" data-i18n="wizard.no">Não</h3>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 7: Iron supplements -->
+          <div class="wizard-step" data-step="6" data-testid="wizard-step-iron">
+            <h2 class="wizard-step-title" data-testid="wizard-step-title" data-i18n="wizard.step7Title">Toma suplementos ou medicamentos com ferro, incluindo multivitamínicos?</h2>
+            <p class="wizard-step-subtitle" data-testid="wizard-step-subtitle" data-i18n="wizard.step7Subtitle"></p>
+            <div class="wizard-options">
+              <button type="button" class="wizard-option" data-wizard-iron="true" data-testid="wizard-iron-true">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.yes">Sim</h3>
                   <p class="wizard-option-description" data-i18n="wizard.ironYesDesc">Sim, tomo suplementos/medicamentos com ferro</p>
                 </div>
               </button>
-              <button type="button" class="wizard-option" data-wizard-iron="false">
+              <button type="button" class="wizard-option" data-wizard-iron="false" data-testid="wizard-iron-false">
                 <div class="wizard-option-radio"></div>
                 <div class="wizard-option-content">
                   <h3 class="wizard-option-title" data-i18n="wizard.no">Não</h3>
@@ -540,20 +573,22 @@
 
           <!-- Navigation -->
           <div class="wizard-buttons">
-            <button
-              type="button"
-              class="wizard-btn wizard-btn-secondary"
-              id="wizardBack"
-              style="display: none;"
-              data-i18n="wizard.back"
-            >Voltar</button>
-            <button
-              type="button"
-              class="wizard-btn wizard-btn-primary"
-              id="wizardNext"
-              disabled
-              data-i18n="wizard.next"
-            >Continuar</button>
+              <button
+                type="button"
+                class="wizard-btn wizard-btn-secondary"
+                id="wizardBack"
+                data-testid="wizard-back-button"
+                style="display: none;"
+                data-i18n="wizard.back"
+              >Voltar</button>
+              <button
+                type="button"
+                class="wizard-btn wizard-btn-primary"
+                id="wizardNext"
+                data-testid="wizard-next-button"
+                disabled
+                data-i18n="wizard.next"
+              >Continuar</button>
           </div>
         </div>
       </div>

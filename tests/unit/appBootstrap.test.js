@@ -34,6 +34,7 @@ describe('appBootstrap', () => {
       examTime: '',
       medication: '',
       isConstipated: false,
+      takesSubcutaneousMedication: false,
     };
 
     applyWizardDataToState({
@@ -44,6 +45,7 @@ describe('appBootstrap', () => {
         examTime: '',
         medication: 'plenvu',
         isConstipated: true,
+        takesSubcutaneousMedication: true,
       },
       defaultExamTime: '08:30',
     });
@@ -54,6 +56,7 @@ describe('appBootstrap', () => {
       examTime: '08:30',
       medication: 'plenvu',
       isConstipated: true,
+      takesSubcutaneousMedication: true,
     });
   });
 

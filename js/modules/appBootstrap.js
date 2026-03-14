@@ -9,6 +9,7 @@ export const applyWizardDataToState = ({ appState, wizardData, defaultExamTime }
   appState.medication = wizardData.medication;
   appState.isConstipated = wizardData.isConstipated;
   appState.takesAnticoagulation = Boolean(wizardData.takesAnticoagulation);
+  appState.takesSubcutaneousMedication = Boolean(wizardData.takesSubcutaneousMedication);
   appState.takesIronMedication = Boolean(wizardData.takesIronMedication);
 };
 
