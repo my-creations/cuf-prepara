@@ -1,4 +1,14 @@
 import { test, expect } from "./fixtures.js";
+import {
+  getLocalizedTranslations,
+  getMedicationLabel,
+} from "./support/localized-data.js";
+
+const enTranslations = getLocalizedTranslations("en");
+const anticoagLabels = Array.from(
+  enTranslations.wizard.step5SubtitleHtml.matchAll(/<strong>([^<]+)<\/strong>/g),
+  ([, label]) => label
+);
 
 test("wizard flow completes and contact popup opens", async ({
   wizardPage,
@@ -23,13 +33,15 @@ test("wizard flow completes and contact popup opens", async ({
   await wizardPage.answerConstipation(false);
   await wizardPage.continue();
 
-  await expect(wizardPage.stepSubtitle("anticoagulation")).toContainText("Anticoagulants");
-  await expect(wizardPage.stepSubtitle("anticoagulation")).toContainText("Antiplatelets");
+  for (const label of anticoagLabels) {
+    await expect(wizardPage.stepSubtitle("anticoagulation")).toContainText(label);
+  }
   await wizardPage.answerAnticoagulation(false);
   await wizardPage.continue();
 
-  await expect(wizardPage.stepSubtitle("subcutaneous")).toContainText("Ozempic");
-  await expect(wizardPage.stepSubtitle("subcutaneous")).toContainText("Mounjaro");
+  await expect(wizardPage.stepSubtitle("subcutaneous")).toContainText(
+    enTranslations.wizard.step6Subtitle
+  );
   await wizardPage.answerSubcutaneousMedication(false);
   await wizardPage.continue();
 
@@ -100,6 +112,6 @@ test("wizard completion persists after page reload", async ({
   await page.reload();
 
   await expect(wizardPage.overlay).toBeHidden();
-  await expect(preparationPage.contactTeamButton).toContainText("Contact the team");
-  await expect(preparationPage.heroCard).toContainText("Taking Moviprep");
+  await expect(preparationPage.contactTeamButton).toContainText(enTranslations.alerts.cta);
+  await expect(preparationPage.heroCard).toContainText(getMedicationLabel("en", "moviprep"));
 });

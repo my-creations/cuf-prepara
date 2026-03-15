@@ -2,10 +2,10 @@
   "accordion": {
     "residuePhase": "3 to 2 days before",
     "liquidPhase": "Day before",
-    "residueIntro": "On the third and second day before the exam, it is essential to start adjusting your diet to help clean the bowel. During these days, a low-residue diet is recommended, focusing on simple, cooked, easy-to-digest foods.",
-    "liquidIntro": "On the day before the exam, the diet should be based on clear liquids to maintain hydration and support bowel cleansing.",
-    "residueShoppingNote": "On the third and second day before the exam, use this list as a reference to organize simple, low-residue meals.",
-    "liquidShoppingNote": "On the day before the exam, use this list as a reference and prioritize clear liquids.",
+    "residueIntro": "On the third and second day before the exam, it is essential to start adjusting your diet to help clean the bowel. During these days, a low-residue diet is recommended, focusing on simple, cooked, easy-to-digest foods",
+    "liquidIntro": "On the day before the exam, the diet should be based on clear liquids to maintain hydration and support bowel cleansing",
+    "residueShoppingNote": "On the third and second day before the exam, use this list as a reference to organize simple, low-residue meals",
+    "liquidShoppingNote": "On the day before the exam, use this list as a reference and prioritize clear liquids",
     "residueFocusTitle": "",
     "residueFocus": [],
     "liquidFocusTitle": "",
@@ -158,11 +158,20 @@
         "imageAlt": "Clear gelatin"
       }
     ],
-    "dulcolaxReminder": "⚠️ Do not forget: Take Dulcolax 48 hours and 24 hours before the exam.",
-    "plenvuText": "The success of the exam depends, to a great extent, on good bowel preparation. It is important for the bowel to be very clean, with no stool.",
+    "dulcolaxReminder": "⚠️ Do not forget: Take Dulcolax 48 hours and 24 hours before the exam",
+    "plenvuText": "The success of the exam depends, to a great extent, on good bowel preparation. It is important for the bowel to be very clean, with no stool",
     "plenvuMedicationNote": "Buy the bowel preparation product $medicamento at the pharmacy (no prescription is required) and carefully follow the instructions below:",
+    "medicationStartAlert": "⚠️ You must fast for at least 3 hours before starting the preparation",
+    "medicationFastingAlert": "⚠️ After finishing the bowel preparation, you must remain fasting (no solids or liquids, including water) for 6 hours before the exam. This fasting period does not prevent you from taking your medication, which should be taken with the smallest possible amount of water up to 2 hours before the exam",
+    "plenvuTips": [
+      "Prepare the sachet contents with very cold water",
+      "If you like, add a few drops of lemon or mint leaves",
+      "Use a straw to drink the solution",
+      "Alternate drinking the solution with clear liquids",
+      "If you feel nauseated, pause for 10 to 15 minutes"
+    ],
     "plenvuVideoId": "video-meds",
-    "examLocation": "Building 1, floor 1, reception 1C - Special exams.",
+    "examLocation": "Building 1, floor 1, reception 1C - Special exams",
     "examChecklist": [
       "Identification document",
       "Insurance card or national health system card",
@@ -269,80 +278,92 @@
       "category": "lunch",
       "phase": "3 to 2 days before",
       "title": "Gentle rice soup",
-      "description": "Strained broth with well-cooked white rice."
+      "description": "Strained broth with well-cooked white rice"
     },
     {
       "id": "grilled-fish",
       "category": "dinner",
       "phase": "3 to 2 days before",
       "title": "Grilled white fish",
-      "description": "Lean fish with white rice and mild olive oil."
+      "description": "Lean fish with white rice and mild olive oil"
     },
     {
       "id": "shredded-chicken",
       "category": "lunch",
       "phase": "3 to 2 days before",
       "title": "Shredded chicken",
-      "description": "Boiled chicken breast with plain pasta."
+      "description": "Boiled chicken breast with plain pasta"
     },
     {
       "id": "gelatin",
       "category": "snack",
       "phase": "Day before",
       "title": "Clear gelatin",
-      "description": "Light-colored gelatin without fruit pieces."
+      "description": "Light-colored gelatin without fruit pieces"
     },
     {
       "id": "tea-honey",
       "category": "breakfast",
       "phase": "Day before",
       "title": "Tea with honey",
-      "description": "Mild tea with a touch of honey."
+      "description": "Mild tea with a touch of honey"
     },
     {
       "id": "clear-broth",
       "category": "dinner",
       "phase": "Day before",
       "title": "Clear broth",
-      "description": "Strained vegetable or chicken broth."
+      "description": "Strained vegetable or chicken broth"
     }
   ],
   "videos": [
     {
       "id": "video-diet",
       "title": "How to organize the diet",
-      "description": "Summary of phases and food choices.",
+      "description": "Summary of phases and food choices",
       "duration": "02:20"
     },
     {
       "id": "video-meds",
       "title": "How to take the medication",
-      "description": "Timing and hydration guidance.",
+      "description": "Timing and hydration guidance",
       "duration": "03:10"
     },
     {
       "id": "video-day",
       "title": "On the exam day",
-      "description": "What to bring and how to prepare for arrival.",
+      "description": "What to bring and how to prepare for arrival",
       "duration": "01:45"
     }
   ],
   "faqs": [
     {
       "question": "Can I take my usual medication?",
-      "answer": "Follow your doctor's instructions. Some medications may require adjustment."
-    },
-    {
-      "question": "Can I drink water on the exam day?",
-      "answer": "You may drink water or other clear liquids up to 2 hours before the exam."
+      "answer": "Yes. You may take your usual medication, however, you should take it with the smallest possible amount of liquid up to two hours before the exam and, whenever possible, outside the period when you are taking the preparation"
     },
     {
       "question": "What if I cannot finish the solution?",
-      "answer": "Contact the hospital to receive specific guidance."
+      "answer": "During the preparation, you may not be able to drink the entire solution or vomiting may occur. Even so, the preparation may still be adequate. The final goal is for bowel movements to be liquid and light yellow in color"
+    },
+    {
+      "question": "How long does the preparation take to work?",
+      "answer": "The preparation usually starts to work between 30 minutes and 2 hours after you begin taking it. However, this timing can vary from person to person"
+    },
+    {
+      "question": "Can I brush my teeth on the exam day?",
+      "answer": "Yes. You may brush your teeth normally, taking care not to swallow water"
+    },
+    {
+      "question": "Can I smoke before the exam?",
+      "answer": "It is not recommended to smoke before the exam, especially during the fasting period"
+    },
+    {
+      "question": "Can I drive after the exam?",
+      "answer": "No. If sedation is administered during the exam, you should not drive or operate machinery in the following 12-24 hours. You should be accompanied home"
     },
     {
       "question": "How do I know the prep was effective?",
-      "answer": "Bowel movements should be liquid and become clear/yellowish. If in doubt, contact the team."
+      "answer": "Bowel movements should be liquid and become clear/yellowish. If in doubt, contact the team"
     }
   ]
 }

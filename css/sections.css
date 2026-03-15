@@ -365,6 +365,17 @@
   gap: 4px;
 }
 
+.info-card ol {
+  padding-left: 22px;
+  display: grid;
+  gap: 10px;
+}
+
+.info-card ol li::marker {
+  font-weight: 700;
+  color: var(--primary-dark);
+}
+
 .prep-guide {
   margin-top: 12px;
   display: grid;

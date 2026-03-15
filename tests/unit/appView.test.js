@@ -20,6 +20,8 @@ const createElements = () => {
     <div id="residueIntro"></div>
     <div id="liquidIntro"></div>
     <div id="plenvuText"></div>
+    <div id="medicationFastingAlertBlock" hidden><div id="medicationFastingAlert"></div></div>
+    <div id="plenvuTipsBlock" hidden><div id="plenvuTips"></div></div>
     <div id="plenvuVideoGrid"></div>
     <div id="examLocation"></div>
     <div id="examChecklist"></div>
@@ -48,6 +50,10 @@ const createElements = () => {
     residueIntro: document.getElementById('residueIntro'),
     liquidIntro: document.getElementById('liquidIntro'),
     plenvuText: document.getElementById('plenvuText'),
+    medicationFastingAlertBlock: document.getElementById('medicationFastingAlertBlock'),
+    medicationFastingAlert: document.getElementById('medicationFastingAlert'),
+    plenvuTipsBlock: document.getElementById('plenvuTipsBlock'),
+    plenvuTips: document.getElementById('plenvuTips'),
     plenvuVideoGrid: document.getElementById('plenvuVideoGrid'),
     examLocation: document.getElementById('examLocation'),
     examChecklist: document.getElementById('examChecklist'),
@@ -80,6 +86,9 @@ const createContent = () => ({
     dulcolaxReminder: 'Take Dulcolax',
     plenvuText: 'Base instruction.',
     plenvuMedicationNote: 'Buy $medicamento.',
+    medicationStartAlert: 'Fast at least 3 hours before starting the preparation.',
+    medicationFastingAlert: 'Fast for 6 hours.\n\nTake medication with little water.',
+    plenvuTips: ['Tip 1', 'Tip 2'],
     plenvuVideoId: 'video-meds',
     examLocation: 'Building 1',
     examChecklist: ['ID document'],
@@ -139,9 +148,14 @@ describe('appView module', () => {
     expect(elements.accordionPlenvuTitle.textContent).toBe('Taking Plenvu');
     expect(elements.plenvuText.textContent).toContain('Base instruction.');
     expect(elements.plenvuText.textContent).toContain('Buy Plenvu.');
+    expect(elements.plenvuText.querySelector('[data-testid="medication-start-alert"]')?.textContent).toContain('Fast at least 3 hours');
     expect(elements.plenvuText.querySelector('.prep-guide')).not.toBeNull();
     expect(elements.plenvuText.querySelector('.prep-guide source')?.getAttribute('srcset')).toBe('assets/plenvu-preparation-vertical-en.svg');
     expect(elements.plenvuText.querySelector('.prep-guide img')?.getAttribute('src')).toBe('assets/plenvu-preparation-horizontal-en.svg');
+    expect(elements.medicationFastingAlertBlock.hidden).toBe(false);
+    expect(elements.medicationFastingAlert.textContent).toContain('Fast for 6 hours.');
+    expect(elements.plenvuTipsBlock.hidden).toBe(false);
+    expect(elements.plenvuTips.querySelectorAll('ol li')).toHaveLength(2);
     expect(elements.plenvuVideoGrid.querySelector('[data-testid="video-trigger-video-meds"]')).not.toBeNull();
     expect(elements.recipeCardsResidue.children.length).toBe(1);
     expect(elements.recipeCardsLiquid.children.length).toBe(1);
@@ -187,6 +201,9 @@ describe('appView module', () => {
     expect(elements.navPlenvuLink.textContent).toBe('Taking Moviprep');
     expect(elements.accordionPlenvuTitle.textContent).toBe('Taking Moviprep');
     expect(elements.plenvuText.querySelector('.prep-guide')).toBeNull();
+    expect(elements.plenvuText.querySelector('[data-testid="medication-start-alert"]')?.textContent).toContain('Fast at least 3 hours');
+    expect(elements.medicationFastingAlertBlock.hidden).toBe(false);
+    expect(elements.plenvuTipsBlock.hidden).toBe(true);
     expect(elements.plenvuText.textContent).toContain('Buy Moviprep.');
     expect(elements.residueDulcolaxReminder.classList.contains('is-hidden')).toBe(false);
     expect(elements.liquidDulcolaxReminder.classList.contains('is-hidden')).toBe(false);

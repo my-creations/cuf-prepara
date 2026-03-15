@@ -162,8 +162,5 @@
     <tspan x="805" dy="18">transparentes</tspan>
   </text>
 
-  <text class="note" x="480" y="680" text-anchor="middle">
-    <tspan x="480" dy="0">**Líquidos transparentes: água, gelatina,</tspan>
-    <tspan x="480" dy="18">sumos de fruta sem polpa, chá e café</tspan>
-  </text>
+  <text class="note" x="480" y="680" text-anchor="middle">**Líquidos transparentes: água, gelatina, sumos de fruta sem polpa, chá e café</text>
 </svg>

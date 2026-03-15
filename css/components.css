@@ -421,7 +421,7 @@
   color: var(--muted);
   font-size: 1rem;
   line-height: 1.6;
-  text-align: center;
+  text-align: justify;
 }
 
 .accordion-grid {
@@ -457,6 +457,7 @@
 
 .accordion-note {
   color: var(--muted);
+  text-align: justify;
   font-size: 0.97rem;
   line-height: 1.55;
 }
@@ -492,6 +493,18 @@
 .accordion-panel .check-item {
   border-color: rgba(1, 111, 142, 0.12);
   box-shadow: 0 10px 20px rgba(1, 111, 142, 0.08);
+}
+
+#medicacao-preparacao .info-card:not(.prep-alert),
+#dia-exame .info-card:not(.prep-alert) {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+#plenvuText {
+  text-align: justify;
 }
 
 .food-card .food-content {
@@ -611,6 +624,14 @@
   background: rgba(245, 184, 0, 0.12);
   border: 1px solid rgba(245, 184, 0, 0.3);
   color: #7a5a00;
+}
+
+.info-card.prep-alert {
+  background: rgba(245, 184, 0, 0.12);
+  border: 1px solid rgba(245, 184, 0, 0.3);
+  color: #7a5a00;
+  white-space: pre-line;
+  text-align: justify;
 }
 
 #faq.accordion-item {
@@ -743,7 +764,7 @@
   }
 
   .accordion-intro {
-    text-align: left;
+    text-align: justify;
   }
 
   .accordion-title,

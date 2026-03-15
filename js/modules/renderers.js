@@ -195,6 +195,18 @@ export const renderInfoCard = (element, content) => {
   element.textContent = content;
 };
 
+export const renderOrderedInfoList = (element, items) => {
+  if (!element) {
+    return;
+  }
+  if (!items || items.length === 0) {
+    element.innerHTML = "";
+    return;
+  }
+  const list = items.map((item) => `<li>${item}</li>`).join("");
+  element.innerHTML = `<ol>${list}</ol>`;
+};
+
 export const renderFocusList = (element, title, items) => {
   if (!element) {
     return;

@@ -264,6 +264,13 @@
                     <h3 data-i18n="accordion.blocks.plenvuTextTitle"></h3>
                     <div class="info-card" id="plenvuText" data-testid="medication-text"></div>
                   </div>
+                  <div class="accordion-block full" id="medicationFastingAlertBlock" hidden>
+                    <div class="info-card prep-alert" id="medicationFastingAlert" data-testid="medication-fasting-alert"></div>
+                  </div>
+                  <div class="accordion-block full" id="plenvuTipsBlock" hidden>
+                    <h3 data-i18n="accordion.blocks.plenvuTipsTitle">Dicas para facilitar a toma do Plenvu</h3>
+                    <div class="info-card" id="plenvuTips" data-testid="medication-tips"></div>
+                  </div>
                   <div class="accordion-block full">
                     <h3 data-i18n="accordion.blocks.videoTitle">Vídeo de preparação</h3>
                     <div class="media-grid" id="plenvuVideoGrid" data-testid="medication-video-grid"></div>
@@ -485,7 +492,7 @@
           <!-- Step 4: Constipation -->
           <div class="wizard-step" data-step="3" data-testid="wizard-step-constipation">
             <h2 class="wizard-step-title" data-testid="wizard-step-title" data-i18n="wizard.step4Title">Tem tendência para obstipação?</h2>
-            <p class="wizard-step-subtitle" data-testid="wizard-step-subtitle" data-i18n="wizard.step4Subtitle">Evacua com dificuldade ou irregularidade?</p>
+            <p class="wizard-step-subtitle" data-testid="wizard-step-subtitle" data-i18n="wizard.step4Subtitle">Evacua menos de três vezes por semana ou tem dificuldade em evacuar?</p>
             <div class="wizard-options">
               <button type="button" class="wizard-option" data-wizard-constipation="true" data-testid="wizard-constipation-true">
                 <div class="wizard-option-radio"></div>

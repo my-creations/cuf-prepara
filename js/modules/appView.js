@@ -10,6 +10,7 @@ import {
   renderFoodGrid,
   renderFocusList,
   renderInfoCard,
+  renderOrderedInfoList,
   renderRecipes,
   renderShoppingList,
   renderVideos,
@@ -18,6 +19,19 @@ import { formatDate, formatTime } from "../utils/dates.js";
 import { getMedicationLabel, getMedicationName } from "../utils/medication.js";
 
 export const createAppViewController = ({ elements, state, getContent }) => {
+  const renderMedicationStartAlert = (content) => {
+    if (!elements.plenvuText || !content) {
+      return;
+    }
+
+    const alert = document.createElement("div");
+    alert.className = "info-card prep-alert";
+    alert.setAttribute("data-testid", "medication-start-alert");
+    alert.textContent = content;
+
+    elements.plenvuText.appendChild(alert);
+  };
+
   const renderPlenvuPrepGuide = () => {
     if (!elements.plenvuText) {
       return;
@@ -210,7 +224,25 @@ export const createAppViewController = ({ elements, state, getContent }) => {
         : "";
     const plenvuText = [basePlenvuText, medicationNote].filter(Boolean).join(" ");
     renderInfoCard(elements.plenvuText, plenvuText);
+    renderMedicationStartAlert(content.accordion?.medicationStartAlert || "");
     renderPlenvuPrepGuide();
+
+    const medicationFastingAlert = content.accordion?.medicationFastingAlert || "";
+    if (elements.medicationFastingAlertBlock) {
+      elements.medicationFastingAlertBlock.hidden = !medicationFastingAlert;
+    }
+    renderInfoCard(elements.medicationFastingAlert, medicationFastingAlert);
+
+    const plenvuTips = content.accordion?.plenvuTips || [];
+    const showPlenvuTips = state.medication === "plenvu" && plenvuTips.length > 0;
+    if (elements.plenvuTipsBlock) {
+      elements.plenvuTipsBlock.hidden = !showPlenvuTips;
+    }
+    if (showPlenvuTips) {
+      renderOrderedInfoList(elements.plenvuTips, plenvuTips);
+    } else if (elements.plenvuTips) {
+      elements.plenvuTips.innerHTML = "";
+    }
 
     const plenvuVideoId = content.accordion?.plenvuVideoId;
     const plenvuVideo = content.videos?.filter((video) => video.id === plenvuVideoId);

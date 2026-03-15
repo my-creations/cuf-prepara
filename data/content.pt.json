@@ -2,10 +2,10 @@
   "accordion": {
     "residuePhase": "3 a 2 dias antes",
     "liquidPhase": "Véspera",
-    "residueIntro": "No terceiro e segundo dia antes do exame, é fundamental começar a adaptar a alimentação para facilitar a limpeza do intestino. Durante estes dias, recomenda-se uma dieta pobre em resíduos, privilegiando alimentos simples, cozidos e de fácil digestão.",
-    "liquidIntro": "Na véspera do exame, a dieta deve ser baseada em líquidos claros para manter a hidratação e facilitar a limpeza intestinal.",
-    "residueShoppingNote": "No terceiro e segundo dia antes do exame, use esta lista como referência para organizar refeições simples e pobres em resíduos.",
-    "liquidShoppingNote": "Na véspera do exame, use esta lista como referência e dê prioridade a líquidos claros.",
+    "residueIntro": "No terceiro e segundo dia antes do exame, é fundamental começar a adaptar a alimentação para facilitar a limpeza do intestino. Durante estes dias, recomenda-se uma dieta pobre em resíduos, privilegiando alimentos simples, cozidos e de fácil digestão",
+    "liquidIntro": "Na véspera do exame, a dieta deve ser baseada em líquidos claros para manter a hidratação e facilitar a limpeza intestinal",
+    "residueShoppingNote": "No terceiro e segundo dia antes do exame, use esta lista como referência para organizar refeições simples e pobres em resíduos",
+    "liquidShoppingNote": "Na véspera do exame, use esta lista como referência e dê prioridade a líquidos claros",
     "residueFocusTitle": "",
     "residueFocus": [],
     "liquidFocusTitle": "",
@@ -158,11 +158,20 @@
         "imageAlt": "Gelatina clara"
       }
     ],
-    "dulcolaxReminder": "⚠️ Não esquecer: Toma de Dulcolax 48 horas e 24 horas antes do exame.",
-    "plenvuText": "O sucesso do exame depende, em grande parte, de uma boa preparação intestinal. É importante que o intestino esteja bem limpo, sem fezes.",
+    "dulcolaxReminder": "⚠️ Não esquecer: Toma de Dulcolax 48 horas e 24 horas antes do exame",
+    "plenvuText": "O sucesso do exame depende, em grande parte, de uma boa preparação intestinal. É importante que o intestino esteja bem limpo, sem fezes",
     "plenvuMedicationNote": "Adquira na farmácia o produto de preparação $medicamento (não precisa de receita médica) e siga cuidadosamente as instruções seguintes:",
+    "medicationStartAlert": "⚠️ Deve cumprir um jejum mínimo de 3 horas antes de iniciar a toma do preparado",
+    "medicationFastingAlert": "⚠️ Após terminar a toma da preparação intestinal deverá ficar em jejum total (sólidos e líquidos incluindo água) durante 6 horas antes do exame. Este jejum não impede a toma da sua medicação, que deve ser ingerida com a menor quantidade de água possível até 2 horas antes do exame",
+    "plenvuTips": [
+      "Prepare o conteúdo das saquetas em água bem fria",
+      "Se gostar, adicione gotas de limão ou folhas de hortelã",
+      "Use uma palhinha para beber o preparado",
+      "Alterne a toma do preparado com a ingestão de líquidos transparentes",
+      "Se ficar nauseado/a, faça uma pausa de 10 a 15 minutos"
+    ],
     "plenvuVideoId": "video-meds",
-    "examLocation": "Edifício 1, piso 1, recepção 1C - Exames especiais.",
+    "examLocation": "Edifício 1, piso 1, recepção 1C - Exames especiais",
     "examChecklist": [
       "Documento de identificação",
       "Cartão seguro ou sistema de saúde",
@@ -269,80 +278,92 @@
       "category": "lunch",
       "phase": "3 a 2 dias antes",
       "title": "Sopa suave de arroz",
-      "description": "Caldo coado com arroz branco bem cozido."
+      "description": "Caldo coado com arroz branco bem cozido"
     },
     {
       "id": "peixe-grelhado",
       "category": "dinner",
       "phase": "3 a 2 dias antes",
       "title": "Peixe branco grelhado",
-      "description": "Peixe magro com arroz branco e azeite suave."
+      "description": "Peixe magro com arroz branco e azeite suave"
     },
     {
       "id": "frango-desfiado",
       "category": "lunch",
       "phase": "3 a 2 dias antes",
       "title": "Frango desfiado",
-      "description": "Peito de frango cozido com massa simples."
+      "description": "Peito de frango cozido com massa simples"
     },
     {
       "id": "gelatina",
       "category": "snack",
       "phase": "Véspera",
       "title": "Gelatina clara",
-      "description": "Gelatina de cor clara sem pedaços."
+      "description": "Gelatina de cor clara sem pedaços"
     },
     {
       "id": "cha-mel",
       "category": "breakfast",
       "phase": "Véspera",
       "title": "Chá com mel",
-      "description": "Chá suave com um pouco de mel."
+      "description": "Chá suave com um pouco de mel"
     },
     {
       "id": "caldo-claro",
       "category": "dinner",
       "phase": "Véspera",
       "title": "Caldo claro",
-      "description": "Caldo coado de legumes ou galinha."
+      "description": "Caldo coado de legumes ou galinha"
     }
   ],
   "videos": [
     {
       "id": "video-dieta",
       "title": "Como organizar a dieta",
-      "description": "Resumo das fases e escolhas alimentares.",
+      "description": "Resumo das fases e escolhas alimentares",
       "duration": "02:20"
     },
     {
       "id": "video-meds",
       "title": "Como tomar a medicação",
-      "description": "Orientação sobre horários e hidratação.",
+      "description": "Orientação sobre horários e hidratação",
       "duration": "03:10"
     },
     {
       "id": "video-dia",
       "title": "No dia do exame",
-      "description": "O que levar e como preparar a chegada.",
+      "description": "O que levar e como preparar a chegada",
       "duration": "01:45"
     }
   ],
   "faqs": [
     {
       "question": "Posso tomar a minha medicação habitual?",
-      "answer": "Siga as instruções do seu médico. Alguns medicamentos precisam de ajuste prévio."
-    },
-    {
-      "question": "Posso beber água no dia do exame?",
-      "answer": "Pode ingerir água ou outros líquidos transparentes até 2 horas antes do exame."
+      "answer": "Sim. Pode tomar a sua medicação habitual, no entanto, deve tomá-la com a menor quantidade de líquido possível até duas horas antes do exame e, sempre que possível, fora do período de toma do preparado"
     },
     {
       "question": "E se não conseguir terminar a solução?",
-      "answer": "Contacte o hospital para receber indicações específicas."
+      "answer": "Durante a preparação pode acontecer não conseguir beber toda a solução ou ocorrer vómito. Ainda assim, a preparação pode estar adequada. O objetivo final é que as dejeções sejam líquidas, de cor amarela clara"
+    },
+    {
+      "question": "Quanto tempo demora o preparado a fazer efeito?",
+      "answer": "O preparado começa geralmente a fazer efeito entre 30 minutos e 2 horas após o início da toma. No entanto, este tempo pode variar de pessoa para pessoa"
+    },
+    {
+      "question": "Posso escovar os dentes no dia do exame?",
+      "answer": "Sim. Pode escovar os dentes normalmente, tendo apenas o cuidado de não engolir água"
+    },
+    {
+      "question": "Posso fumar antes do exame?",
+      "answer": "Não é recomendado fumar antes do exame, especialmente durante o período de jejum"
+    },
+    {
+      "question": "Posso conduzir depois do exame?",
+      "answer": "Não. Se for administrada sedação durante o exame, não deve conduzir nem operar máquinas nas 12-24 horas seguintes. Deve ser acompanhado para regressar a casa"
     },
     {
       "question": "Como sei se a preparação foi eficaz?",
-      "answer": "As dejeções devem ser líquidas e ficar transparentes/amareladas. Em caso de dúvida, contacte a equipa."
+      "answer": "As dejeções devem ser líquidas e ficar transparentes/amareladas. Em caso de dúvida, contacte a equipa"
     }
   ]
 }

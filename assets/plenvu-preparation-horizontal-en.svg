@@ -161,8 +161,5 @@
     <tspan x="805" dy="18">liquids</tspan>
   </text>
 
-  <text class="note" x="480" y="680" text-anchor="middle">
-    <tspan x="480" dy="0">**Clear liquids: water, jelly,</tspan>
-    <tspan x="480" dy="18">pulp-free fruit juice, tea and coffee</tspan>
-  </text>
+  <text class="note" x="480" y="680" text-anchor="middle">**Clear liquids: water, jelly, pulp-free fruit juice, tea and coffee</text>
 </svg>
