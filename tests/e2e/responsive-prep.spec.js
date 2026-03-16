@@ -64,6 +64,38 @@ test.describe("desktop preparation flow", () => {
     );
   });
 
+  test("keeps accordion sections aligned to their start on desktop", async ({
+    page,
+    wizardPage,
+    preparationPage,
+  }) => {
+    await wizardPage.complete({
+      language: "pt",
+      medication: "plenvu",
+      isConstipated: true,
+      takesAnticoagulation: false,
+      takesSubcutaneousMedication: true,
+      takesIronMedication: false,
+    });
+
+    await preparationPage.expandResidueSection();
+    await expect(preparationPage.accordionResidue).toHaveJSProperty("open", true);
+
+    await preparationPage.expandLiquidSection();
+    await expect(preparationPage.accordionLiquid).toHaveJSProperty("open", true);
+    await page.waitForFunction(() => {
+      const top = document.getElementById("dieta-liquida")?.getBoundingClientRect().top;
+      return typeof top === "number" && top >= -5 && top <= 160;
+    });
+
+    await preparationPage.expandMedicationSection();
+    await expect(preparationPage.accordionMedication).toHaveJSProperty("open", true);
+    await page.waitForFunction(() => {
+      const top = document.getElementById("medicacao-preparacao")?.getBoundingClientRect().top;
+      return typeof top === "number" && top >= -5 && top <= 160;
+    });
+  });
+
   test("matches English personalized plan entries to the selected answers", async ({
     wizardPage,
     preparationPage,

@@ -1,4 +1,12 @@
 export const createNavigationController = ({ elements, mobileMediaQuery }) => {
+  let skipNextToggleScrollId = "";
+
+  const scrollAccordionItemIntoView = (item) => {
+    requestAnimationFrame(() => {
+      item.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
+
   const setCurrentNavItem = (targetId = "") => {
     document.querySelectorAll(".site-nav a").forEach((link) => {
       const linkTarget = link.getAttribute("href")?.replace("#", "");
@@ -66,6 +74,7 @@ export const createNavigationController = ({ elements, mobileMediaQuery }) => {
       ? Array.from(accordion.querySelectorAll("details.accordion-item"))
       : [];
     const targetId = window.location.hash.replace("#", "");
+    skipNextToggleScrollId = "";
     if (!targetId) {
       accordionItems.forEach((item) => {
         item.open = false;
@@ -75,15 +84,15 @@ export const createNavigationController = ({ elements, mobileMediaQuery }) => {
     }
     const target = document.getElementById(targetId);
     if (target && target.tagName === "DETAILS") {
+      const targetWasOpen = target.open;
+      if (!targetWasOpen) {
+        skipNextToggleScrollId = targetId;
+      }
       accordionItems.forEach((item) => {
         item.open = item === target;
       });
       target.open = true;
-      if (mobileMediaQuery.matches) {
-        requestAnimationFrame(() => {
-          target.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      }
+      scrollAccordionItemIntoView(target);
     } else {
       accordionItems.forEach((item) => {
         item.open = false;
@@ -112,10 +121,10 @@ export const createNavigationController = ({ elements, mobileMediaQuery }) => {
           }
         });
 
-        if (mobileMediaQuery.matches) {
-          requestAnimationFrame(() => {
-            item.scrollIntoView({ behavior: "smooth", block: "start" });
-          });
+        if (skipNextToggleScrollId === item.id) {
+          skipNextToggleScrollId = "";
+        } else {
+          scrollAccordionItemIntoView(item);
         }
 
         setCurrentNavItem(item.id);

@@ -206,7 +206,7 @@ describe('navigation module', () => {
     expect(document.querySelector('.site-nav a.is-current')).toBeNull();
   });
 
-  it('opens hash target on mobile and skips accordion scroll on desktop toggle', () => {
+  it('scrolls opened accordion items into view on hash navigation and desktop toggle', () => {
     const mobileNavigation = createNavigationController({
       elements: {
         mobileNavToggle: document.getElementById('mobileNavToggle'),
@@ -234,6 +234,6 @@ describe('navigation module', () => {
     residue.open = true;
     residue.dispatchEvent(new Event('toggle'));
 
-    expect(Element.prototype.scrollIntoView).not.toHaveBeenCalled();
+    expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
   });
 });

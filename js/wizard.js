@@ -551,9 +551,10 @@ export class Wizard {
     this.elements.splash.classList.remove('is-hidden');
     this.elements.container.classList.add('is-hidden');
 
+    const splashLang = this.data.language || 'pt';
     const splashTitle = this.elements.splash.querySelector('.wizard-splash-logo');
     if (splashTitle) {
-      splashTitle.textContent = translations.pt?.wizard?.splashTitle || 'CUF Prepara';
+      splashTitle.textContent = translations[splashLang]?.wizard?.splashTitle || 'CUF Prepara';
     }
 
     const splashDuration = this.isCoarsePointer ? 900 : 2000;
@@ -841,11 +842,11 @@ export class Wizard {
     return key;
   }
 
-  next() {
+  async next() {
     if (this.currentStep < this.elements.steps.length - 1) {
       this.showStep(this.currentStep + 1);
     } else {
-      this.finish();
+      await this.finish();
     }
   }
 
@@ -860,7 +861,7 @@ export class Wizard {
     this.showStep(0);
   }
 
-  finish() {
+  async finish() {
     const finalData = {
       ...this.data,
       completed: true,
@@ -868,8 +869,10 @@ export class Wizard {
     };
 
     saveJson(WIZARD_KEY, finalData);
+    await this.onComplete(finalData);
+    this.elements.splash.classList.add('is-hidden');
+    this.elements.container.classList.add('is-hidden');
     this.elements.overlay.classList.add('is-hidden');
-    this.onComplete(finalData);
   }
 
   t(key) {
@@ -878,7 +881,7 @@ export class Wizard {
 
   static reset() {
     localStorage.removeItem(WIZARD_KEY);
-    window.location.reload();
+    window.location.replace(`${window.location.pathname}${window.location.search}`);
   }
 }
 

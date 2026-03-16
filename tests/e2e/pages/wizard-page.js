@@ -5,6 +5,7 @@ export class WizardPage extends BasePage {
   constructor(page) {
     super(page);
     this.overlay = this.getByTestId("wizard-overlay");
+    this.splash = this.getByTestId("wizard-splash");
     this.nextButton = this.getByTestId("wizard-next-button");
     this.backButton = this.getByTestId("wizard-back-button");
     this.dateTrigger = this.getByTestId("wizard-date-trigger");

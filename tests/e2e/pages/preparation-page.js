@@ -22,6 +22,8 @@ export class PreparationPage extends BasePage {
     this.heroDulcolaxLabel24 = this.getByTestId("hero-dulcolax-label-24");
     this.mobileNavToggle = this.getByTestId("mobile-nav-toggle");
     this.mobileNavBackdrop = this.getByTestId("mobile-nav-backdrop");
+    this.accordionResidue = this.getByTestId("accordion-residue");
+    this.accordionLiquid = this.getByTestId("accordion-liquid");
     this.accordionMedication = this.getByTestId("accordion-medication");
     this.accordionFaq = this.getByTestId("accordion-faq");
     this.medicationText = this.getByTestId("medication-text");
@@ -54,6 +56,21 @@ export class PreparationPage extends BasePage {
   async openMedicationSection() {
     await this.navMedication.click();
     await this.waitForUrlHash("#medicacao-preparacao");
+    return this;
+  }
+
+  async expandResidueSection() {
+    await this.accordionResidue.locator("summary").click();
+    return this;
+  }
+
+  async expandLiquidSection() {
+    await this.accordionLiquid.locator("summary").click();
+    return this;
+  }
+
+  async expandMedicationSection() {
+    await this.accordionMedication.locator("summary").click();
     return this;
   }
 

@@ -82,6 +82,91 @@ const contentCache = new Map();
 const contactTeamEmail = "";
 let modalControls = null;
 
+const getNavigationType = () => {
+  const navigationEntry = performance.getEntriesByType("navigation")[0];
+  if (navigationEntry?.type) {
+    return navigationEntry.type;
+  }
+
+  if (performance.navigation?.type === performance.navigation.TYPE_RELOAD) {
+    return "reload";
+  }
+
+  return "navigate";
+};
+
+const getSplashDuration = () => {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    return 0;
+  }
+
+  return window.matchMedia("(pointer: coarse)").matches ? 900 : 2000;
+};
+
+const setSplashCopy = (lang = "pt") => {
+  const localizedWizard = translations[lang]?.wizard || translations.pt?.wizard || {};
+  const splashTitle = document.querySelector("#wizardSplash .wizard-splash-logo");
+
+  if (splashTitle) {
+    splashTitle.textContent = localizedWizard.splashTitle || "CUF Prepara";
+  }
+};
+
+const scrollPageToTop = ({ clearHash = false } = {}) => {
+  if ("scrollRestoration" in window.history) {
+    window.history.scrollRestoration = "manual";
+  }
+
+  if (clearHash && window.location.hash) {
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}`);
+  }
+
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+};
+
+const runAppEntryTransition = async ({ lang = "pt", clearHash = false, task }) => {
+  const splashDuration = getSplashDuration();
+
+  if (splashDuration <= 0) {
+    scrollPageToTop({ clearHash });
+    await task();
+    scrollPageToTop();
+    return;
+  }
+
+  try {
+    await ensureStylesheet("css/wizard.css", "wizardStylesheet");
+  } catch (error) {
+    console.error(error);
+  }
+
+  const overlay = document.getElementById("wizardOverlay");
+  const splash = document.getElementById("wizardSplash");
+  const container = document.getElementById("wizardContainer");
+
+  if (!overlay || !splash) {
+    scrollPageToTop({ clearHash });
+    await task();
+    scrollPageToTop();
+    return;
+  }
+
+  setSplashCopy(lang);
+  overlay.classList.remove("is-hidden");
+  splash.classList.remove("is-hidden");
+  container?.classList.add("is-hidden");
+  scrollPageToTop({ clearHash });
+
+  await Promise.all([
+    Promise.resolve().then(task),
+    new Promise((resolve) => setTimeout(resolve, splashDuration)),
+  ]);
+
+  splash.classList.add("is-hidden");
+  overlay.classList.add("is-hidden");
+  scrollPageToTop();
+};
+
 const getContent = (lang) => contentCache.get(lang);
 const mobileMediaQuery = window.matchMedia("(max-width: 900px)");
 const navigation = createNavigationController({ elements, mobileMediaQuery });
@@ -155,7 +240,7 @@ const setupActions = () => {
   });
 
   document.querySelectorAll(".site-nav a").forEach((link) => {
-    link.addEventListener("click", () => {
+    link.addEventListener("click", (event) => {
       const targetId = link.getAttribute("href")?.replace("#", "");
       if (!targetId) {
         return;
@@ -163,15 +248,14 @@ const setupActions = () => {
 
       const target = document.getElementById(targetId);
       if (target && target.tagName === "DETAILS") {
-        target.open = true;
-        if (mobileMediaQuery.matches) {
-          requestAnimationFrame(() => {
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-          });
+        if (window.location.hash === `#${targetId}`) {
+          event.preventDefault();
+          navigation.openAccordionFromHash();
         }
+      } else {
+        navigation.setCurrentNavItem(targetId);
       }
 
-      navigation.setCurrentNavItem(targetId);
       navigation.closeMobileNav();
     });
   });
@@ -179,7 +263,7 @@ const setupActions = () => {
   window.addEventListener("hashchange", navigation.openAccordionFromHash);
 };
 
-const handleWizardComplete = (wizardData) => {
+const handleWizardComplete = async (wizardData) => {
   state.wizardCompleted = true;
   applyWizardDataToState({
     appState: state,
@@ -187,7 +271,9 @@ const handleWizardComplete = (wizardData) => {
     defaultExamTime,
   });
 
-  initializeApp();
+  scrollPageToTop({ clearHash: true });
+  await initializeApp();
+  scrollPageToTop();
 };
 
 const initializeApp = async () => {
@@ -255,7 +341,17 @@ const init = async () => {
       wizardData: savedWizard,
       defaultExamTime,
     });
-    initializeApp();
+
+    if (getNavigationType() === "reload") {
+      await runAppEntryTransition({
+        lang: state.lang,
+        clearHash: true,
+        task: initializeApp,
+      });
+    } else {
+      await initializeApp();
+    }
+
     return;
   }
 

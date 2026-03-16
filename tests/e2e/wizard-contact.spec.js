@@ -48,7 +48,7 @@ test("wizard flow completes and contact popup opens", async ({
   await wizardPage.answerIronMedication(false);
   await wizardPage.continue();
 
-  await expect(wizardPage.overlay).toBeHidden();
+  await expect(wizardPage.overlay).toBeHidden({ timeout: 10000 });
 
   await preparationPage.openContactTeamForm();
 
@@ -111,7 +111,10 @@ test("wizard completion persists after page reload", async ({
 
   await page.reload();
 
-  await expect(wizardPage.overlay).toBeHidden();
+  await expect(wizardPage.splash).toBeVisible();
+  await expect(wizardPage.overlay).toBeHidden({ timeout: 10000 });
   await expect(preparationPage.contactTeamButton).toContainText(enTranslations.alerts.cta);
   await expect(preparationPage.heroCard).toContainText(getMedicationLabel("en", "moviprep"));
+  await expect(page).not.toHaveURL(/#/);
+  await expect.poll(async () => page.evaluate(() => Math.round(window.scrollY))).toBe(0);
 });
