@@ -121,7 +121,7 @@
               </div>
               <div class="hero-card-body">
                 <div class="hero-card-row anticoag-warning-row" id="heroAnticoagWarningRow" data-testid="hero-anticoagulation-warning">
-                  <span data-i18n="hero.anticoagWarning">⚠️ Se toma medicação anticoagulante/antiagregante, consulte o seu médico antes do procedimento para saber se a deve parar ou substituir.</span>
+                  <span data-i18n="hero.anticoagPlanWarning">⚠️ Se toma medicação anticoagulante/antiagregante, consulte o seu médico prescritor antes do procedimento para saber se a deve parar ou substituir.</span>
                 </div>
                 <div class="hero-card-row iron-row" id="heroIronRow" data-testid="hero-iron-row">
                   <span id="heroIronLabel" data-i18n="hero.ironSuppLabel" data-testid="hero-iron-label">Suspender Suplementos</span>
@@ -178,6 +178,11 @@
                 <div class="accordion-summary">
                   <span class="accordion-title" data-i18n="accordion.sections.residue.title">Dieta pobre em resíduos</span>
                   <span class="accordion-meta" id="accordionMetaResidue"></span>
+                  <span class="accordion-indicator" aria-hidden="true">
+                    <span class="accordion-indicator-label accordion-indicator-open-label" data-i18n="accordion.expandHint">Clique aqui</span>
+                    <span class="accordion-indicator-label accordion-indicator-close-label" data-i18n="accordion.collapseHint">Fechar</span>
+                    <span class="accordion-indicator-icon"></span>
+                  </span>
                 </div>
               </summary>
               <div class="accordion-panel">
@@ -217,6 +222,11 @@
                 <div class="accordion-summary">
                   <span class="accordion-title" data-i18n="accordion.sections.liquid.title">Dieta líquida</span>
                   <span class="accordion-meta" id="accordionMetaLiquid"></span>
+                  <span class="accordion-indicator" aria-hidden="true">
+                    <span class="accordion-indicator-label accordion-indicator-open-label" data-i18n="accordion.expandHint">Clique aqui</span>
+                    <span class="accordion-indicator-label accordion-indicator-close-label" data-i18n="accordion.collapseHint">Fechar</span>
+                    <span class="accordion-indicator-icon"></span>
+                  </span>
                 </div>
               </summary>
               <div class="accordion-panel">
@@ -256,6 +266,11 @@
                 <div class="accordion-summary">
                   <span class="accordion-title" data-i18n="accordion.sections.plenvu.title">Toma do Plenvu</span>
                   <span class="accordion-meta" id="accordionMetaPlenvu"></span>
+                  <span class="accordion-indicator" aria-hidden="true">
+                    <span class="accordion-indicator-label accordion-indicator-open-label" data-i18n="accordion.expandHint">Clique aqui</span>
+                    <span class="accordion-indicator-label accordion-indicator-close-label" data-i18n="accordion.collapseHint">Fechar</span>
+                    <span class="accordion-indicator-icon"></span>
+                  </span>
                 </div>
               </summary>
               <div class="accordion-panel">
@@ -284,6 +299,11 @@
                 <div class="accordion-summary">
                   <span class="accordion-title" data-i18n="accordion.sections.examDay.title">Dia do exame</span>
                   <span class="accordion-meta" id="accordionMetaExam"></span>
+                  <span class="accordion-indicator" aria-hidden="true">
+                    <span class="accordion-indicator-label accordion-indicator-open-label" data-i18n="accordion.expandHint">Clique aqui</span>
+                    <span class="accordion-indicator-label accordion-indicator-close-label" data-i18n="accordion.collapseHint">Fechar</span>
+                    <span class="accordion-indicator-icon"></span>
+                  </span>
                 </div>
               </summary>
               <div class="accordion-panel">
@@ -291,6 +311,9 @@
                   <div class="accordion-block full">
                     <h3 data-i18n="accordion.blocks.examLocationTitle">Dirija-se ao</h3>
                     <div class="info-card" id="examLocation"></div>
+                  </div>
+                  <div class="accordion-block full" id="examArrivalAlertBlock" hidden>
+                    <div class="info-card prep-alert" id="examArrivalAlert" data-testid="exam-arrival-alert"></div>
                   </div>
                   <div class="accordion-block full">
                     <h3 data-i18n="accordion.blocks.examChecklistTitle">A não esquecer</h3>
@@ -305,6 +328,11 @@
                 <div class="accordion-summary">
                   <span class="accordion-title" data-i18n="accordion.sections.faq.title">Perguntas frequentes</span>
                   <span class="accordion-meta" data-i18n="accordion.sections.faq.meta"></span>
+                  <span class="accordion-indicator" aria-hidden="true">
+                    <span class="accordion-indicator-label accordion-indicator-open-label" data-i18n="accordion.expandHint">Clique aqui</span>
+                    <span class="accordion-indicator-label accordion-indicator-close-label" data-i18n="accordion.collapseHint">Fechar</span>
+                    <span class="accordion-indicator-icon"></span>
+                  </span>
                 </div>
               </summary>
               <div class="accordion-panel">

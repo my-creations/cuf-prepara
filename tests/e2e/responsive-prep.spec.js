@@ -33,6 +33,9 @@ test.describe("desktop preparation flow", () => {
     await expect(preparationPage.heroTitle).toContainText(enTranslations.hero.title);
     await expect(preparationPage.siteNav).toBeVisible();
     await expect(preparationPage.heroAnticoagulationWarning).toHaveClass(/is-visible/);
+    await expect(preparationPage.heroAnticoagulationWarning).toContainText(
+      enTranslations.hero.anticoagPlanWarning
+    );
     await expect(preparationPage.heroIronRow).toHaveClass(/is-visible/);
     await expect(preparationPage.heroSubcutaneousRow).toHaveClass(/is-visible/);
     await expect(preparationPage.heroDulcolaxRow48).toHaveClass(/is-visible/);
@@ -62,6 +65,15 @@ test.describe("desktop preparation flow", () => {
     await expect(appModal.body).toContainText(
       getLocalizedVideo("en", enContent.accordion.plenvuVideoId).title
     );
+
+    await appModal.close();
+    await expect(appModal.root).not.toHaveClass(/is-open/);
+
+    await preparationPage.openExamDaySection();
+
+    await expect(page).toHaveURL(/#dia-exame/);
+    await expect(preparationPage.accordionExamDay).toHaveJSProperty("open", true);
+    await expect(preparationPage.examArrivalAlert).toContainText(enContent.accordion.examArrivalAlert);
   });
 
   test("keeps accordion sections aligned to their start on desktop", async ({
@@ -114,6 +126,9 @@ test.describe("desktop preparation flow", () => {
     await expect(preparationPage.heroCard).toContainText(enTranslations.hero.cardDiet);
     await expect(preparationPage.heroCard).toContainText(enTranslations.hero.cardExam);
     await expect(preparationPage.heroAnticoagulationWarning).toBeVisible();
+    await expect(preparationPage.heroAnticoagulationWarning).toContainText(
+      enTranslations.hero.anticoagPlanWarning
+    );
     await expect(preparationPage.heroIronRow).toBeVisible();
     await expect(preparationPage.heroIronLabel).toContainText(enTranslations.hero.ironSuppLabel);
     await expect(preparationPage.heroSubcutaneousRow).toBeHidden();

@@ -24,6 +24,7 @@ const createElements = () => {
     <div id="plenvuTipsBlock" hidden><div id="plenvuTips"></div></div>
     <div id="plenvuVideoGrid"></div>
     <div id="examLocation"></div>
+    <div id="examArrivalAlertBlock" hidden><div id="examArrivalAlert"></div></div>
     <div id="examChecklist"></div>
     <div id="accordionMetaResidue"></div>
     <div id="accordionMetaLiquid"></div>
@@ -56,6 +57,8 @@ const createElements = () => {
     plenvuTips: document.getElementById('plenvuTips'),
     plenvuVideoGrid: document.getElementById('plenvuVideoGrid'),
     examLocation: document.getElementById('examLocation'),
+    examArrivalAlertBlock: document.getElementById('examArrivalAlertBlock'),
+    examArrivalAlert: document.getElementById('examArrivalAlert'),
     examChecklist: document.getElementById('examChecklist'),
     accordionMetaResidue: document.getElementById('accordionMetaResidue'),
     accordionMetaLiquid: document.getElementById('accordionMetaLiquid'),
@@ -91,6 +94,7 @@ const createContent = () => ({
     plenvuTips: ['Tip 1', 'Tip 2'],
     plenvuVideoId: 'video-meds',
     examLocation: 'Building 1',
+    examArrivalAlert: 'Arrive 30 minutes early to complete admission at the reception desk',
     examChecklist: ['ID document'],
   },
   shoppingList: [
@@ -157,6 +161,8 @@ describe('appView module', () => {
     expect(elements.plenvuTipsBlock.hidden).toBe(false);
     expect(elements.plenvuTips.querySelectorAll('ol li')).toHaveLength(2);
     expect(elements.plenvuVideoGrid.querySelector('[data-testid="video-trigger-video-meds"]')).not.toBeNull();
+    expect(elements.examArrivalAlertBlock.hidden).toBe(false);
+    expect(elements.examArrivalAlert.textContent).toContain('Arrive 30 minutes early');
     expect(elements.recipeCardsResidue.children.length).toBe(1);
     expect(elements.recipeCardsLiquid.children.length).toBe(1);
   });
@@ -233,5 +239,22 @@ describe('appView module', () => {
     expect(elements.accordionMetaResidue.textContent).toContain('and');
     expect(elements.accordionMetaPlenvu.textContent).toContain('22:30');
     expect(elements.accordionMetaExam.textContent).toContain('08:30');
+  });
+
+  it('keeps the exam-day arrival alert hidden when content is missing', () => {
+    const elements = createElements();
+    const content = createContent();
+    content.accordion.examArrivalAlert = '';
+
+    const appView = createAppViewController({
+      elements,
+      state,
+      getContent: () => content,
+    });
+
+    appView.renderAccordionContent(content);
+
+    expect(elements.examArrivalAlertBlock.hidden).toBe(true);
+    expect(elements.examArrivalAlert.textContent).toBe('');
   });
 });

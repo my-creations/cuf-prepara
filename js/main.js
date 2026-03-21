@@ -67,6 +67,8 @@ const elements = {
   plenvuTips: document.getElementById("plenvuTips"),
   plenvuVideoGrid: document.getElementById("plenvuVideoGrid"),
   examLocation: document.getElementById("examLocation"),
+  examArrivalAlertBlock: document.getElementById("examArrivalAlertBlock"),
+  examArrivalAlert: document.getElementById("examArrivalAlert"),
   examChecklist: document.getElementById("examChecklist"),
   accordionMetaResidue: document.getElementById("accordionMetaResidue"),
   accordionMetaLiquid: document.getElementById("accordionMetaLiquid"),

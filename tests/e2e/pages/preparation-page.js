@@ -10,6 +10,7 @@ export class PreparationPage extends BasePage {
     this.heroCard = this.getByTestId("hero-card");
     this.siteNav = this.getByTestId("site-nav");
     this.navMedication = this.getByTestId("nav-medication");
+    this.navExamDay = this.getByTestId("nav-exam-day");
     this.navFaq = this.getByTestId("nav-faq");
     this.heroAnticoagulationWarning = this.getByTestId("hero-anticoagulation-warning");
     this.heroIronRow = this.getByTestId("hero-iron-row");
@@ -25,12 +26,14 @@ export class PreparationPage extends BasePage {
     this.accordionResidue = this.getByTestId("accordion-residue");
     this.accordionLiquid = this.getByTestId("accordion-liquid");
     this.accordionMedication = this.getByTestId("accordion-medication");
+    this.accordionExamDay = this.getByTestId("accordion-exam-day");
     this.accordionFaq = this.getByTestId("accordion-faq");
     this.medicationText = this.getByTestId("medication-text");
     this.medicationStartAlert = this.getByTestId("medication-start-alert");
     this.medicationFastingAlert = this.getByTestId("medication-fasting-alert");
     this.medicationTips = this.getByTestId("medication-tips");
     this.medicationVideoGrid = this.getByTestId("medication-video-grid");
+    this.examArrivalAlert = this.getByTestId("exam-arrival-alert");
     this.faqList = this.getByTestId("faq-list");
     this.contactTeamButton = this.getByTestId("contact-team-button");
   }
@@ -56,6 +59,12 @@ export class PreparationPage extends BasePage {
   async openMedicationSection() {
     await this.navMedication.click();
     await this.waitForUrlHash("#medicacao-preparacao");
+    return this;
+  }
+
+  async openExamDaySection() {
+    await this.navExamDay.click();
+    await this.waitForUrlHash("#dia-exame");
     return this;
   }
 

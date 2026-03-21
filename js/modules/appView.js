@@ -249,6 +249,13 @@ export const createAppViewController = ({ elements, state, getContent }) => {
     renderVideos(elements.plenvuVideoGrid, plenvuVideo || []);
 
     renderInfoCard(elements.examLocation, content.accordion?.examLocation || "");
+
+    const examArrivalAlert = content.accordion?.examArrivalAlert || "";
+    if (elements.examArrivalAlertBlock) {
+      elements.examArrivalAlertBlock.hidden = !examArrivalAlert;
+    }
+    renderInfoCard(elements.examArrivalAlert, examArrivalAlert);
+
     renderInfoCard(elements.examChecklist, content.accordion?.examChecklist || "");
 
     if (elements.residueShoppingNote) {

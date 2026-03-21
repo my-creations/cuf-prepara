@@ -172,6 +172,7 @@
     ],
     "plenvuVideoId": "video-meds",
     "examLocation": "Building 1, floor 1, reception 1C - Special exams",
+    "examArrivalAlert": "⚠️ Arrive 30 minutes before the scheduled time to complete your admission at the reception desk",
     "examChecklist": [
       "Identification document",
       "Insurance card or national health system card",
@@ -352,6 +353,10 @@
     {
       "question": "Can I brush my teeth on the exam day?",
       "answer": "Yes. You may brush your teeth normally, taking care not to swallow water"
+    },
+    {
+      "question": "Can I have the exam if I am menstruating?",
+      "answer": "Yes. Menstruation does not prevent the exam from being performed. You can have the exam as usual, while maintaining your usual hygiene care"
     },
     {
       "question": "Can I smoke before the exam?",

@@ -172,6 +172,7 @@
     ],
     "plenvuVideoId": "video-meds",
     "examLocation": "Edifício 1, piso 1, recepção 1C - Exames especiais",
+    "examArrivalAlert": "⚠️ Chegue 30 minutos antes da hora marcada para fazer a admissão no balcão",
     "examChecklist": [
       "Documento de identificação",
       "Cartão seguro ou sistema de saúde",
@@ -352,6 +353,10 @@
     {
       "question": "Posso escovar os dentes no dia do exame?",
       "answer": "Sim. Pode escovar os dentes normalmente, tendo apenas o cuidado de não engolir água"
+    },
+    {
+      "question": "Posso fazer o exame se estiver menstruada?",
+      "answer": "Sim. A menstruação não impede a realização do exame. Pode fazer o exame normalmente, mantendo os seus cuidados habituais de higiene"
     },
     {
       "question": "Posso fumar antes do exame?",
